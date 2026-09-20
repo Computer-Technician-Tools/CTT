@@ -37,6 +37,17 @@ interface SourceBadgeProps {
   codepen?: string;
   git?: string;
 
+  // Distribution / software stores
+  steam?: string;
+  epicgames?: string;
+  gog?: string;
+  itch?: string;
+  microsoftstore?: string;
+  googleplay?: string;
+  appstore?: string;
+  flathub?: string;
+  snapcraft?: string;
+
   // Explicit website icon override
   icon?: string;
 }
@@ -63,7 +74,16 @@ type SourceType =
   | 'dockerhub'
   | 'huggingface'
   | 'codepen'
-  | 'git';
+  | 'git'
+  | 'steam'
+  | 'epicgames'
+  | 'gog'
+  | 'itch'
+  | 'microsoftstore'
+  | 'googleplay'
+  | 'appstore'
+  | 'flathub'
+  | 'snapcraft';
 
 function getDomain(url: string): string | null {
   try {
@@ -161,10 +181,29 @@ function SimpleIcon({
 
 function SourcePlatformIcon({
   type,
+  url,
 }: {
   type: SourceType;
+  url: string;
 }) {
   switch (type) {
+    // Distribution / software stores use the official
+    // favicon from the supplied store URL.
+    case 'steam':
+    case 'epicgames':
+    case 'gog':
+    case 'itch':
+    case 'microsoftstore':
+    case 'googleplay':
+    case 'appstore':
+    case 'flathub':
+    case 'snapcraft':
+      return (
+        <WebsiteIcon
+          url={url}
+        />
+      );
+
     case 'github':
       return (
         <FontAwesomeIcon
@@ -306,13 +345,14 @@ function SourcePlatformIcon({
   }
 }
 
-function getSourceLink(
+function getSourceLinks(
   props: SourceBadgeProps,
-): SourceLink | null {
+): SourceLink[] {
   const sources: Array<{
     url?: string;
     type: SourceType;
   }> = [
+    // Source / repository platforms
     {url: props.github, type: 'github'},
     {url: props.gitlab, type: 'gitlab'},
     {url: props.bitbucket, type: 'bitbucket'},
@@ -324,26 +364,123 @@ function getSourceLink(
     {url: props.launchpad, type: 'launchpad'},
     {url: props.savannah, type: 'savannah'},
     {url: props.kde, type: 'kde'},
+
+    // Package / development platforms
     {url: props.npm, type: 'npm'},
     {url: props.pypi, type: 'pypi'},
     {url: props.dockerhub, type: 'dockerhub'},
     {url: props.huggingface, type: 'huggingface'},
     {url: props.codepen, type: 'codepen'},
     {url: props.git, type: 'git'},
+
+    // Distribution / software stores
+    {url: props.steam, type: 'steam'},
+    {url: props.epicgames, type: 'epicgames'},
+    {url: props.gog, type: 'gog'},
+    {url: props.itch, type: 'itch'},
+    {url: props.microsoftstore, type: 'microsoftstore'},
+    {url: props.googleplay, type: 'googleplay'},
+    {url: props.appstore, type: 'appstore'},
+    {url: props.flathub, type: 'flathub'},
+    {url: props.snapcraft, type: 'snapcraft'},
   ];
 
-  const source = sources.find(
-    (entry) => Boolean(entry.url),
-  );
+  return sources
+    .filter(
+      (source): source is SourceLink =>
+        Boolean(source.url),
+    )
+    .map((source) => ({
+      url: source.url,
+      type: source.type,
+    }));
+}
 
-  if (!source?.url) {
-    return null;
+function getSourceTypeLabel(
+  type: SourceType,
+): string {
+  switch (type) {
+    case 'github':
+      return 'GitHub';
+
+    case 'gitlab':
+      return 'GitLab';
+
+    case 'bitbucket':
+      return 'Bitbucket';
+
+    case 'codeberg':
+      return 'Codeberg';
+
+    case 'gitea':
+      return 'Gitea';
+
+    case 'forgejo':
+      return 'Forgejo';
+
+    case 'sourceforge':
+      return 'SourceForge';
+
+    case 'sourcehut':
+      return 'SourceHut';
+
+    case 'launchpad':
+      return 'Launchpad';
+
+    case 'savannah':
+      return 'Savannah';
+
+    case 'kde':
+      return 'KDE Invent';
+
+    case 'npm':
+      return 'npm';
+
+    case 'pypi':
+      return 'PyPI';
+
+    case 'dockerhub':
+      return 'Docker Hub';
+
+    case 'huggingface':
+      return 'Hugging Face';
+
+    case 'codepen':
+      return 'CodePen';
+
+    case 'git':
+      return 'Git';
+
+    case 'steam':
+      return 'Steam';
+
+    case 'epicgames':
+      return 'Epic Games';
+
+    case 'gog':
+      return 'GOG';
+
+    case 'itch':
+      return 'itch.io';
+
+    case 'microsoftstore':
+      return 'Microsoft Store';
+
+    case 'googleplay':
+      return 'Google Play';
+
+    case 'appstore':
+      return 'App Store';
+
+    case 'flathub':
+      return 'Flathub';
+
+    case 'snapcraft':
+      return 'Snapcraft';
+
+    default:
+      return type;
   }
-
-  return {
-    url: source.url,
-    type: source.type,
-  };
 }
 
 export default function SourceBadge({
@@ -365,9 +502,20 @@ export default function SourceBadge({
   huggingface,
   codepen,
   git,
+
+  steam,
+  epicgames,
+  gog,
+  itch,
+  microsoftstore,
+  googleplay,
+  appstore,
+  flathub,
+  snapcraft,
+
   icon,
 }: SourceBadgeProps) {
-  const source = getSourceLink({
+  const sources = getSourceLinks({
     url,
     github,
     gitlab,
@@ -386,6 +534,17 @@ export default function SourceBadge({
     huggingface,
     codepen,
     git,
+
+    steam,
+    epicgames,
+    gog,
+    itch,
+    microsoftstore,
+    googleplay,
+    appstore,
+    flathub,
+    snapcraft,
+
     icon,
   });
 
@@ -406,21 +565,29 @@ export default function SourceBadge({
         />
       </a>
 
-      {/* Source / development platform */}
-      {source && (
-        <a
-          href={source.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.sourceBadge}
-          title={`View source on ${source.type}`}
-          aria-label={`View source on ${source.type}`}
-        >
-          <SourcePlatformIcon
-            type={source.type}
-          />
-        </a>
-      )}
+      {/* Source / development / distribution platforms */}
+      {sources.map((source) => {
+        const label = getSourceTypeLabel(
+          source.type,
+        );
+
+        return (
+          <a
+            key={`${source.type}-${source.url}`}
+            href={source.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.sourceBadge}
+            title={`View on ${label}`}
+            aria-label={`View on ${label}`}
+          >
+            <SourcePlatformIcon
+              type={source.type}
+              url={source.url}
+            />
+          </a>
+        );
+      })}
     </span>
   );
 }

@@ -1,9 +1,17 @@
 .sourceGroup {
-  display: inline-flex;
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 24px;
   align-items: center;
   gap: 4px;
+
   margin-right: 6px;
   vertical-align: middle;
+
+  width: max-content;
+  max-width: none;
+
+  white-space: nowrap;
 }
 
 .sourceBadge {
@@ -14,11 +22,12 @@
   width: 24px;
   height: 24px;
 
+  min-width: 24px;
+  max-width: 24px;
+
   color: inherit;
   text-decoration: none;
   line-height: 0;
-
-  flex: 0 0 24px;
 
   border-radius: 4px;
 
@@ -40,9 +49,15 @@
 .sourceBadge svg,
 .favicon {
   display: block;
+
   width: 24px;
   height: 24px;
+
+  min-width: 24px;
+  max-width: 24px;
+
   margin: 0;
+
   object-fit: contain;
 }
 
@@ -53,3 +68,4 @@
 .githubBadge {
   font-size: 20px;
 }
+

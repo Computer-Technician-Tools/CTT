@@ -1,5 +1,50 @@
 # Change Log
 
+## 20/09/2026
+
+## Update
+
+[Get Started](/docs/getting-started.md) updated
+
+
+## Added
+
+### Keyboard and Mouse Software
+- [OpenLogi](/docs/tools/utilities/index.md#keyboard-and-mouse-software)
+- [OpenRazer](/docs/tools/utilities/index.md#keyboard-and-mouse-software)
+
+### RGB Control
+- [OpenRGB](/docs/tools/utilities/index.md#rgb-control)
+
+### Effects and Visuals
+- [After Effects](/docs/tools/utilities/index.md#effects-and-visuals)
+- [Alight Motion](/docs/tools/utilities/index.md#effects-and-visuals)
+
+### Photo Editing
+- [Photopea](/docs/tools/utilities/index.md#photo-editing)
+- [GIMP](/docs/tools/utilities/index.md#photo-editing) - [PhotoGIMP](/docs/tools/utilities/index.md#photo-editing)
+- [Inkscape](/docs/tools/utilities/index.md#photo-editing)
+- [Krita](/docs/tools/utilities/index.md#photo-editing)
+- [Affinity](/docs/tools/utilities/index.md#photo-editing)
+
+### Gaming Tools
+- [Framepacer](/docs/tools/utilities/index.md#gaming-tools)
+- [Lossless Scaling](/docs/tools/utilities/index.md#gaming-tools)
+
+### Wallpapers
+- [Wallpaper Engine](/docs/tools/utilities/index.md#wallpapers)
+- [Lively](/docs/tools/utilities/index.md#wallpapers)
+- [ScreenPlay](/docs/tools/utilities/index.md#wallpapers)
+
+### Screenshot Tools
+- [ShareX](/docs/tools/utilities/index.md#screenshot-tools)
+- [Flameshot](/docs/tools/utilities/index.md#screenshot-tools)
+- [Greenshot](/docs/tools/utilities/index.md#screenshot-tools)
+
+### DNS
+- [DNS Jumper](/docs/tools/network/index.md)
+
+
 ## 11/09/2026
 
 ## Update

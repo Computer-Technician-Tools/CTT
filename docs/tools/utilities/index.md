@@ -188,6 +188,56 @@ Tools for creating, extracting, and managing archives and compressed files.
 | [Shotcut](https://www.shotcut.org/) | A free, open-source, cross-platform video editor with support for a wide range of formats, filters, effects, and editing workflows. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://www.shotcut.org/" github="https://github.com/mltframework/shotcut" /> |
 | [OpenCut](https://opencut.app/) | An open-source, web-based video editor designed as a free alternative to proprietary editing tools, with a familiar timeline-based workflow. | <PlatformBadges items={['web']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://opencut.app/" github="https://github.com/OpenCut-app/OpenCut" /> |
 
+### Effects and Visuals
+| Tool | Description | Supported platforms | Source |
+| --- | --- | --- | --- |
+| [After Effects](https://www.adobe.com/products/aftereffects.html) | Professional motion graphics, visual effects, compositing, and animation software from Adobe. | <PlatformBadges items={['windows','macos']} /> | <PlatformBadges items={['closed-source']} /> <SourceBadge url="https://www.adobe.com/products/aftereffects.html" /> |
+| [Alight Motion](https://alightcreative.com/) | Motion graphics and video editing app with keyframe animation, visual effects, compositing, and vector tools for mobile devices. | <PlatformBadges items={['android','ios']} /> | <PlatformBadges items={['closed-source']} /> <SourceBadge url="https://alightcreative.com/" /> |
+
 :::note
 Also good software include [**`Final Cut Pro`**](https://www.apple.com/final-cut-pro/) for MacOS, [**`VEGAS Pro`**](https://www.vegascreativesoftware.com/vegas-pro/) for Windows, and [**`Adobe Premiere Pro`**](https://www.adobe.com/products/premiere.html), but I don't think they deserve to be on this list.
 :::
+
+## Photo Editing
+| Tool | Description | Supported platforms | Source |
+| --- | --- | --- | --- |
+| [Photopea](https://www.photopea.com/) | A browser-based image editor for raster and vector graphics, with support for formats such as PSD. | <PlatformBadges items={['web']} /> | <PlatformBadges items={['closed-source']} /> <SourceBadge url="https://www.photopea.com/" /> |
+| [GIMP](https://www.gimp.org/) (use [PhotoGIMP](https://github.com/Diolinux/Photogimp)) | Free, open-source image editor for photo retouching, image composition, and graphic design. PhotoGIMP provides a Photoshop-like layout and setup for GIMP. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://www.gimp.org/" gitlab="https://gitlab.gnome.org/GNOME/gimp" /> |
+| [Inkscape](https://inkscape.org/) | Free, open-source vector graphics editor for creating illustrations, diagrams, logos, and other scalable artwork. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://inkscape.org/" gitlab="https://gitlab.com/inkscape/inkscape" /> |
+| [Krita](https://krita.org/en/) | Free, open-source digital painting and illustration software with tools for drawing, animation, and image editing. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://krita.org/en/" gitlab="https://invent.kde.org/graphics/krita" /> |
+| [Affinity](https://www.affinity.studio/) | Professional creative software combining tools for photo editing, vector design, and page layout in one application. | <PlatformBadges items={['windows','macos']} /> | <PlatformBadges items={['closed-source']} /> <SourceBadge url="https://www.affinity.studio/" /> |
+
+## Keyboard and Mouse Software
+
+| Tool | Description | Supported platforms | Source |
+| --- | --- | --- | --- |
+| [OpenLogi](https://openlogi.org/) | A local-first alternative to Logitech Options+, written in Rust.Remap buttons, drive DPI and SmartShift over HID++. No account, no telemetry. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://openlogi.org/" github="https://github.com/AprilNEA/OpenLogi" /> |
+| [OpenRazer](https://openrazer.github.io/) | An entirely open-source driver and user-space daemon that allows you to manage your Razer peripherals on GNU/Linux. | <PlatformBadges items={['linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://openrazer.github.io" github="https://github.com/openrazer/openrazer" /> |
+
+## RGB Control
+
+| Tool | Description | Supported platforms | Source |
+| --- | --- | --- | --- |
+| [OpenRGB](https://openrgb.org/) | Open source RGB lighting control that doesn't depend on manufacturer software. For Windows, Linux, MacOS. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://openrgb.org/" gitlab="https://gitlab.com/CalcProgrammer1/OpenRGB" /> |
+
+## Gaming Tools
+| Tool | Description | Supported platforms | Source |
+| --- | --- | --- | --- |
+| [Framepacer](https://framepacer.com/) | A lightweight, high-precision framerate limiter for Windows that focuses on stable frame pacing and smoother gameplay. | <PlatformBadges items={['windows']} /> | <PlatformBadges items={['closed-source']} /> <SourceBadge url="https://framepacer.com/" steam="https://store.steampowered.com/app/4874400/framepacer/" /> |
+| [Lossless Scaling](https://losslessscaling.com/) | Gaming utility for upscaling windowed games and generating additional frames, with support for multiple scaling algorithms and frame-generation modes. | <PlatformBadges items={['windows']} /> | <PlatformBadges items={['closed-source']} /> <SourceBadge url="https://losslessscaling.com/" steam="https://store.steampowered.com/app/993090/Lossless_Scaling/" /> |
+
+## Wallpapers
+
+| Tool | Description | Supported platforms | Source |
+| --- | --- | --- | --- |
+| [Wallpaper Engine](https://www.wallpaperengine.io/) | Live wallpaper software for Windows that supports animated wallpapers, videos, websites, applications, and Steam Workshop wallpapers. It also has a companion Android app for transferring wallpapers. | <PlatformBadges items={['windows','android']} /> | <PlatformBadges items={['closed-source']} /> <SourceBadge url="https://www.wallpaperengine.io/" steam="https://store.steampowered.com/app/431960/Wallpaper_Engine/" /> |
+| [Lively](https://www.rocksdanister.com/lively/) | Free, open-source live wallpaper application for Windows that supports videos, webpages, interactive wallpapers, multiple monitors, and screensavers. | <PlatformBadges items={['windows']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://www.rocksdanister.com/lively/" github="https://github.com/rocksdanister/lively" /> |
+| [ScreenPlay](https://screen-play.app/) | Free, open-source live wallpaper and desktop widget application with support for video, QML, HTML, and interactive wallpapers, plus Steam Workshop integration. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://screen-play.app/" gitlab="https://gitlab.com/kelteseth/ScreenPlay" steam="https://store.steampowered.com/app/672870/ScreenPlay/" /> |
+
+## Screenshot Tools
+
+| Tool | Description | Supported platforms | Source |
+| --- | --- | --- | --- |
+| [ShareX](https://getsharex.com/) | Free, open-source screenshot and screen-recording tool for Windows with capture, annotation, automation, and file-sharing features. | <PlatformBadges items={['windows']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://getsharex.com/" github="https://github.com/ShareX/ShareX" steam="https://store.steampowered.com/app/400040/ShareX/" /> |
+| [Flameshot](https://flameshot.org/) | Free, open-source screenshot tool with region capture, annotation, drawing, and editing features. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://flameshot.org/" github="https://github.com/flameshot-org/flameshot" /> |
+| [Greenshot](https://getgreenshot.org/) | Lightweight screenshot tool for Windows with region, window, and fullscreen capture, plus annotation, highlighting, and image export options. | <PlatformBadges items={['windows']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://getgreenshot.org/" github="https://github.com/greenshot/greenshot" /> |
