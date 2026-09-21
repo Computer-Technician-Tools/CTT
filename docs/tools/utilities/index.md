@@ -147,12 +147,18 @@ Tools for creating, extracting, and managing archives and compressed files.
 | [7-Zip](https://www.7-zip.org/) | File archiver with a high compression ratio and support for many archive formats. | <PlatformBadges items={['windows', 'linux', 'macos']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://www.7-zip.org/" github="https://github.com/ip7z/7zip" /> |
 | [PeaZip](https://peazip.github.io/) | Open-source file archiver and file manager supporting many archive formats. | <PlatformBadges items={['windows', 'linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://peazip.github.io/" github="https://github.com/peazip/PeaZip" /> |
 
-## Documents
+## Document & PDF Tools
 
 | Tool | Description | Supported platforms | Source |
 | --- | --- | --- | --- |
 | [LibreOffice](https://www.libreoffice.org/) | Open-source office suite with tools for word processing, spreadsheets, presentations, databases, diagrams, and mathematical formulas. | <PlatformBadges items={['windows', 'linux', 'macos', 'android', 'ios']} /> | <PlatformBadges items={['opensource', 'free']} /> <SourceBadge url="https://www.libreoffice.org/" /> |
 | [ONLYOFFICE](https://www.onlyoffice.com/) | Office suite for creating, viewing, editing, and collaborating on documents, spreadsheets, presentations, PDF forms, and PDFs. | <PlatformBadges items={['windows', 'linux', 'macos', 'android', 'ios', 'web']} /> | <PlatformBadges items={['opensource', 'free']} /> <SourceBadge url="https://www.onlyoffice.com/" /> |
+| [Calibre](https://calibre-ebook.com/) | Free, open-source ebook manager for organizing, converting, editing, and reading ebooks, with support for a wide range of formats and devices. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://calibre-ebook.com/" github="https://github.com/kovidgoyal/calibre" /> |
+| [KOReader](https://koreader.rocks/) | Free, open-source document and ebook reader designed for E Ink devices, with support for EPUB, PDF, DjVu, CBZ, MOBI, and many other formats. | <PlatformBadges items={['android','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://koreader.rocks/" github="https://github.com/koreader/koreader" /> |
+| [Librera](https://librera.mobi/) | Free, open-source ebook and document reader for Android supporting EPUB, PDF, MOBI, DjVu, FB2, CBZ, CBR, and many other formats. | <PlatformBadges items={['android']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://librera.mobi/" github="https://github.com/foobnix/LibreraReader" /> |
+| [SumatraPDF](https://www.sumatrapdfreader.org/free-pdf-reader) | Free, open-source lightweight document reader for Windows supporting PDF, EPUB, MOBI, CBZ, CBR, DjVu, XPS, and other formats. | <PlatformBadges items={['windows']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://www.sumatrapdfreader.org/free-pdf-reader" github="https://github.com/sumatrapdfreader/sumatrapdf" /> |
+| [PDF24](https://www.pdf24.org/) | Free PDF toolkit for creating, editing, merging, splitting, converting, compressing, OCR processing, and reading PDF files. | <PlatformBadges items={['windows']} /> | <PlatformBadges items={['closed-source']} /> <SourceBadge url="https://www.pdf24.org/" /> |
+| [Okular](https://okular.kde.org/) | Free, open-source document viewer from KDE with support for PDF, EPUB, DjVu, comic books, images, and other document formats. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://okular.kde.org/" github="https://invent.kde.org/graphics/okular" /> |
 
 ## Transfer
 
@@ -242,4 +248,27 @@ Also good software include [**`Final Cut Pro`**](https://www.apple.com/final-cut
 | [Flameshot](https://flameshot.org/) | Free, open-source screenshot tool with region capture, annotation, drawing, and editing features. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://flameshot.org/" github="https://github.com/flameshot-org/flameshot" /> |
 | [Greenshot](https://getgreenshot.org/) | Lightweight screenshot tool for Windows with region, window, and fullscreen capture, plus annotation, highlighting, and image export options. | <PlatformBadges items={['windows']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://getgreenshot.org/" github="https://github.com/greenshot/greenshot" /> |
 
+## Video Tools
 
+| Tool | Description | Supported platforms | Source |
+| --- | --- | --- | --- |
+| [OBS Studio](https://obsproject.com/) | Free, open-source software for video recording, screen capture, live streaming, and real-time audio/video mixing. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://obsproject.com/" github="https://github.com/obsproject/obs-studio" /> |
+
+## Audio Tools
+
+| Tool | Description | Supported platforms | Source |
+| --- | --- | --- | --- |
+| [Audacity](https://www.audacityteam.org/download/) | Free, open-source audio editor and recorder for recording, editing, mixing, and converting audio. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://www.audacityteam.org/download/" github="https://github.com/audacity/audacity" /> |
+
+## 3D Softwares
+
+| Tool | Description | Supported platforms | Source |
+| --- | --- | --- | --- |
+| [Blender](https://www.blender.org/) | Free, open-source 3D creation suite for modeling, sculpting, animation, rendering, simulation, video editing, and more. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://www.blender.org/" github="https://github.com/blender/blender" /> |
+
+## Email Tools
+
+| Tool | Description | Supported platforms | Source |
+| --- | --- | --- | --- |
+| [Thunderbird](https://www.thunderbird.net/en-US/) | Free, open-source email and productivity application for managing email accounts, calendars, contacts, and messages. | <PlatformBadges items={['windows','macos','linux','android']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://www.thunderbird.net/en-US/" github="https://github.com/mozilla/releases-comm-central" /> |
+| [K-9 Mail](https://k9mail.app/) | Free, open-source email client for Android with support for multiple email accounts and a focus on privacy and flexibility. | <PlatformBadges items={['android']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://k9mail.app/" github="https://github.com/thunderbird/thunderbird-android" fdroid="https://f-droid.org/packages/com.fsck.k9/" /> |

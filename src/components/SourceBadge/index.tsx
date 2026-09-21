@@ -47,6 +47,7 @@ interface SourceBadgeProps {
   appstore?: string;
   flathub?: string;
   snapcraft?: string;
+  fdroid?: string;
 
   // Explicit website icon override
   icon?: string;
@@ -83,7 +84,8 @@ type SourceType =
   | 'googleplay'
   | 'appstore'
   | 'flathub'
-  | 'snapcraft';
+  | 'snapcraft'
+  | 'fdroid';
 
 function getDomain(url: string): string | null {
   try {
@@ -198,6 +200,7 @@ function SourcePlatformIcon({
     case 'appstore':
     case 'flathub':
     case 'snapcraft':
+    case 'fdroid':
       return (
         <WebsiteIcon
           url={url}
@@ -383,6 +386,7 @@ function getSourceLinks(
     {url: props.appstore, type: 'appstore'},
     {url: props.flathub, type: 'flathub'},
     {url: props.snapcraft, type: 'snapcraft'},
+    {url: props.fdroid, type: 'fdroid'},
   ];
 
   return sources
@@ -478,6 +482,9 @@ function getSourceTypeLabel(
     case 'snapcraft':
       return 'Snapcraft';
 
+    case 'fdroid':
+      return 'F-Droid';
+
     default:
       return type;
   }
@@ -512,6 +519,7 @@ export default function SourceBadge({
   appstore,
   flathub,
   snapcraft,
+  fdroid,
 
   icon,
 }: SourceBadgeProps) {
@@ -544,6 +552,7 @@ export default function SourceBadge({
     appstore,
     flathub,
     snapcraft,
+    fdroid,
 
     icon,
   });
