@@ -160,6 +160,7 @@ html[data-tech-theme="halloween"] .hero--primary::before {
 @media (prefers-reduced-motion: reduce) {
   html[data-tech-theme="galaxy"] body::before,
   html[data-tech-theme="galaxy"] body::after,
+  html[data-tech-theme="galaxy"] .hero--primary::before,
   html[data-tech-theme="halloween"] body::before,
   html[data-tech-theme="halloween"] body::after,
   html[data-tech-theme="halloween"] .hero--primary::before {
@@ -190,140 +191,11 @@ html[data-tech-theme="galaxy"] {
 
 
 /* ------------------------------------------------------------------------
-   Animated star field
+   Galaxy star-field ownership
+   ------------------------------------------------------------------------
+   The complete Galaxy star system lives in module 10 so there is one source
+   of truth for the body/hero star layers and their animations.
    ------------------------------------------------------------------------ */
-
-html[data-tech-theme="galaxy"] body::before {
-  animation:
-    ctt-galaxy-drift-back 58s linear infinite,
-    ctt-galaxy-twinkle-back 8s ease-in-out infinite;
-  transform: translateZ(0);
-  will-change: background-position, opacity;
-}
-
-html[data-tech-theme="galaxy"] body::after {
-  animation:
-    ctt-galaxy-drift-front 34s linear infinite,
-    ctt-galaxy-twinkle-front 5.5s ease-in-out infinite;
-  transform: translateZ(0);
-  will-change: background-position, opacity;
-}
-
-/* Keep the galaxy glow gently breathing without moving the page content. */
-html[data-tech-theme="galaxy"] body::before {
-  background-size:
-    112% 112%,
-    108% 108%,
-    110% 110%,
-    89px 107px,
-    137px 151px,
-    193px 211px;
-  background-position:
-    center,
-    center,
-    center,
-    17px 31px,
-    73px 103px,
-    121px 51px;
-}
-
-
-/* Slow movement of the distant stars */
-@keyframes ctt-galaxy-drift-back {
-  0% {
-    background-position:
-      center,
-      center,
-      center,
-      17px 31px,
-      73px 103px,
-      121px 51px;
-  }
-
-  50% {
-    background-position:
-      center,
-      center,
-      center,
-      49px 68px,
-      92px 77px,
-      83px 111px;
-  }
-
-  100% {
-    background-position:
-      center,
-      center,
-      center,
-      81px 105px,
-      111px 151px,
-      45px 171px;
-  }
-}
-
-
-/* Slightly faster movement of the foreground stars */
-@keyframes ctt-galaxy-drift-front {
-  0% {
-    background-position:
-      41px 61px,
-      117px 29px,
-      11px 89px;
-  }
-
-  50% {
-    background-position:
-      88px 96px,
-      76px 72px,
-      41px 54px;
-  }
-
-  100% {
-    background-position:
-      135px 131px,
-      35px 115px,
-      71px 19px;
-  }
-}
-
-
-/* Gentle brightness changes — enough to make the sky feel alive */
-@keyframes ctt-galaxy-twinkle-back {
-  0%, 100% {
-    opacity: 0.68;
-  }
-
-  35% {
-    opacity: 0.82;
-  }
-
-  55% {
-    opacity: 0.61;
-  }
-
-  78% {
-    opacity: 0.77;
-  }
-}
-
-@keyframes ctt-galaxy-twinkle-front {
-  0%, 100% {
-    opacity: 0.58;
-  }
-
-  28% {
-    opacity: 0.78;
-  }
-
-  48% {
-    opacity: 0.54;
-  }
-
-  72% {
-    opacity: 0.70;
-  }
-}
-
 
 /* ------------------------------------------------------------------------
    Glassy navbar

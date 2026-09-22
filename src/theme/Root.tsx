@@ -13,52 +13,25 @@ const darkOnlyThemes = new Set<string>([
   'TKOD',
 ]);
 
-function collapseMobileToc(): void {
+function isMobileTocExpanded(): boolean {
   const toc = document.querySelector('.theme-doc-toc-mobile');
-  if (!toc) return;
+  if (!toc) return false;
 
-  const button = toc.querySelector('button');
-  const expanded = toc.querySelector('[class*="tocCollapsibleExpanded"]');
+  const button = toc.querySelector<HTMLButtonElement>('button');
+  if (button?.getAttribute('aria-expanded') === 'true') return true;
 
-  if (expanded && button instanceof HTMLButtonElement) {
-    button.click();
-  }
+  return Boolean(toc.querySelector('[class*="tocCollapsibleExpanded"]'));
 }
 
-function syncMobileTocLayout(): void {
-  const toc = document.querySelector<HTMLElement>('.theme-doc-toc-mobile');
-  const mobile = window.matchMedia('(max-width: 996px)').matches;
+function collapseMobileToc(): boolean {
+  const toc = document.querySelector('.theme-doc-toc-mobile');
+  if (!toc || !isMobileTocExpanded()) return false;
 
-  if (!mobile) {
-    document.querySelectorAll<HTMLElement>('[data-ctt-toc-placeholder]').forEach((placeholder) => {
-      placeholder.remove();
-    });
-    toc?.classList.remove('ctt-mobile-toc-fixed');
-    return;
-  }
+  const button = toc.querySelector<HTMLButtonElement>('button');
+  if (!button) return false;
 
-  if (!toc) return;
-
-  // Docusaurus owns the TOC markup. We only reserve its original collapsed
-  // height, while the visible TOC is fixed directly below the navbar.
-  let placeholder = document.querySelector<HTMLElement>('[data-ctt-toc-placeholder]');
-  if (!placeholder) {
-    placeholder = document.createElement('div');
-    placeholder.setAttribute('data-ctt-toc-placeholder', 'true');
-    placeholder.setAttribute('aria-hidden', 'true');
-    toc.parentElement?.insertBefore(placeholder, toc);
-  }
-
-  const button = toc.querySelector<HTMLElement>('button');
-  const reservedHeight = button?.getBoundingClientRect().height || 48;
-  placeholder.style.height = `${Math.ceil(reservedHeight)}px`;
-  placeholder.style.width = '100%';
-  placeholder.style.pointerEvents = 'none';
-
-  const navbar = document.querySelector<HTMLElement>('.navbar');
-  const navbarHeight = navbar?.getBoundingClientRect().height || 60;
-  toc.style.setProperty('--ctt-mobile-toc-top', `${Math.ceil(navbarHeight)}px`);
-  toc.classList.add('ctt-mobile-toc-fixed');
+  button.click();
+  return true;
 }
 
 function getTocEntries(): Array<{link: HTMLAnchorElement; heading: HTMLElement}> {
@@ -117,9 +90,20 @@ function setMobileTocActiveLink(activeLink: HTMLAnchorElement | null): void {
     });
 }
 
-function syncMobileTocActiveHeading(): void {
+function syncMobileTocActiveHeading(forcedActiveId: string | null = null): void {
   const entries = getTocEntries();
   if (!entries.length) return;
+
+  // Keep the item the user just clicked active while the smooth scroll is
+  // settling. Docusaurus can otherwise recalculate the active heading from
+  // intermediate scroll positions and remove the clicked highlight.
+  if (forcedActiveId) {
+    const forcedEntry = entries.find(({heading}) => heading.id === forcedActiveId);
+    if (forcedEntry) {
+      setMobileTocActiveLink(forcedEntry.link);
+      return;
+    }
+  }
 
   const navbar = document.querySelector<HTMLElement>('.navbar');
   const toc = document.querySelector<HTMLElement>('.theme-doc-toc-mobile');
@@ -198,19 +182,35 @@ function installMobileTocInteractions(): () => void {
   let scrollFrame = 0;
   let refreshTimer = 0;
   let collapseTimer = 0;
+  let forcedActiveId: string | null = null;
+  let forcedActiveTimer = 0;
+  let scrollIntentTimer = 0;
 
   const sync = () => {
     if (scrollFrame) return;
     scrollFrame = window.requestAnimationFrame(() => {
       scrollFrame = 0;
-      syncMobileTocLayout();
-      syncMobileTocActiveHeading();
+      syncMobileTocActiveHeading(forcedActiveId);
     });
+  };
+
+  const releaseForcedActive = () => {
+    forcedActiveId = null;
+    window.clearTimeout(forcedActiveTimer);
+    forcedActiveTimer = 0;
+    sync();
   };
 
   const refresh = () => {
     window.clearTimeout(refreshTimer);
-    refreshTimer = window.setTimeout(sync, 50);
+    refreshTimer = window.setTimeout(() => {
+      sync();
+      // Docusaurus can finish rebuilding the mobile TOC a frame or two after
+      // the drawer/TOC changes state. Re-sync after layout has settled so the
+      // heading under the current scroll position is always highlighted.
+      window.setTimeout(sync, 100);
+      window.setTimeout(sync, 300);
+    }, 50);
   };
 
   const handlePointerDown = (event: PointerEvent) => {
@@ -253,17 +253,73 @@ function installMobileTocInteractions(): () => void {
 
     event.preventDefault();
 
-    if (!scrollToHashTarget(rawHash)) return;
+    const isMobileTocLink = Boolean(link.closest('.theme-doc-toc-mobile'));
 
     if (window.location.hash !== rawHash) {
       window.history.pushState(null, '', rawHash);
     }
 
-    if (link.closest('.theme-doc-toc-mobile')) {
-      setMobileTocActiveLink(link);
+    if (isMobileTocLink) {
+      // Close the TOC before calculating the final destination. If we start
+      // the smooth scroll while the expanded TOC is still changing height,
+      // the layout shift can interrupt the scroll and leave the target partly
+      // hidden underneath the fixed TOC.
+      forcedActiveId = targetId;
+      window.clearTimeout(forcedActiveTimer);
       window.clearTimeout(collapseTimer);
-      collapseTimer = window.setTimeout(collapseMobileToc, 120);
+      window.clearTimeout(scrollIntentTimer);
+      setMobileTocActiveLink(link);
+
+      // Collapse first. The native Docusaurus TOC animates its expanded panel,
+      // so calculating the destination while it is open produces a target that
+      // can end up underneath the fixed TOC. Wait until the collapse has settled.
+      const wasExpanded = collapseMobileToc();
+      const wait = wasExpanded ? 360 : 0;
+
+      collapseTimer = window.setTimeout(() => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (!scrollToHashTarget(rawHash)) {
+              forcedActiveId = null;
+              return;
+            }
+
+            setMobileTocActiveLink(link);
+
+            // Keep the clicked item active through the browser's smooth-scroll
+            // animation. Release control afterward so normal scroll tracking
+            // can resume.
+            forcedActiveTimer = window.setTimeout(() => {
+              forcedActiveId = null;
+              forcedActiveTimer = 0;
+              sync();
+            }, 900);
+
+            window.setTimeout(sync, 120);
+            window.setTimeout(sync, 400);
+          });
+        });
+      }, wait);
+      return;
     }
+
+    if (!scrollToHashTarget(rawHash)) return;
+
+    forcedActiveId = null;
+    window.clearTimeout(forcedActiveTimer);
+    forcedActiveTimer = 0;
+
+    window.setTimeout(sync, 120);
+    window.setTimeout(sync, 350);
+  };
+
+  const handleUserScrollIntent = () => {
+    if (!forcedActiveId) return;
+
+    window.clearTimeout(scrollIntentTimer);
+    scrollIntentTimer = window.setTimeout(() => {
+      releaseForcedActive();
+    }, 80);
   };
 
   const handleHashChange = () => {
@@ -271,6 +327,23 @@ function installMobileTocInteractions(): () => void {
       scrollToHashTarget(window.location.hash);
     }
     refresh();
+  };
+
+  // Docusaurus changes the mobile TOC between collapsed/expanded states
+  // without necessarily replacing the TOC DOM. Recalculate the active
+  // heading after the toggle so the visible section is highlighted
+  // immediately when the menu opens.
+  const handleTocToggle = (event: MouseEvent) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+
+    const button = target.closest<HTMLButtonElement>('.theme-doc-toc-mobile button');
+    if (!button) return;
+
+    window.setTimeout(sync, 0);
+    window.setTimeout(sync, 50);
+    window.setTimeout(sync, 150);
+    window.setTimeout(sync, 300);
   };
 
   // Observe DOM replacement, but not class attributes: Docusaurus itself
@@ -281,23 +354,34 @@ function installMobileTocInteractions(): () => void {
   document.addEventListener('pointerdown', handlePointerDown, true);
   document.addEventListener('keydown', handleKeyDown, true);
   document.addEventListener('click', handleSmoothAnchorClick, true);
+  document.addEventListener('click', handleTocToggle, true);
   window.addEventListener('scroll', sync, {passive: true});
+  window.addEventListener('wheel', handleUserScrollIntent, {passive: true});
+  window.addEventListener('touchstart', handleUserScrollIntent, {passive: true});
   window.addEventListener('resize', sync, {passive: true});
   window.addEventListener('hashchange', handleHashChange);
 
   sync();
+  window.setTimeout(sync, 100);
+  window.setTimeout(sync, 300);
 
   return () => {
     document.removeEventListener('pointerdown', handlePointerDown, true);
     document.removeEventListener('keydown', handleKeyDown, true);
     document.removeEventListener('click', handleSmoothAnchorClick, true);
+    document.removeEventListener('click', handleTocToggle, true);
     window.removeEventListener('scroll', sync);
+    window.removeEventListener('wheel', handleUserScrollIntent);
+    window.removeEventListener('touchstart', handleUserScrollIntent);
     window.removeEventListener('resize', sync);
     window.removeEventListener('hashchange', handleHashChange);
     observer.disconnect();
     window.cancelAnimationFrame(scrollFrame);
     window.clearTimeout(refreshTimer);
     window.clearTimeout(collapseTimer);
+    window.clearTimeout(forcedActiveTimer);
+    window.clearTimeout(scrollIntentTimer);
+    forcedActiveId = null;
   };
 }
 
@@ -339,8 +423,16 @@ function ThemeModeEnforcer(): null {
       root.style.colorScheme = 'dark';
     };
 
+    const updatePageScrollState = () => {
+      const isScrolled = getDocumentScrollTop() > 24;
+      root.toggleAttribute('data-ctt-page-scrolled', isScrolled);
+    };
+
     enforceThemeMode();
     stabilizeNavbarLogo();
+    updatePageScrollState();
+
+    window.addEventListener('scroll', updatePageScrollState, {passive: true});
 
     const observer = new MutationObserver(enforceThemeMode);
     observer.observe(root, {
@@ -360,6 +452,8 @@ function ThemeModeEnforcer(): null {
       observer.disconnect();
       logoObserver.disconnect();
       tocCleanup();
+      window.removeEventListener('scroll', updatePageScrollState);
+      root.removeAttribute('data-ctt-page-scrolled');
     };
   }, []);
 

@@ -769,3 +769,83 @@ html[data-tech-theme='default'][data-theme='light'] .footer {
   border-top: 1px solid #d9dce1 !important;
 }
 
+
+
+/* ============================================================
+   DESKTOP SEARCH — CLEAR BUTTON POSITION
+   Keep the search clear/reset control inside the input and
+   vertically centered. Mobile search is intentionally untouched.
+   ============================================================ */
+
+@media screen and (min-width: 997px) {
+  html[data-tech-theme] .searchBar,
+  html[data-tech-theme] .navbar__search {
+    position: relative;
+  }
+
+  /*
+   * The local-search clear control can use different class names
+   * depending on the search plugin/version. These selectors cover
+   * the clear/reset control without affecting the search icon.
+   */
+  html[data-tech-theme] .searchBar [class*='clearButton'],
+  html[data-tech-theme] .searchBar [class*='ClearButton'],
+  html[data-tech-theme] .searchBar [class*='clear-button'],
+  html[data-tech-theme] .searchBar [class*='clear'],
+  html[data-tech-theme] .navbar__search [class*='clearButton'],
+  html[data-tech-theme] .navbar__search [class*='ClearButton'],
+  html[data-tech-theme] .navbar__search [class*='clear-button'],
+  html[data-tech-theme] .navbar__search [class*='clear'],
+  html[data-tech-theme] .searchBar button[aria-label*='Clear'],
+  html[data-tech-theme] .searchBar button[aria-label*='clear'],
+  html[data-tech-theme] .searchBar button[title*='Clear'],
+  html[data-tech-theme] .searchBar button[title*='clear'],
+  html[data-tech-theme] .navbar__search button[aria-label*='Clear'],
+  html[data-tech-theme] .navbar__search button[aria-label*='clear'],
+  html[data-tech-theme] .navbar__search button[title*='Clear'],
+  html[data-tech-theme] .navbar__search button[title*='clear'] {
+    position: absolute !important;
+
+    top: 50% !important;
+    right: 8px !important;
+    left: auto !important;
+
+    width: 24px !important;
+    min-width: 24px !important;
+    max-width: 24px !important;
+
+    height: 24px !important;
+    min-height: 24px !important;
+    max-height: 24px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    transform: translateY(-50%) !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    border: 0 !important;
+    background: transparent !important;
+
+    line-height: 1 !important;
+    z-index: 3 !important;
+  }
+
+  /*
+   * Make room for the clear button so the typed text does not
+   * run underneath it.
+   */
+  html[data-tech-theme] .navbar__search-input {
+    padding-right: 36px !important;
+  }
+
+  /*
+   * Keep the search field itself as the positioning reference.
+   */
+  html[data-tech-theme] .navbar__search-input {
+    position: relative;
+  }
+}

@@ -8,17 +8,10 @@
 
 @media screen and (max-width: 996px) {
   /* Full-screen native Docusaurus mobile drawer. */
-  html[data-tech-theme] .navbar-sidebar {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    box-sizing: border-box !important;
-  }
+  
 
   /* Galaxy used to have an 83/86vw drawer. Override only that old size. */
-  html[data-tech-theme='galaxy'] .navbar-sidebar {
-    width: 100vw !important;
-    max-width: 100vw !important;
-  }
+  
 
   /* IMPORTANT: do not touch .navbar-sidebar__items or its transform.
      Docusaurus needs its native two-panel geometry. */
@@ -98,15 +91,7 @@
   }
 
   /* The navbar must span the viewport, not a centered content column. */
-  html[data-tech-theme] .navbar {
-    left: 0 !important;
-    right: auto !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    box-sizing: border-box !important;
-  }
+  
 
   html[data-tech-theme] .navbar__inner {
     width: 100% !important;
@@ -146,35 +131,16 @@
   }
 
   /* Mobile drawer itself is always viewport anchored. */
-  html[data-tech-theme] .navbar-sidebar {
-    left: 0 !important;
-    right: auto !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    box-sizing: border-box !important;
-  }
+  
 
-  html[data-tech-theme] .navbar-sidebar__backdrop {
-    left: 0 !important;
-    right: auto !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    box-sizing: border-box !important;
-  }
+  
 }
 
 /* Very narrow Chromium windows can expose a horizontal scrollbar gutter.
    Keep the UI width tied to the layout viewport in that case as well. */
 @supports (width: 100dvw) {
   @media screen and (max-width: 996px) {
-    html[data-tech-theme] #__docusaurus,
-    html[data-tech-theme] .navbar,
-    html[data-tech-theme] .navbar-sidebar,
-    html[data-tech-theme] .navbar-sidebar__backdrop,
-    html[data-tech-theme] .theme-doc-toc-mobile {
-      width: 100dvw !important;
-      max-width: 100dvw !important;
-    }
+    
   }
 }
 
@@ -204,7 +170,7 @@ html[data-tech-theme] .navbar-sidebar__brand .navbar__logo {
   opacity: 1 !important;
   filter: none !important;
   mix-blend-mode: normal !important;
-  content: url('/img/logo.png') !important;
+  content: url("/img/logo.png") !important;
 }
 
 html[data-tech-theme] .navbar__brand,
@@ -227,18 +193,7 @@ html[data-tech-theme] .navbar-sidebar__brand .navbar__brand {
 
 @media screen and (max-width: 996px) {
   /* Navbar is viewport chrome, never a child-sized content block. */
-  html[data-tech-theme] .navbar {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-  }
+  
 
   html[data-tech-theme] .navbar__inner {
     width: 100% !important;
@@ -348,21 +303,10 @@ html[data-tech-theme] .navbar-sidebar__brand .navbar__brand {
   /* ----------------------------------------------------------------------
      MOBILE DRAWER — ALWAYS THE FULL VIEWPORT
      ---------------------------------------------------------------------- */
-  html[data-tech-theme] .navbar-sidebar {
-    left: 0 !important;
-    right: auto !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 100vw !important;
-    box-sizing: border-box !important;
-  }
+  
 
   /* Also override the old Galaxy-specific 83/86vw rules. */
-  html[data-tech-theme="galaxy"] .navbar-sidebar {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 100vw !important;
-  }
+  
 
   /* ----------------------------------------------------------------------
      OPEN MENU — SEARCH MUST NOT FLOAT ABOVE THE DRAWER
@@ -439,11 +383,7 @@ html[data-tech-theme] .navbar-sidebar__brand .navbar__brand {
 
 @supports (width: 100dvw) {
   @media screen and (max-width: 996px) {
-    html[data-tech-theme] .navbar-sidebar {
-      width: 100dvw !important;
-      max-width: 100dvw !important;
-      min-width: 100dvw !important;
-    }
+    
   }
 }
 
@@ -618,9 +558,9 @@ html[data-tech-theme] .navbar-sidebar__brand .navbar__brand {
 
   html[data-tech-theme] .navbar.navbar-sidebar--show .navbar-sidebar {
     z-index: 1202 !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 100vw !important;
+    
+    
+    
   }
 
   /* Mobile logo remains visually consistent with the desktop asset. */
@@ -636,12 +576,7 @@ html[data-tech-theme] .navbar-sidebar__brand .navbar__brand {
 
 @supports (width: 100dvw) {
   @media screen and (max-width: 996px) {
-    html[data-tech-theme] .theme-doc-toc-mobile,
-    html[data-tech-theme] .navbar.navbar-sidebar--show .navbar-sidebar {
-      width: 100dvw !important;
-      max-width: 100dvw !important;
-      min-width: 100dvw !important;
-    }
+    
   }
 }
 
@@ -846,6 +781,7 @@ html {
     max-width: 100% !important;
     min-width: 0 !important;
     box-sizing: border-box !important;
+    margin-top: 10px;
   }
 
   /* Resource cards follow the centered document column. */
@@ -1028,5 +964,321 @@ html {
   ) > table > tbody > tr > td {
     position: relative;
     z-index: 1;
+  }
+}
+
+/* ========================================================================
+   CTT — MOBILE FIXED TOC / BREADCRUMB VISIBILITY (FINAL)
+   ------------------------------------------------------------------------
+   The mobile TOC is fixed directly under the navbar. Breadcrumbs must
+   therefore be explicitly pushed below that bar in normal document flow.
+   Target the breadcrumb itself rather than relying on a :has() relationship
+   to <main>, because the Docusaurus mobile TOC can live outside that subtree.
+   ======================================================================== */
+@media screen and (max-width: 996px) {
+  html[data-tech-theme] .theme-doc-breadcrumbs {
+    position: relative !important;
+    z-index: 95 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  html[data-tech-theme] .theme-doc-breadcrumbs .breadcrumbs__item,
+  html[data-tech-theme] .theme-doc-breadcrumbs .breadcrumbs__link {
+    position: relative !important;
+    z-index: 96 !important;
+  }
+}
+
+/* ========================================================================
+   CTT — MOBILE TOC ACTIVE HEADING: FINAL VISUAL STATE
+   ------------------------------------------------------------------------
+   The custom Root controller marks exactly one link with
+   data-ctt-toc-active="true". Keep the active state visible even when
+   Docusaurus has its own native active class/aria state at the same time.
+   ======================================================================== */
+@media screen and (max-width: 996px) {
+  html[data-tech-theme] .theme-doc-toc-mobile .table-of-contents a[data-ctt-toc-active="true"] {
+    display: block !important;
+    color: var(--ctt-accent, var(--ifm-color-primary)) !important;
+    background: var(--ctt-surface-2, var(--ifm-color-emphasis-100)) !important;
+    border-left: 3px solid var(--ctt-accent, var(--ifm-color-primary)) !important;
+    border-radius: 0.35rem !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  html[data-tech-theme] .theme-doc-toc-mobile .table-of-contents a[data-ctt-toc-active="true"]:hover,
+  html[data-tech-theme] .theme-doc-toc-mobile .table-of-contents a[data-ctt-toc-active="true"]:focus-visible {
+    color: var(--ctt-accent, var(--ifm-color-primary)) !important;
+    background: var(--ctt-surface-2, var(--ifm-color-emphasis-100)) !important;
+  }
+}
+
+/* ========================================================================
+   CTT — MOBILE TOC ACTIVE ITEM: OPEN/CLOSED SYNC
+   ------------------------------------------------------------------------
+   Keep the custom active marker visually stronger than Docusaurus' native
+   link states. The Root controller refreshes it when the TOC is toggled.
+   ======================================================================== */
+@media screen and (max-width: 996px) {
+  html[data-tech-theme] .theme-doc-toc-mobile .table-of-contents a[data-ctt-toc-active="true"] {
+    position: relative !important;
+    display: block !important;
+    min-height: 44px !important;
+    padding: 0.65rem 1rem !important;
+    color: var(--ctt-accent, var(--ifm-color-primary)) !important;
+    background: var(--ctt-surface-2, var(--ifm-color-emphasis-100)) !important;
+    border-left: 3px solid var(--ctt-accent, var(--ifm-color-primary)) !important;
+    border-radius: 0.35rem !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    box-sizing: border-box !important;
+  }
+
+  html[data-tech-theme] .theme-doc-toc-mobile .table-of-contents a[data-ctt-toc-active="true"]:hover,
+  html[data-tech-theme] .theme-doc-toc-mobile .table-of-contents a[data-ctt-toc-active="true"]:focus-visible {
+    color: var(--ctt-accent, var(--ifm-color-primary)) !important;
+    background: var(--ctt-surface-2, var(--ifm-color-emphasis-100)) !important;
+  }
+}
+
+
+/* ========================================================================
+   CTT — MOBILE/TABLET CONTENT ALIGNMENT + TOC SCROLL TARGET
+   ------------------------------------------------------------------------
+   Keep the document column, headings, prose and resource cards centered.
+   The fixed mobile TOC is UI chrome, not part of the content column.
+   ======================================================================== */
+@media screen and (max-width: 996px) {
+  html[data-tech-theme] main .container,
+  html[data-tech-theme] main .row,
+  html[data-tech-theme] main .col,
+  html[data-tech-theme] .theme-doc-container,
+  html[data-tech-theme] .theme-doc-markdown {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  html[data-tech-theme] .theme-doc-markdown {
+    width: min(42rem, calc(100% - 2rem)) !important;
+    max-width: 42rem !important;
+  }
+
+  html[data-tech-theme] .theme-doc-markdown .markdown,
+  html[data-tech-theme] .theme-doc-markdown .table-wrapper,
+  html[data-tech-theme] .theme-doc-markdown table {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  html[data-tech-theme] .theme-doc-markdown h1,
+  html[data-tech-theme] .theme-doc-markdown h2,
+  html[data-tech-theme] .theme-doc-markdown h3,
+  html[data-tech-theme] .theme-doc-markdown h4,
+  html[data-tech-theme] .theme-doc-markdown h5,
+  html[data-tech-theme] .theme-doc-markdown h6,
+  html[data-tech-theme] .theme-doc-markdown p,
+  html[data-tech-theme] .theme-doc-markdown > ul,
+  html[data-tech-theme] .theme-doc-markdown > ol {
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* All document headings get the same safe landing point below the fixed TOC. */
+  html[data-tech-theme] .theme-doc-markdown h1,
+  html[data-tech-theme] .theme-doc-markdown h2,
+  html[data-tech-theme] .theme-doc-markdown h3,
+  html[data-tech-theme] .theme-doc-markdown h4,
+  html[data-tech-theme] .theme-doc-markdown h5,
+  html[data-tech-theme] .theme-doc-markdown h6 {
+    scroll-margin-top: calc(var(--ifm-navbar-height, 60px) + 64px) !important;
+  }
+}
+
+/* The custom back button is no longer used; keep it out of the mobile drawer. */
+@media screen and (max-width: 996px) {
+  html[data-tech-theme] .ctt-mobile-sidebar-back {
+    display: none !important;
+  }
+}
+
+/* ========================================================================
+   CTT — COMPACT MOBILE DRAWER MENU SPACING
+   ------------------------------------------------------------------------
+   Keep the shared mobile menu structure, but use the compact vertical
+   rhythm from the reference navigation. The previous theme overrides could
+   leave each menu item with excessive vertical padding, making the labels
+   look widely separated.
+   ======================================================================== */
+@media screen and (max-width: 996px) {
+  html[data-tech-theme] .navbar-sidebar .menu__list {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar .menu__list-item {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar .menu__link,
+  html[data-tech-theme] .navbar-sidebar .menu__list-item > a,
+  html[data-tech-theme] .navbar-sidebar .menu__list-item > button {
+    min-height: 40px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0.5rem 0.75rem !important;
+    box-sizing: border-box !important;
+    line-height: 1.25 !important;
+  }
+
+  /* Match the reference mobile menu: nested entries align with the parent
+     menu column instead of gaining another large left indent. */
+  html[data-tech-theme] .navbar-sidebar .menu__list .menu__list {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar .menu__list .menu__list .menu__link,
+  html[data-tech-theme] .navbar-sidebar .menu__list .menu__list-item > a,
+  html[data-tech-theme] .navbar-sidebar .menu__list .menu__list-item > button {
+    min-height: 38px !important;
+    padding-top: 0.45rem !important;
+    padding-bottom: 0.45rem !important;
+  }
+
+  /* Don't let expanded parent rows introduce extra vertical whitespace. */
+  html[data-tech-theme] .navbar-sidebar .menu__list-item--collapsed,
+  html[data-tech-theme] .navbar-sidebar .menu__list-item--expanded {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+
+/* ========================================================================
+   CTT — FINAL MOBILE DRAWER NORMALIZATION
+   ------------------------------------------------------------------------
+   No custom drawer geometry: Docusaurus owns the panel/transform state.
+   This layer only removes the native secondary-menu back row and normalizes
+   the compact visual rhythm shared by all themes.
+   ======================================================================== */
+@media screen and (max-width: 996px) {
+  html[data-tech-theme] .navbar-sidebar__back {
+    display: none !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar .menu__list {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar .menu__list-item {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar .menu__link,
+  html[data-tech-theme] .navbar-sidebar .menu__list-item > a,
+  html[data-tech-theme] .navbar-sidebar .menu__list-item > button {
+    min-height: 40px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0.5rem 0.75rem !important;
+    box-sizing: border-box !important;
+    line-height: 1.25 !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar .menu__list .menu__list {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar .menu__list .menu__list .menu__link,
+  html[data-tech-theme] .navbar-sidebar .menu__list .menu__list-item > a,
+  html[data-tech-theme] .navbar-sidebar .menu__list .menu__list-item > button {
+    min-height: 38px !important;
+    padding-top: 0.45rem !important;
+    padding-bottom: 0.45rem !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar .menu__list-item--collapsed,
+  html[data-tech-theme] .navbar-sidebar .menu__list-item--expanded {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Keep mobile sidebar text crisp by avoiding inherited nav shadows. */
+  html[data-tech-theme] .navbar-sidebar,
+  html[data-tech-theme] .navbar-sidebar a,
+  html[data-tech-theme] .navbar-sidebar button {
+    text-shadow: none !important;
+    -webkit-font-smoothing: auto !important;
+    text-rendering: optimizeLegibility !important;
+  }
+}
+
+
+/* ========================================================================
+   CTT — FINAL MOBILE DRAWER NORMALIZATION
+   ======================================================================== */
+@media screen and (max-width: 996px) {
+  html[data-tech-theme] .navbar-sidebar__back {
+    display: none !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar .menu__list {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar .menu__list-item {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar .menu__link,
+  html[data-tech-theme] .navbar-sidebar .menu__list-item > a,
+  html[data-tech-theme] .navbar-sidebar .menu__list-item > button {
+    min-height: 40px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0.5rem 0.75rem !important;
+    box-sizing: border-box !important;
+    line-height: 1.25 !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar .menu__list .menu__list {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar .menu__list .menu__list .menu__link,
+  html[data-tech-theme] .navbar-sidebar .menu__list .menu__list-item > a,
+  html[data-tech-theme] .navbar-sidebar .menu__list .menu__list-item > button {
+    min-height: 38px !important;
+    padding-top: 0.45rem !important;
+    padding-bottom: 0.45rem !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar .menu__list-item--collapsed,
+  html[data-tech-theme] .navbar-sidebar .menu__list-item--expanded {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  html[data-tech-theme] .navbar-sidebar,
+  html[data-tech-theme] .navbar-sidebar a,
+  html[data-tech-theme] .navbar-sidebar button {
+    text-shadow: none !important;
+    -webkit-font-smoothing: auto !important;
+    text-rendering: optimizeLegibility !important;
   }
 }

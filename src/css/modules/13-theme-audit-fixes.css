@@ -1,41 +1,27 @@
 /* ========================================================================
    Theme audit fixes
    ------------------------------------------------------------------------
-   Cross-theme guardrails kept in one final layer so a theme cannot inherit
-   a conflicting mobile width or an unreadable native select popup.
+   Final cross-theme guardrails. Drawer geometry stays native to Docusaurus;
+   this file must not resize/reposition the mobile sidebar.
    ======================================================================== */
 
-/* Native option menus are rendered outside a control's painted background
-   on some browsers. Give every picker a concrete themed surface instead of
-   relying on a transparent option background. */
 html[data-tech-theme] select[aria-label='Choose color theme'] {
   color-scheme: dark !important;
-  background-color: var(
-    --ctt-surface,
-    var(--ifm-background-surface-color)
-  ) !important;
+  background-color: var(--ctt-surface, var(--ifm-background-surface-color)) !important;
   color: var(--ifm-font-color-base) !important;
 }
 
 html[data-tech-theme] select[aria-label='Choose color theme'] option {
-  background-color: var(
-    --ctt-surface,
-    var(--ifm-background-surface-color)
-  ) !important;
+  background-color: var(--ctt-surface, var(--ifm-background-surface-color)) !important;
   color: var(--ifm-font-color-base) !important;
 }
 
 html[data-tech-theme] select[aria-label='Choose color theme'] option:checked {
-  background-color: var(
-    --ctt-surface-secondary,
-    var(--ifm-color-emphasis-200)
-  ) !important;
+  background-color: var(--ctt-surface-secondary, var(--ifm-color-emphasis-200)) !important;
   color: var(--ifm-font-color-base) !important;
 }
 
-/* Navigation is UI, never decoration. Establish one predictable stack for
-   the fixed navbar and compact T.O.C., then raise the actual navbar content
-   above any theme canvas or legacy pseudo-element. */
+/* Keep the navbar above decorative theme layers. */
 html[data-tech-theme] .navbar {
   isolation: isolate;
   z-index: 1200 !important;
@@ -52,22 +38,15 @@ html[data-tech-theme] .navbar button {
   z-index: 1;
 }
 
+/* Do not add a shadow to mobile navigation text; it makes the menu look
+   softer than the live CTT rendering. */
 html[data-tech-theme] .navbar__title,
 html[data-tech-theme] .navbar__link,
 html[data-tech-theme] .navbar__item {
   color: var(--ifm-font-color-base) !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.48);
+  text-shadow: none !important;
 }
 
-@media screen and (max-width: 996px) {
-  html[data-tech-theme] .theme-doc-toc-mobile {
-    z-index: 1100 !important;
-  }
-}
-
-/* `100vw` includes the scrollbar gutter. On compact layouts that made the
-   page a scrollbar-width wider than the visible viewport. Use percentage
-   sizing for layout boxes and let fixed UI span with left/right anchors. */
 @media screen and (max-width: 996px) {
   html[data-tech-theme],
   html[data-tech-theme] body,
@@ -82,20 +61,60 @@ html[data-tech-theme] .navbar__item {
     overflow-x: clip !important;
   }
 
-  html[data-tech-theme] .navbar,
-  html[data-tech-theme] .navbar-sidebar,
-  html[data-tech-theme] .navbar-sidebar__backdrop {
-    left: 0 !important;
-    right: 0 !important;
-    width: auto !important;
-    max-width: none !important;
-  }
-
   html[data-tech-theme] .theme-doc-toc-mobile {
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
+    z-index: 1100 !important;
+  }
+
+  /* Never bring back the native secondary-menu back row. */
+  html[data-tech-theme] .navbar-sidebar__back {
+    display: none !important;
+  }
+
+  /* Keep mobile navigation text crisp across themes. */
+  html[data-tech-theme] .navbar-sidebar,
+  html[data-tech-theme] .navbar-sidebar a,
+  html[data-tech-theme] .navbar-sidebar button {
+    text-shadow: none !important;
+    -webkit-font-smoothing: auto !important;
+    text-rendering: optimizeLegibility !important;
+  }
+
+  /* Expanded TOC participates in normal flow, preventing overlap with the
+     first document card. */
+  html[data-tech-theme] .theme-doc-toc-mobile:has([class*="tocCollapsibleExpanded"]) {
+    position: relative !important;
+    top: auto !important;
+    bottom: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    z-index: 30 !important;
+  }
+
+  html[data-tech-theme] .theme-doc-toc-mobile:has([class*="tocCollapsibleExpanded"]) > div {
+    height: auto !important;
+    max-height: none !important;
+    overflow: hidden !important;
+  }
+
+  html[data-tech-theme] .theme-doc-toc-mobile:has([class*="tocCollapsibleExpanded"]) > div > div {
+    position: relative !important;
+    display: block !important;
+    height: auto !important;
+    max-height: min(55vh, 28rem) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+}
+
+/* The custom CTT header-back button is intentionally unused. */
+@media screen and (max-width: 996px) {
+  html[data-tech-theme] .ctt-mobile-sidebar-back {
+    display: none !important;
   }
 }

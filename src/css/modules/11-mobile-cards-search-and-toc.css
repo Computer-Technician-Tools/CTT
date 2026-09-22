@@ -686,3 +686,181 @@ html[data-theme='dark'][data-tech-theme] .alert--danger .alert__icon svg {
   }
 }
 
+/* ============================================================
+   CTT — MOBILE SEARCH CLEAR BUTTON
+   ------------------------------------------------------------
+   @easyops-cn/docusaurus-search-local renders the SearchBar
+   container as the SAME element that has `.navbar__search`.
+   The clear button is a direct child of that element.
+
+   Keep the mobile search container and its clear button aligned
+   with the actual input. Do not target a nested searchBarContainer:
+   there isn't one.
+   ============================================================ */
+
+@media screen and (max-width: 996px) {
+  html[data-tech-theme] .navbar__search {
+    position: absolute !important;
+    top: 50% !important;
+    right: 0.75rem !important;
+    left: auto !important;
+
+    width: 12rem !important;
+    max-width: 12rem !important;
+    height: 2.5rem !important;
+    min-height: 2.5rem !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: translateY(-50%) !important;
+    box-sizing: border-box !important;
+    flex: none !important;
+  }
+
+  html[data-tech-theme] .navbar__search-input {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    padding-right: 36px !important;
+  }
+
+  /* CSS Modules hash this class, so match its stable class-name part. */
+  html[data-tech-theme] .navbar__search > [class*="searchClearButton"] {
+    position: absolute !important;
+    top: 50% !important;
+    right: 0.8rem !important;
+    left: auto !important;
+
+    width: 24px !important;
+    min-width: 24px !important;
+    max-width: 24px !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    max-height: 24px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: translateY(-50%) !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+
+    color: var(--ifm-color-content) !important;
+    line-height: 1 !important;
+    z-index: 10 !important;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  /* Keep the phone search field the same size while hovering/focusing.
+     The search plugin can otherwise expand its input when `.focused`
+     or `:hover` is active. */
+  html[data-tech-theme] .navbar__search,
+  html[data-tech-theme] .navbar__search:hover,
+  html[data-tech-theme] .navbar__search.focused {
+    width: min(11rem, calc(100vw - 150px)) !important;
+    max-width: min(11rem, calc(100vw - 150px)) !important;
+    min-width: 0 !important;
+  }
+
+  html[data-tech-theme] .navbar__search-input,
+  html[data-tech-theme] .navbar__search-input:hover,
+  html[data-tech-theme] .navbar__search-input:focus {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    transition: none !important;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  html[data-tech-theme] .navbar__search {
+    width: min(10rem, calc(100vw - 140px)) !important;
+    max-width: min(10rem, calc(100vw - 140px)) !important;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  /*
+   * Phone-width override: the search-local plugin hides its clear
+   * button at this breakpoint. Re-assert the button as a direct
+   * child of the search container so it stays inside the field.
+   */
+  html[data-tech-theme] .navbar__search > button[class*="searchClearButton"] {
+    position: absolute !important;
+    top: 50% !important;
+    right: 0.8rem !important;
+    left: auto !important;
+    width: 24px !important;
+    min-width: 24px !important;
+    max-width: 24px !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    max-height: 24px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: var(--ifm-color-content) !important;
+    line-height: 1 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: 20 !important;
+  }
+
+  html[data-tech-theme] .navbar__search-input {
+    padding-right: 40px !important;
+  }
+}
+
+@media screen and (max-width: 996px) {
+  html[dir="rtl"] .navbar__search > [class*="searchClearButton"] {
+    right: auto !important;
+    left: 0.8rem !important;
+  }
+
+  html[dir="rtl"] .navbar__search-input {
+    padding-right: 0 !important;
+    padding-left: 36px !important;
+  }
+}
+
+
+/* ============================================================
+   CTT — TOC click state + back-to-top top-of-page cleanup
+   ============================================================ */
+
+/* The JS marks the clicked TOC item immediately. Keep that visual state
+   visible even while Docusaurus is still recalculating its native active
+   heading during smooth scrolling. */
+@media screen and (max-width: 996px) {
+  .theme-doc-toc-mobile a[data-ctt-toc-active],
+  .theme-doc-toc-mobile a[aria-current='location'] {
+    color: var(--ctt-accent, var(--ifm-color-primary)) !important;
+    background: var(--ctt-surface-2, var(--ifm-color-emphasis-100)) !important;
+    border-left-color: var(--ctt-accent, var(--ifm-color-primary)) !important;
+    font-weight: 600 !important;
+  }
+}
+
+/* Docusaurus normally hides this control at the top of the page. CTT's
+   theme rules intentionally keep its layout/styling, so explicitly hide
+   it until the document has actually been scrolled. */
+html[data-tech-theme]:not([data-ctt-page-scrolled]) .theme-back-to-top-button {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: scale(0.82) !important;
+}

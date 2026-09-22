@@ -1,5 +1,11 @@
 # Change Log
 
+## 22/09/2026
+
+## Fixed
+
+The css fixed for mobile.
+
 ## 21/09/2026
 
 ## Added

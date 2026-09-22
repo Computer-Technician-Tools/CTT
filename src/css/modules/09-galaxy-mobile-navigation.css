@@ -1,82 +1,21 @@
 /* ========================================================================
-   GALAXY — MOBILE DRAWER + PAGE FLOW FINAL FIX v7
-   ========================================================================
-   IMPORTANT:
-   Docusaurus renders .navbar-sidebar inside .navbar.  The Galaxy navbar
-   uses backdrop-filter on desktop.  A backdrop-filter creates a containing
-   block for position:fixed descendants, which can trap the mobile drawer
-   inside the navbar instead of letting it cover the viewport.
-
-   On mobile we therefore disable the navbar glass filter and leave the
-   drawer geometry/state to Docusaurus.  The page itself gets an explicit
-   vertical flex layout so the footer remains at the bottom of short pages.
+   GALAXY — MOBILE NAVIGATION VISUAL LAYER
+   ------------------------------------------------------------------------
+   Docusaurus owns mobile drawer geometry, panel movement, secondary-menu
+   state and scrolling. Galaxy only changes the appearance.
    ======================================================================== */
 
 @media screen and (max-width: 996px) {
-
-  /* ----------------------------------------------------------------------
-     1. MOBILE PAGE SHELL
-     ---------------------------------------------------------------------- */
-
   html[data-tech-theme="galaxy"],
   html[data-tech-theme="galaxy"] body {
-    width: 100% !important;
     min-width: 0 !important;
-    min-height: 100% !important;
     overflow-x: hidden !important;
   }
 
-  html[data-tech-theme="galaxy"] #__docusaurus {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    position: relative !important;
-  }
-
-  html[data-tech-theme="galaxy"] .main-wrapper {
-    display: block !important;
-    flex: 1 0 auto !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    position: relative !important;
-  }
-
-  html[data-tech-theme="galaxy"] main {
-    width: 100% !important;
-    min-width: 0 !important;
-  }
-
-  html[data-tech-theme="galaxy"] .footer {
-    flex: 0 0 auto !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    margin-top: 0 !important;
-    position: relative !important;
-    inset: auto !important;
-    transform: none !important;
-  }
-
-  /* ----------------------------------------------------------------------
-     2. CRITICAL: DO NOT LET THE GALAXY GLASS TRAP THE DRAWER
-     ----------------------------------------------------------------------
-
-     backdrop-filter / -webkit-backdrop-filter on .navbar creates a fixed-
-     positioning containing block.  Since .navbar-sidebar lives inside the
-     navbar, the drawer can become constrained to the navbar's rectangle.
-
-     Keep the Galaxy color and border on mobile, but turn the filter off.
-     ---------------------------------------------------------------------- */
-
-  html[data-tech-theme="galaxy"] .navbar {
-    background: rgba(7, 8, 17, 0.98) !important;
+  /* Never let the desktop glass effect create a compositing/containing block
+     for the mobile drawer. */
+  html[data-tech-theme="galaxy"] .navbar,
+  html[data-tech-theme="galaxy"] .navbar__inner {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     filter: none !important;
@@ -84,36 +23,28 @@
     perspective: none !important;
     contain: none !important;
     overflow: visible !important;
-    isolation: auto !important;
   }
 
-  html[data-tech-theme="galaxy"] .navbar__inner {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    filter: none !important;
-    transform: none !important;
-    perspective: none !important;
+  html[data-tech-theme="galaxy"] .navbar {
+    background: #070811 !important;
+    border-bottom: 1px solid rgba(142, 167, 255, 0.16) !important;
   }
 
-  /* ----------------------------------------------------------------------
-     3. NATIVE Docusaurus MOBILE DRAWER
-     ----------------------------------------------------------------------
-
-     Do not recreate the drawer.  Do not add a custom transform.  Do not
-     change its left/right/top/bottom values.  Docusaurus owns those rules.
-     We only provide an opaque Galaxy surface and a high stacking level.
-     ---------------------------------------------------------------------- */
-
+  /* Match the deployed CTT mobile drawer: full viewport, but do not define
+     its transform/animation here. The native Docusaurus state remains in
+     control of opening and closing. */
   html[data-tech-theme="galaxy"] .navbar-sidebar {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
     background: #05060d !important;
     background-color: #05060d !important;
     background-image: none !important;
+    color: #eef1ff !important;
     opacity: 1 !important;
     filter: none !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    transform-style: flat !important;
-    z-index: 2000 !important;
   }
 
   html[data-tech-theme="galaxy"] .navbar-sidebar__brand,
@@ -122,36 +53,20 @@
     background: #05060d !important;
     background-color: #05060d !important;
     background-image: none !important;
-    opacity: 1 !important;
-    filter: none !important;
-  }
-
-  /* Keep the internal drawer area usable on narrow screens. */
-  html[data-tech-theme="galaxy"] .navbar-sidebar__items {
     color: #eef1ff !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
-
-  html[data-tech-theme="galaxy"] .navbar-sidebar__backdrop {
-    background: rgba(0, 0, 0, 0.78) !important;
-    background-image: none !important;
+    filter: none !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    z-index: 1990 !important;
   }
 
-  /* The backdrop must never receive Galaxy star layers. */
-  html[data-tech-theme="galaxy"] .navbar-sidebar__backdrop::before,
-  html[data-tech-theme="galaxy"] .navbar-sidebar__backdrop::after {
-    content: none !important;
+  html[data-tech-theme="galaxy"] .navbar-sidebar__brand {
+    border-bottom: 1px solid rgba(142, 167, 255, 0.14) !important;
+  }
+
+  /* The native secondary menu has this row. CTT intentionally removes it. */
+  html[data-tech-theme="galaxy"] .navbar-sidebar__back {
     display: none !important;
   }
-
-  /* ----------------------------------------------------------------------
-     4. DRAWER TEXT / LINKS
-     ---------------------------------------------------------------------- */
 
   html[data-tech-theme="galaxy"] .navbar-sidebar .menu,
   html[data-tech-theme="galaxy"] .navbar-sidebar .menu__list,
@@ -162,397 +77,48 @@
   }
 
   html[data-tech-theme="galaxy"] .navbar-sidebar .menu__link,
-  html[data-tech-theme="galaxy"] .navbar-sidebar .navbar__link,
-  html[data-tech-theme="galaxy"] .navbar-sidebar a {
+  html[data-tech-theme="galaxy"] .navbar-sidebar .navbar__link {
     color: #eef1ff !important;
+    background: transparent !important;
+    text-shadow: none !important;
+    -webkit-font-smoothing: auto !important;
+    text-rendering: optimizeLegibility !important;
   }
 
-  html[data-tech-theme="galaxy"] .navbar-sidebar .menu__link:hover,
+  /* Only the real active page is filled/highlighted. */
   html[data-tech-theme="galaxy"] .navbar-sidebar .menu__link--active,
-  html[data-tech-theme="galaxy"] .navbar-sidebar .menu__link--active:hover {
+  html[data-tech-theme="galaxy"] .navbar-sidebar .menu__link--active:hover,
+  html[data-tech-theme="galaxy"] .navbar-sidebar .menu__link--active:focus-visible {
     color: #8ea7ff !important;
     background: #101426 !important;
+    box-shadow: inset 3px 0 0 #8ea7ff !important;
   }
 
-  html[data-tech-theme="galaxy"] .navbar-sidebar__brand,
+  /* Expanded category: rail only, no selected-item fill. */
+  html[data-tech-theme="galaxy"] .navbar-sidebar .menu__list-item-collapsible[aria-expanded="true"] {
+    color: #8ea7ff !important;
+    background: transparent !important;
+    box-shadow: inset 3px 0 0 #8ea7ff !important;
+  }
+
+  html[data-tech-theme="galaxy"] .navbar-sidebar .menu__list-item-collapsible:hover,
+  html[data-tech-theme="galaxy"] .navbar-sidebar .menu__list-item-collapsible:focus-visible {
+    color: #8ea7ff !important;
+    background: rgba(142, 167, 255, 0.06) !important;
+    outline: none !important;
+  }
+
+  html[data-tech-theme="galaxy"] .navbar-sidebar__close,
   html[data-tech-theme="galaxy"] .navbar-sidebar__brand a,
-  html[data-tech-theme="galaxy"] .navbar-sidebar__close {
-    color: #eef1ff !important;
-  }
-
-  /* ----------------------------------------------------------------------
-     5. PREVENT THE STAR FIELD FROM COVERING THE DRAWER
-     ---------------------------------------------------------------------- */
-
-  html[data-tech-theme="galaxy"] .navbar-sidebar,
-  html[data-tech-theme="galaxy"] .navbar-sidebar * {
-    isolation: auto;
-  }
-
-  /* ----------------------------------------------------------------------
-     6. MOBILE FOOTER — NORMAL DOCUMENT FLOW
-     ---------------------------------------------------------------------- */
-
-  html[data-tech-theme="galaxy"] .footer,
-  html[data-tech-theme="galaxy"] footer {
-    clear: both !important;
-    float: none !important;
-    top: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    left: auto !important;
-  }
-
-  html[data-tech-theme="galaxy"] .footer__bottom,
-  html[data-tech-theme="galaxy"] .footer__links {
-    position: relative !important;
-    z-index: 1 !important;
-  }
-
-  /* ----------------------------------------------------------------------
-     7. VERY NARROW PHONES
-     ---------------------------------------------------------------------- */
-
-  @media screen and (max-width: 480px) {
-    html[data-tech-theme="galaxy"] .navbar-sidebar {
-      max-width: 100vw !important;
-    }
-
-    html[data-tech-theme="galaxy"] .navbar-sidebar__items {
-      width: 100% !important;
-      max-width: 100% !important;
-    }
-  }
-}
-
-
-/* ========================================================================
-   GALAXY — MOBILE NAVIGATION REBUILD v8
-   ------------------------------------------------------------------------
-   The Galaxy theme must behave exactly like the working Docusaurus mobile
-   drawer.  Only the visual treatment is themed here; the drawer geometry,
-   panel movement and page flow are made explicit so Galaxy cannot inherit
-   any of the glass/stacking rules that were hiding its menu.
-   ======================================================================== */
-
-@media screen and (max-width: 996px) {
-
-  /* ----------------------------------------------------------------------
-     PAGE / FOOTER FLOW
-     ---------------------------------------------------------------------- */
-
-  html[data-tech-theme="galaxy"],
-  html[data-tech-theme="galaxy"] body {
-    width: 100% !important;
-    min-width: 0 !important;
-    min-height: 100% !important;
-    overflow-x: hidden !important;
-  }
-
-  html[data-tech-theme="galaxy"] #__docusaurus {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  html[data-tech-theme="galaxy"] .main-wrapper {
-    flex: 1 0 auto !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  html[data-tech-theme="galaxy"] main {
-    width: 100% !important;
-    min-width: 0 !important;
-  }
-
-  html[data-tech-theme="galaxy"] .footer,
-  html[data-tech-theme="galaxy"] footer {
-    position: relative !important;
-    inset: auto !important;
-    float: none !important;
-    clear: both !important;
-    flex: 0 0 auto !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    margin: 0 !important;
-    transform: none !important;
-  }
-
-  /* ----------------------------------------------------------------------
-     NAVBAR — NO GLASS CONTAINING BLOCK ON MOBILE
-     ---------------------------------------------------------------------- */
-
-  html[data-tech-theme="galaxy"] .navbar {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 1000 !important;
-    overflow: visible !important;
-    isolation: auto !important;
-    contain: none !important;
-    transform: none !important;
-    filter: none !important;
-    perspective: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background: #070811 !important;
-    border-bottom: 1px solid rgba(142, 167, 255, 0.18) !important;
-  }
-
-  html[data-tech-theme="galaxy"] .navbar__inner {
-    position: relative !important;
-    z-index: 1 !important;
-    transform: none !important;
-    filter: none !important;
-    perspective: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-
-  /* ----------------------------------------------------------------------
-     DRAWER — EXPLICIT Docusaurus-COMPATIBLE GEOMETRY
-     ---------------------------------------------------------------------- */
-
-  html[data-tech-theme="galaxy"] .navbar-sidebar {
-    position: fixed !important;
-    top: 0 !important;
-    right: auto !important;
-    bottom: 0 !important;
-    left: 0 !important;
-
-    width: var(--ifm-navbar-sidebar-width, 83vw) !important;
-    max-width: 100vw !important;
-    height: 100vh !important;
-    height: 100dvh !important;
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
-
-    display: flex !important;
-    flex-direction: column !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    background: #05060d !important;
-    background-color: #05060d !important;
-    background-image: none !important;
-
-    border-right: 1px solid rgba(142, 167, 255, 0.16) !important;
-    box-shadow: 10px 0 32px rgba(0, 0, 0, 0.35) !important;
-
-    opacity: 1 !important;
-    visibility: visible !important;
-    filter: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-
-    z-index: 1201 !important;
-
-    overflow: hidden !important;
-    transform: translate3d(-100%, 0, 0) !important;
-    transition: transform 300ms var(--ifm-transition-timing-default, ease) !important;
-    will-change: transform !important;
-  }
-
-  /* Docusaurus adds navbar-sidebar--show to the NAV itself when open. */
-  html[data-tech-theme="galaxy"] .navbar.navbar-sidebar--show .navbar-sidebar {
-    transform: translate3d(0, 0, 0) !important;
-  }
-
-  /* ----------------------------------------------------------------------
-     DRAWER HEADER
-     ---------------------------------------------------------------------- */
-
-  html[data-tech-theme="galaxy"] .navbar-sidebar__brand {
-    position: relative !important;
-    flex: 0 0 var(--ifm-navbar-height, 60px) !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    min-height: var(--ifm-navbar-height, 60px) !important;
-    max-height: var(--ifm-navbar-height, 60px) !important;
-
-    display: flex !important;
-    align-items: center !important;
-
-    margin: 0 !important;
-    padding: 0 var(--ifm-navbar-padding-horizontal, 16px) !important;
-
-    background: #05060d !important;
-    background-color: #05060d !important;
-    background-image: none !important;
-    border-bottom: 1px solid rgba(142, 167, 255, 0.14) !important;
-
-    opacity: 1 !important;
-    filter: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-
   html[data-tech-theme="galaxy"] .navbar-sidebar__brand .navbar__brand {
-    min-width: 0 !important;
-    max-width: calc(100% - 52px) !important;
     color: #eef1ff !important;
   }
-
-  html[data-tech-theme="galaxy"] .navbar-sidebar__close {
-    color: #eef1ff !important;
-    flex: 0 0 auto !important;
-    margin-left: auto !important;
-  }
-
-  /* ----------------------------------------------------------------------
-     DRAWER CONTENT AREA
-     ---------------------------------------------------------------------- */
-
-  html[data-tech-theme="galaxy"] .navbar-sidebar__items {
-    position: relative !important;
-    flex: 1 1 auto !important;
-    width: 200% !important;
-    height: auto !important;
-    min-height: 0 !important;
-
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: stretch !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    overflow: hidden !important;
-    overflow-x: hidden !important;
-    overflow-y: hidden !important;
-
-    background: #05060d !important;
-    background-color: #05060d !important;
-    background-image: none !important;
-
-    transform: translate3d(0, 0, 0) !important;
-    transition: transform 300ms var(--ifm-transition-timing-default, ease) !important;
-    will-change: transform !important;
-  }
-
-  html[data-tech-theme="galaxy"] .navbar-sidebar__items--show-secondary {
-    transform: translate3d(-50%, 0, 0) !important;
-  }
-
-  /* Each Docusaurus panel occupies exactly half of the two-panel track. */
-  html[data-tech-theme="galaxy"] .navbar-sidebar__item {
-    position: relative !important;
-    flex: 0 0 50% !important;
-    width: 50% !important;
-    min-width: 50% !important;
-    max-width: 50% !important;
-    height: 100% !important;
-    min-height: 0 !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-
-    background: #05060d !important;
-    background-color: #05060d !important;
-    background-image: none !important;
-  }
-
-  /* ----------------------------------------------------------------------
-     PRIMARY / SECONDARY MENUS
-     ---------------------------------------------------------------------- */
-
-  html[data-tech-theme="galaxy"] .navbar-sidebar__item.menu {
-    flex-grow: 0 !important;
-    flex-shrink: 0 !important;
-    width: 50% !important;
-    max-width: 50% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    background: #05060d !important;
-  }
-
-  html[data-tech-theme="galaxy"] .navbar-sidebar__item .menu__list,
-  html[data-tech-theme="galaxy"] .navbar-sidebar__item .menu__list-item,
-  html[data-tech-theme="galaxy"] .navbar-sidebar__item .menu__list-item-collapsible {
-    background: transparent !important;
-    background-image: none !important;
-  }
-
-  html[data-tech-theme="galaxy"] .navbar-sidebar__item .menu__list {
-    margin: 0 !important;
-    padding: 0.5rem !important;
-  }
-
-  html[data-tech-theme="galaxy"] .navbar-sidebar__item .menu__link,
-  html[data-tech-theme="galaxy"] .navbar-sidebar__item .navbar__link {
-    color: #eef1ff !important;
-    background: transparent !important;
-    background-image: none !important;
-  }
-
-  html[data-tech-theme="galaxy"] .navbar-sidebar__item .menu__link:hover,
-  html[data-tech-theme="galaxy"] .navbar-sidebar__item .menu__link--active,
-  html[data-tech-theme="galaxy"] .navbar-sidebar__item .menu__link--active:hover {
-    color: #8ea7ff !important;
-    background: rgba(142, 167, 255, 0.10) !important;
-  }
-
-  /* Secondary panel's Back button must remain visible at the top. */
-  html[data-tech-theme="galaxy"] .navbar-sidebar__back {
-    display: block !important;
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0.75rem 1rem !important;
-
-    color: #eef1ff !important;
-    text-align: left !important;
-    background: rgba(142, 167, 255, 0.08) !important;
-    border: 0 !important;
-    border-bottom: 1px solid rgba(142, 167, 255, 0.10) !important;
-  }
-
-  html[data-tech-theme="galaxy"] .navbar-sidebar__back:hover {
-    color: #8ea7ff !important;
-    background: rgba(142, 167, 255, 0.13) !important;
-  }
-
-  /* ----------------------------------------------------------------------
-     BACKDROP
-     ---------------------------------------------------------------------- */
 
   html[data-tech-theme="galaxy"] .navbar-sidebar__backdrop {
-    position: fixed !important;
-    inset: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    height: 100dvh !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
     background: rgba(0, 0, 0, 0.76) !important;
     background-image: none !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    z-index: 1200 !important;
-  }
-
-  html[data-tech-theme="galaxy"] .navbar.navbar-sidebar--show .navbar-sidebar__backdrop {
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
   }
 
   html[data-tech-theme="galaxy"] .navbar-sidebar__backdrop::before,
@@ -561,238 +127,23 @@
     display: none !important;
   }
 
-  /* ----------------------------------------------------------------------
-     GALAXY EFFECTS MUST STAY BEHIND THE DRAWER
-     ---------------------------------------------------------------------- */
-
+  /* Prevent Galaxy decoration from affecting drawer pixels or hit-testing. */
   html[data-tech-theme="galaxy"] .navbar-sidebar,
   html[data-tech-theme="galaxy"] .navbar-sidebar__brand,
   html[data-tech-theme="galaxy"] .navbar-sidebar__items,
-  html[data-tech-theme="galaxy"] .navbar-sidebar__item,
-  html[data-tech-theme="galaxy"] .navbar-sidebar__item.menu {
+  html[data-tech-theme="galaxy"] .navbar-sidebar__item {
     isolation: auto !important;
+    will-change: auto !important;
   }
-
-  /* ----------------------------------------------------------------------
-     BODY LOCK / SCROLLBAR SAFETY
-     ---------------------------------------------------------------------- */
 
   html[data-tech-theme="galaxy"] body:has(.navbar.navbar-sidebar--show) {
     overflow: hidden !important;
   }
-
-  /* ----------------------------------------------------------------------
-     SMALL SCREENS
-     ---------------------------------------------------------------------- */
-
-  @media screen and (max-width: 480px) {
-    html[data-tech-theme="galaxy"] .navbar-sidebar {
-      width: 86vw !important;
-      max-width: 86vw !important;
-    }
-  }
 }
 
-/* ============================================================
-   GALAXY MOBILE DRAWER — PANEL WIDTH / TWO-PANEL FIX
-   ============================================================
-
-   The drawer itself is correctly sized, but the flex item containing
-   the two navigation panels was allowed to shrink back to 100%.
-   That made each 50% panel only half the drawer width, leaving a
-   large empty area on the right and making the secondary panel look
-   broken. Keep the two-panel track at exactly 200% of the drawer.
-*/
-@media screen and (max-width: 996px) {
+@media screen and (max-width: 996px) and (prefers-reduced-motion: reduce) {
+  html[data-tech-theme="galaxy"] .navbar-sidebar,
   html[data-tech-theme="galaxy"] .navbar-sidebar__items {
-    flex: 0 0 200% !important;
-    width: 200% !important;
-    max-width: none !important;
-    min-width: 200% !important;
-    box-sizing: border-box !important;
-  }
-
-  html[data-tech-theme="galaxy"] .navbar-sidebar__item,
-  html[data-tech-theme="galaxy"] .navbar-sidebar__item.menu {
-    flex: 0 0 50% !important;
-    width: 50% !important;
-    min-width: 50% !important;
-    max-width: 50% !important;
-    box-sizing: border-box !important;
-  }
-
-  /* The secondary state moves exactly one drawer-width, not half of it. */
-  html[data-tech-theme="galaxy"] .navbar-sidebar__items--show-secondary {
-    transform: translate3d(-50%, 0, 0) !important;
+    transition: none !important;
   }
 }
-
-
-/* =========================================================================
-   GALAXY v11 — IRREGULAR STAR FIELD
-   =========================================================================
-   The previous star field used repeated radial-gradient tiles. Even when
-   animated, those tiles kept the stars in the same grid-like relationships.
-   This layer intentionally uses individually positioned, non-repeating stars.
-   The stars are therefore scattered across the sky instead of forming a
-   repeating pattern.
-   ========================================================================= */
-
-html[data-tech-theme="galaxy"] body::before {
-  content: "";
-  position: fixed;
-  inset: -8vh -8vw;
-  width: 116vw;
-  height: 116vh;
-  pointer-events: none !important;
-  z-index: -2 !important;
-
-  background:
-    radial-gradient(
-      ellipse at 50% 100%,
-      rgba(92, 77, 220, 0.16),
-      transparent 48%
-    ),
-    radial-gradient(
-      ellipse at 15% 20%,
-      rgba(72, 98, 255, 0.09),
-      transparent 40%
-    ),
-    radial-gradient(
-      ellipse at 85% 65%,
-      rgba(151, 92, 255, 0.07),
-      transparent 40%
-    ),
-    radial-gradient(circle, rgba(255,255,255,0.72) 0 1px, transparent 2.2px),
-    radial-gradient(circle, rgba(180,195,255,0.52) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(220,225,255,0.42) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(255,255,255,0.72) 0 0.75px, transparent 1.7px),
-    radial-gradient(circle, rgba(180,195,255,0.52) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(220,225,255,0.42) 0 1px, transparent 2.2px),
-    radial-gradient(circle, rgba(255,255,255,0.72) 0 0.75px, transparent 1.7px),
-    radial-gradient(circle, rgba(180,195,255,0.52) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(220,225,255,0.42) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(255,255,255,0.72) 0 0.75px, transparent 1.7px),
-    radial-gradient(circle, rgba(180,195,255,0.52) 0 1px, transparent 2.2px),
-    radial-gradient(circle, rgba(220,225,255,0.42) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(255,255,255,0.72) 0 0.75px, transparent 1.7px),
-    radial-gradient(circle, rgba(180,195,255,0.52) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(220,225,255,0.42) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(255,255,255,0.72) 0 1px, transparent 2.2px),
-    radial-gradient(circle, rgba(180,195,255,0.52) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(220,225,255,0.42) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(255,255,255,0.72) 0 0.75px, transparent 1.7px),
-    radial-gradient(circle, rgba(180,195,255,0.52) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(220,225,255,0.42) 0 1px, transparent 2.2px),
-    radial-gradient(circle, rgba(255,255,255,0.72) 0 0.75px, transparent 1.7px),
-    radial-gradient(circle, rgba(180,195,255,0.52) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(220,225,255,0.42) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(255,255,255,0.72) 0 0.75px, transparent 1.7px),
-    radial-gradient(circle, rgba(180,195,255,0.52) 0 1px, transparent 2.2px),
-    radial-gradient(circle, rgba(220,225,255,0.42) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(255,255,255,0.72) 0 0.75px, transparent 1.7px),
-    radial-gradient(circle, rgba(180,195,255,0.52) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(220,225,255,0.42) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(255,255,255,0.72) 0 1px, transparent 2.2px),
-    radial-gradient(circle, rgba(180,195,255,0.52) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(220,225,255,0.42) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(255,255,255,0.72) 0 0.75px, transparent 1.7px),
-    radial-gradient(circle, rgba(180,195,255,0.52) 0 0.6px, transparent 1.5px),
-    radial-gradient(circle, rgba(220,225,255,0.42) 0 1px, transparent 2.2px);
-
-  background-repeat:
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat;
-
-  background-size:
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto;
-
-  background-position:
-    center,
-    center,
-    center,
-    4% 7%,
-    12% 18%,
-    21% 6%,
-    31% 14%,
-    43% 5%,
-    54% 17%,
-    66% 8%,
-    78% 15%,
-    91% 6%,
-    7% 31%,
-    17% 42%,
-    28% 27%,
-    39% 36%,
-    49% 29%,
-    61% 40%,
-    73% 30%,
-    84% 43%,
-    96% 34%,
-    3% 55%,
-    14% 67%,
-    24% 51%,
-    35% 62%,
-    46% 55%,
-    57% 69%,
-    68% 53%,
-    80% 64%,
-    93% 57%,
-    8% 82%,
-    19% 93%,
-    30% 76%,
-    42% 88%,
-    53% 79%,
-    64% 94%,
-    76% 83%,
-    87% 91%,
-    97% 77%;
-
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  animation:
-    ctt-galaxy-random-drift-back 70s ease-in-out infinite,
-    ctt-galaxy-random-twinkle-back 8s ease-in-out infinite;
-  will-change: transform, opacity;
-}
-
