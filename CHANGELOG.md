@@ -6,6 +6,10 @@
 
 The css fixed for mobile.
 
+## Update
+
+Updated the css for mobile use, now the tables changed to cards at the Android section
+
 ## 21/09/2026
 
 ## Added

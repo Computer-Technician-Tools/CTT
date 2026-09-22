@@ -4,43 +4,121 @@
    ============================================================ */
 
 @media screen and (max-width: 700px) {
-  /* Remove the unused right-side document/TOC column space. */
-  html[data-tech-theme] [class*="docItemCol"],
-  html[data-tech-theme] [class*="docItemContainer"],
-  html[data-tech-theme] .theme-doc-markdown {
-    flex: 0 0 100% !important;
+  /*
+   * Every ordinary rectangular Markdown table becomes a stacked card list
+   * on phones. Root.tsx supplies the real column labels as data attributes,
+   * so this works for Android, utilities, diagnostics, commands, etc.
+   */
+  html[data-tech-theme] .theme-doc-markdown .table-wrapper:has(> table[data-ctt-mobile-cards-ready="true"]),
+  html[data-tech-theme] .markdown .table-wrapper:has(> table[data-ctt-mobile-cards-ready="true"]),
+  html[data-tech-theme] .table-wrapper:has(> table[data-ctt-mobile-cards-ready="true"]) {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
+    margin: 1rem 0 1.5rem !important;
+    padding: 0 !important;
+    overflow: visible !important;
     box-sizing: border-box !important;
   }
 
-  html[data-tech-theme] .theme-doc-markdown {
-    padding-right: 0 !important;
-  }
-
-  html[data-tech-theme] .theme-doc-markdown > * {
-    max-width: 100% !important;
-    min-width: 0 !important;
-  }
-
-  /* Cards should use the full available document width. */
-  .markdown table:has(> thead > tr > th:nth-child(4):last-child),
-  .markdown table:has(> thead > tr > th:nth-child(4):last-child) tbody,
-  .markdown table:has(> thead > tr > th:nth-child(4):last-child) tbody tr {
+  html[data-tech-theme] table[data-ctt-mobile-cards-ready="true"] {
+    display: block !important;
     width: 100% !important;
     max-width: 100% !important;
+    min-width: 0 !important;
+    border: 0 !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    background: transparent !important;
     box-sizing: border-box !important;
   }
 
-  /* Colored icons look better at their natural size on cards. */
-  .markdown table:has(> thead > tr > th:nth-child(4):last-child) .badge {
-    border-radius: 0.45rem;
-    background: rgba(255, 255, 255, 0.035);
+  html[data-tech-theme] table[data-ctt-mobile-cards-ready="true"] thead {
+    display: none !important;
   }
 
-  .markdown table:has(> thead > tr > th:nth-child(4):last-child) .icon {
-    filter: drop-shadow(0 1px 4px rgba(255, 255, 255, 0.08));
+  html[data-tech-theme] table[data-ctt-mobile-cards-ready="true"] tbody {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0.85rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  html[data-tech-theme] table[data-ctt-mobile-cards-ready="true"] tbody tr {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 1rem !important;
+    box-sizing: border-box !important;
+    border: 1px solid var(--ctt-border, var(--ifm-color-emphasis-300)) !important;
+    border-radius: 14px !important;
+    background: var(--ctt-surface-1, var(--ifm-card-background-color, var(--ifm-background-surface-color))) !important;
+    color: var(--ctt-text, inherit) !important;
+    box-shadow: var(--ifm-global-shadow-lw) !important;
+  }
+
+  html[data-tech-theme] table[data-ctt-mobile-cards-ready="true"] tbody td {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0.25rem 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-sizing: border-box !important;
+    text-align: left !important;
+    vertical-align: top !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+    line-height: 1.55 !important;
+  }
+
+  /* First column becomes the card title. */
+  html[data-tech-theme] table[data-ctt-mobile-cards-ready="true"] tbody td[data-ctt-mobile-title="true"] {
+    padding-top: 0 !important;
+    padding-bottom: 0.55rem !important;
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+    color: var(--ctt-accent, var(--ifm-color-primary)) !important;
+  }
+
+  /* Remaining columns show their actual Markdown header above the value. */
+  html[data-tech-theme] table[data-ctt-mobile-cards-ready="true"] tbody td[data-ctt-mobile-label]:not([data-ctt-mobile-title="true"])::before {
+    display: block !important;
+    margin: 0.55rem 0 0.2rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    color: var(--ctt-text-muted, var(--ifm-color-emphasis-700)) !important;
+    content: attr(data-ctt-mobile-label) !important;
+  }
+
+  html[data-tech-theme] table[data-ctt-mobile-cards-ready="true"] a {
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+  }
+
+  html[data-tech-theme] table[data-ctt-mobile-cards-ready="true"] img,
+  html[data-tech-theme] table[data-ctt-mobile-cards-ready="true"] svg,
+  html[data-tech-theme] table[data-ctt-mobile-cards-ready="true"] video {
+    max-width: 100% !important;
+  }
+
+  @media screen and (max-width: 380px) {
+    html[data-tech-theme] table[data-ctt-mobile-cards-ready="true"] tbody tr {
+      padding: 0.85rem !important;
+      border-radius: 12px !important;
+    }
   }
 }
 

@@ -385,6 +385,68 @@ function installMobileTocInteractions(): () => void {
   };
 }
 
+
+function prepareMobileTableCards(): void {
+  const tables = document.querySelectorAll<HTMLTableElement>(
+    '.theme-doc-markdown table, .markdown table',
+  );
+
+  tables.forEach((table) => {
+    if (table.dataset.cttMobileCardsReady === 'true') return;
+
+    const headerRow = table.querySelector<HTMLTableRowElement>('thead > tr');
+    if (!headerRow) return;
+
+    const headers = Array.from(headerRow.children).map((cell) =>
+      (cell.textContent ?? '').replace(/\s+/g, ' ').trim(),
+    );
+
+    if (!headers.length || headers.some((label) => !label)) return;
+
+    const bodyRows = Array.from(table.tBodies).flatMap((tbody) =>
+      Array.from(tbody.rows),
+    );
+
+    // Preserve complex tables that rely on spanning cells.
+    const isRectangular = bodyRows.every((row) => {
+      if (row.cells.length !== headers.length) return false;
+      return Array.from(row.cells).every(
+        (cell) => cell.rowSpan === 1 && cell.colSpan === 1,
+      );
+    });
+
+    if (!isRectangular || !bodyRows.length) return;
+
+    bodyRows.forEach((row) => {
+      Array.from(row.cells).forEach((cell, index) => {
+        cell.setAttribute('data-ctt-mobile-label', headers[index]);
+        cell.toggleAttribute('data-ctt-mobile-title', index === 0);
+      });
+    });
+
+    table.dataset.cttMobileCardsReady = 'true';
+  });
+}
+
+function installMobileTableCards(): () => void {
+  let timer = 0;
+
+  const refresh = () => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(prepareMobileTableCards, 50);
+  };
+
+  prepareMobileTableCards();
+
+  const observer = new MutationObserver(refresh);
+  observer.observe(document.body, {childList: true, subtree: true});
+
+  return () => {
+    observer.disconnect();
+    window.clearTimeout(timer);
+  };
+}
+
 function ThemeModeEnforcer(): null {
   useEffect(() => {
     const root = document.documentElement;
@@ -447,6 +509,7 @@ function ThemeModeEnforcer(): null {
     });
 
     const tocCleanup = installMobileTocInteractions();
+    const mobileTableCleanup = installMobileTableCards();
 
     return () => {
       observer.disconnect();
