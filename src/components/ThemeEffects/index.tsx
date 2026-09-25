@@ -88,6 +88,11 @@ const STAR_COUNT = 180;
 const SNOW_COUNT = 85;
 const EMBER_COUNT = 42;
 const LIGHT_COLORS = ['#ef3340', '#22c55e', '#ffd166', '#3b82f6'];
+
+/* Ground-decoration geometry, in pixels from the viewport edge. */
+const HALLOWEEN_PUMPKIN_INSETS = [50, 128];
+const HALLOWEEN_CAT_INSET = 92;
+const HALLOWEEN_CLUSTER_SPAN = 128;
 const SHOOTING_STAR_CHANCE_PER_FRAME = 0.0035;
 const MAX_SHOOTING_STARS = 2;
 
@@ -164,7 +169,9 @@ function createEmbers(width: number, height: number): Ember[] {
 }
 
 function createLights(width: number, time: number): ChristmasLight[] {
-  const count = Math.max(14, Math.floor(width / 92));
+  /* One bulb roughly every 92px at every width, so a phone string reads
+     with the same spacing and bulb size as the desktop one. */
+  const count = Math.max(5, Math.floor(width / 92));
 
   return Array.from({length: count}, (_, index) => ({
     xRatio: (index + 0.5) / count,
@@ -188,23 +195,28 @@ function randomEdgeRatio(): number {
 }
 
 function createHalloweenState(width = 1024): HalloweenState {
-  const compact = width < 640;
-  const pumpkinSlots = compact
-    ? [0.08, 0.92]
-    : [0.04, 0.10, 0.90, 0.96];
-  const catSlots = compact ? [0.07, 0.93] : [0.08, 0.92];
+  /* Each corner cluster is two pumpkins with a cat between them, placed at
+     fixed pixel insets from the viewport edge instead of at a fraction of
+     the width. Ratio slots collapsed the cluster on phones — the cat landed
+     on its own pumpkin and hid it — so phone and desktop now draw the same
+     cluster at the same size. Only a viewport too narrow to hold it scales
+     the whole cluster down together. */
+  const scale = Math.min(1, (width * 0.3) / HALLOWEEN_CLUSTER_SPAN);
+  const edgePair = (inset: number) => [inset * scale, width - inset * scale];
 
   return {
-    pumpkins: pumpkinSlots.map((xRatio, index) => ({
-      xRatio,
-      yRatio: compact ? 0.995 : 0.99 + (index % 2) * 0.005,
-      size: randomBetween(19, compact ? 27 : 32),
+    pumpkins: HALLOWEEN_PUMPKIN_INSETS.flatMap(
+      (inset) => edgePair(inset),
+    ).map((x, index) => ({
+      xRatio: x / width,
+      yRatio: 0.99 + (index % 2) * 0.005,
+      size: randomBetween(19, 32) * scale,
       phase: Math.random() * Math.PI * 2,
     })),
-    cats: catSlots.map((xRatio) => ({
-      xRatio,
+    cats: edgePair(HALLOWEEN_CAT_INSET).map((x) => ({
+      xRatio: x / width,
       yRatio: 0.995,
-      size: randomBetween(24, compact ? 29 : 35),
+      size: randomBetween(24, 35) * scale,
       phase: Math.random() * Math.PI * 2,
     })),
     nextStrikeAt: randomBetween(1800, 5200),
@@ -603,13 +615,6 @@ function drawChristmas(
   if (garlandCtx) {
     garlandCtx.clearRect(0, 0, width, height);
     garlandCtx.save();
-    if (wireBaseY < 50) {
-      /* Compact layouts put the garland inside the navbar. Clip its glow at
-         the navbar's lower edge so the T.O.C. bar below stays untouched. */
-      garlandCtx.beginPath();
-      garlandCtx.rect(0, 0, width, Math.min(height, wireBaseY + 26));
-      garlandCtx.clip();
-    }
     ctx = garlandCtx;
   }
 
@@ -711,12 +716,7 @@ function drawChristmas(
     ctx.globalAlpha = visibility;
 
     /* Warm glow */
-    const compactGarland = wireBaseY < 50;
-    const glowRadius = light.size * (
-      compactGarland
-        ? 2.8 + brightness * 1.2
-        : 5.5 + brightness * 2.5
-    );
+    const glowRadius = light.size * (5.5 + brightness * 2.5);
 
     const glow = ctx.createRadialGradient(
       x,
@@ -993,24 +993,19 @@ export default function ThemeEffects(): React.ReactElement | null {
     let embers: Ember[] = [];
     let halloweenState: HalloweenState = createHalloweenState();
     let lights: ChristmasLight[] = [];
-    /* Where the garland hangs from, in viewport pixels. Desktop lights sit
-       just below the navbar; on mobile they stay inside the navbar band so
-       they never cover the separate "On this page" bar. */
+    /* Where the garland hangs from, in viewport pixels: just under the
+       navbar, identically on desktop, tablet and phone. */
     let wireBaseY = 60;
 
     const measureWireBaseY = () => {
       const navbar = document.querySelector<HTMLElement>('.navbar');
-      const bottom = navbar?.getBoundingClientRect().bottom;
-      if (!bottom || bottom <= 0) {
-        wireBaseY = 60;
-        return;
-      }
+      const rect = navbar?.getBoundingClientRect();
+      const bottom = rect?.bottom;
 
-      /* Docusaurus switches to its compact navbar/T.O.C. layout at 996px,
-         so use that same breakpoint to keep bulbs out of "On this page". */
-      wireBaseY = window.innerWidth <= 996
-        ? Math.max(8, bottom - 26)
-        : bottom + 2;
+      /* Follow the navbar's actual viewport position. Do not assume it
+         starts at viewport Y=0: Docusaurus/custom layouts can offset it,
+         and it hides/shows on scroll. */
+      wireBaseY = !rect || !bottom || bottom <= 0 ? 60 : bottom + 2;
     };
 
     const resize = () => {
@@ -1018,6 +1013,12 @@ export default function ThemeEffects(): React.ReactElement | null {
 
       width = window.innerWidth;
       height = window.innerHeight;
+
+      /* Measure before sizing the garland canvas so its CSS and
+         backing-store dimensions always agree with the current navbar. */
+      if (theme === 'christmas') {
+        measureWireBaseY();
+      }
 
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
@@ -1042,7 +1043,6 @@ export default function ThemeEffects(): React.ReactElement | null {
       if (theme === 'christmas') {
         snow = createSnow(width, height);
         lights = createLights(width, performance.now());
-        measureWireBaseY();
       }
 
       if (theme === 'halloween') {

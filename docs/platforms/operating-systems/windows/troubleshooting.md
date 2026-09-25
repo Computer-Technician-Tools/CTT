@@ -7,6 +7,7 @@ import SourceBadge from '@site/src/components/SourceBadge';
 
 # Troubleshooting
 
-# Hide System Reserved
+## Hide System Reserved
 How to hide System Reserved from showing below.
-![System Reserved Drive](https://learn-attachment.microsoft.com/api/attachments/d7445005-581b-46ed-863d-6b7bc3f2dc46?platform=QnA)
+
+<a href="/img/assets/system-reserved.png"><img src="/img/assets/system-reserved.png" alt="System Reserved Drive" /></a>

@@ -60,6 +60,28 @@ const config: Config = {
   ],
 
   // ============================================================
+  // IDEAL IMAGE PLUGIN
+  // ============================================================
+
+  // Responsive, lazy-loaded documentation images with generated
+  // resized variants and a low-quality placeholder.
+  // PNG and JPG image imports are supported by the plugin.
+  plugins: [
+    [
+      '@docusaurus/plugin-ideal-image',
+      {
+        quality: 85,
+        min: 480,
+        max: 1920,
+        steps: 4,
+
+        // Keep optimized image behavior testable with `npm start`.
+        disableInDev: false,
+      },
+    ],
+  ],
+
+  // ============================================================
   // PRESETS
   // ============================================================
 
@@ -156,8 +178,7 @@ const config: Config = {
   // THEME CONFIGURATION
   // ============================================================
 
-    themeConfig: {
-
+  themeConfig: {
     // Show the page index down to h4 for faster navigation on mobile and desktop.
     tableOfContents: {
       minHeadingLevel: 2,
@@ -167,7 +188,6 @@ const config: Config = {
     // ----------------------------------------------------------
     // COLOR MODE
     // ----------------------------------------------------------
-
 
     colorMode: {
       respectPrefersColorScheme: false,
@@ -179,13 +199,13 @@ const config: Config = {
     // ----------------------------------------------------------
 
     navbar: {
-      logo:{
-          alt: 'CTT Logo',
-          src: '/img/logo.png',
-          target: '_self',
-          href: "https://ctt.mrcyo.com",
-          width: 48,
-          height: 48,
+      logo: {
+        alt: 'CTT Logo',
+        src: '/img/logo.png',
+        target: '_self',
+        href: 'https://ctt.mrcyo.com',
+        width: 48,
+        height: 48,
       },
 
       items: [

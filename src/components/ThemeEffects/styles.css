@@ -141,3 +141,31 @@ html[data-tech-theme='halloween'] .ctt-theme-effects-layer {
     animation: none !important;
   }
 }
+/* ======================================================================
+   CTT CHRISTMAS GARLAND — SHARED STACKING
+
+   The garland is one fixed, full-viewport layer at every breakpoint. It
+   hangs from the navbar's bottom edge (JS measures it), so phones and
+   tablets get the same string of bulbs as desktop instead of a canvas
+   squeezed inside the compact navbar.
+   ====================================================================== */
+html[data-tech-theme='christmas'] .ctt-theme-garland-layer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  z-index: 101;
+}
+
+html[data-tech-theme='christmas'] .ctt-theme-garland {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* The navbar keeps its own stacking (see the mobile navigation module); the
+   bulbs hang past its bottom edge, so no control is ever covered. */

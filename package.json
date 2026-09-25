@@ -17,6 +17,7 @@
   "dependencies": {
     "@docusaurus/core": "3.10.2",
     "@docusaurus/faster": "3.10.2",
+    "@docusaurus/plugin-ideal-image": "^3.10.2",
     "@docusaurus/preset-classic": "3.10.2",
     "@easyops-cn/docusaurus-search-local": "^0.55.3",
     "@fortawesome/fontawesome-svg-core": "^7.3.1",
@@ -31,7 +32,8 @@
     "clsx": "^2.0.0",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "sharp": "^0.35.4"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.10.2",
