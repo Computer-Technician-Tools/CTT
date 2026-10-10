@@ -1,44 +1,77 @@
 .sourceGroup {
-  display: inline-grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 24px;
-  align-items: center;
-  gap: 4px;
+  display: inline-grid !important;
 
-  margin-right: 6px;
-  vertical-align: middle;
+  /* Exactly three source slots per row. */
+  grid-template-columns: repeat(3, 28px) !important;
+  grid-auto-columns: 28px !important;
+  grid-auto-rows: 28px !important;
+  grid-auto-flow: row !important;
 
-  width: max-content;
-  max-width: none;
+  align-items: center !important;
+  justify-items: center !important;
+  align-content: start !important;
+  justify-content: start !important;
 
-  white-space: nowrap;
+  column-gap: 4px !important;
+  row-gap: 4px !important;
+
+  /* 3 × 28px + 2 × 4px = 92px. */
+  width: max-content !important;
+  min-width: 28px !important;
+  max-width: 92px !important;
+  height: auto !important;
+  min-height: 28px !important;
+
+  margin: 0 4px 0 0 !important;
+  padding: 0 !important;
+
+  white-space: normal !important;
+  line-height: 0 !important;
+  vertical-align: middle !important;
+  box-sizing: border-box !important;
 }
 
 .sourceBadge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-flex !important;
+  flex: 0 0 28px !important;
 
-  width: 24px;
-  height: 24px;
+  align-items: center !important;
+  justify-content: center !important;
 
-  min-width: 24px;
-  max-width: 24px;
+  width: 28px !important;
+  min-width: 28px !important;
+  max-width: 28px !important;
+
+  height: 28px !important;
+  min-height: 28px !important;
+  max-height: 28px !important;
+
+  margin: 0 !important;
+  padding: 2px !important;
+  border: 0 !important;
 
   color: inherit;
   text-decoration: none;
-  line-height: 0;
+  line-height: 0 !important;
+  vertical-align: middle !important;
+  box-sizing: border-box !important;
 
-  border-radius: 4px;
+  border-radius: 5px;
+  overflow: hidden !important;
 
   transition:
     opacity 160ms ease,
-    transform 160ms ease;
+    transform 160ms ease,
+    background-color 160ms ease;
 }
 
 .sourceBadge:hover {
-  opacity: 0.8;
+  opacity: 0.86;
   transform: translateY(-1px);
+}
+
+.sourceBadge:active {
+  transform: translateY(0);
 }
 
 .sourceBadge:focus-visible {
@@ -46,19 +79,55 @@
   outline-offset: 2px;
 }
 
-.sourceBadge svg,
-.favicon {
-  display: block;
+/*
+ * The actual icon can be:
+ *   - a FontAwesome <svg>
+ *   - a remote favicon <img>
+ *   - a SimpleIcons <img>
+ *
+ * All are normalized to the same visual box.
+ */
+.sourceBadge > span,
+.sourceBadge > img,
+.sourceBadge > svg,
+.sourceBadge > span > img,
+.sourceBadge > span > svg,
+.sourceBadge .favicon {
+  display: block !important;
+  flex: 0 0 24px !important;
 
-  width: 24px;
-  height: 24px;
+  width: 24px !important;
+  min-width: 24px !important;
+  max-width: 24px !important;
 
-  min-width: 24px;
-  max-width: 24px;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
 
-  margin: 0;
+  margin: 0 !important;
+  padding: 0 !important;
 
-  object-fit: contain;
+  line-height: 0 !important;
+  vertical-align: middle !important;
+
+  object-fit: contain !important;
+  box-sizing: border-box !important;
+}
+
+.sourceBadge > span {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 24px !important;
+  height: 24px !important;
+
+  line-height: 0 !important;
+}
+
+.sourceBadge svg {
+  display: block !important;
+  overflow: visible !important;
 }
 
 .favicon {
@@ -69,3 +138,37 @@
   font-size: 20px;
 }
 
+/*
+ * Docusaurus tables:
+ * keep enough room for three 28px source slots while allowing the table
+ * wrapper to scroll naturally on small screens.
+ */
+:global(.theme-doc-markdown table th:last-child),
+:global(.theme-doc-markdown table td:last-child) {
+  min-width: 100px !important;
+  vertical-align: middle !important;
+}
+
+:global(.theme-doc-markdown table td:last-child .sourceGroup),
+:global(.theme-doc-markdown table th:last-child .sourceGroup) {
+  width: 92px !important;
+  min-width: 92px !important;
+  max-width: 92px !important;
+  white-space: normal !important;
+}
+
+/*
+ * Narrow layouts: do not compress the source grid or let the source column
+ * force the whole document viewport wider than necessary. Docusaurus' table
+ * wrapper remains the horizontal scrolling boundary.
+ */
+@media (max-width: 996px) {
+  .sourceGroup {
+    flex-shrink: 0 !important;
+  }
+
+  :global(.theme-doc-markdown table td:last-child),
+  :global(.theme-doc-markdown table th:last-child) {
+    min-width: 100px !important;
+  }
+}

@@ -140,7 +140,7 @@ const sidebars: SidebarsConfig = {
               },
               items: [
                 'platforms/operating-systems/windows/commands',
-                'platforms/operating-systems/windows/repair',
+                'platforms/operating-systems/windows/guides',
                 'platforms/operating-systems/windows/networking',
                 'platforms/operating-systems/windows/troubleshooting',
               ],

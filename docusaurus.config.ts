@@ -201,7 +201,7 @@ const config: Config = {
     navbar: {
       logo: {
         alt: 'CTT Logo',
-        src: '/img/logo.png',
+        src: '/img/logo.svg',
         target: '_self',
         href: 'https://ctt.mrcyo.com',
         width: 48,
@@ -279,7 +279,7 @@ const config: Config = {
         },
       ],
 
-      copyright: `Copyright © ${new Date().getFullYear()} Computer Technician Tools. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Computer Technician Tools.`,
     },
 
     // ----------------------------------------------------------

@@ -59,6 +59,7 @@ type SourceLink = {
 };
 
 type SourceType =
+  | 'url'
   | 'github'
   | 'gitlab'
   | 'bitbucket'
@@ -184,11 +185,21 @@ function SimpleIcon({
 function SourcePlatformIcon({
   type,
   url,
+  icon,
 }: {
   type: SourceType;
   url: string;
+  icon?: string;
 }) {
   switch (type) {
+    case 'url':
+      return (
+        <WebsiteIcon
+          url={url}
+          icon={icon}
+        />
+      );
+
     // Distribution / software stores use the official
     // favicon from the supplied store URL.
     case 'steam':
@@ -351,52 +362,52 @@ function SourcePlatformIcon({
 function getSourceLinks(
   props: SourceBadgeProps,
 ): SourceLink[] {
-  const sources: Array<{
-    url?: string;
-    type: SourceType;
-  }> = [
-    // Source / repository platforms
-    {url: props.github, type: 'github'},
-    {url: props.gitlab, type: 'gitlab'},
-    {url: props.bitbucket, type: 'bitbucket'},
-    {url: props.codeberg, type: 'codeberg'},
-    {url: props.gitea, type: 'gitea'},
-    {url: props.forgejo, type: 'forgejo'},
-    {url: props.sourceforge, type: 'sourceforge'},
-    {url: props.sourcehut, type: 'sourcehut'},
-    {url: props.launchpad, type: 'launchpad'},
-    {url: props.savannah, type: 'savannah'},
-    {url: props.kde, type: 'kde'},
+  /*
+   * Preserve the exact prop order from the MDX/JSX call.
+   * This lets authors control the visual order simply by changing
+   * the order of the props, without needing a separate `order` prop.
+   */
+  const sourceTypes: Record<string, SourceType> = {
+    url: 'url',
+    github: 'github',
+    gitlab: 'gitlab',
+    bitbucket: 'bitbucket',
+    codeberg: 'codeberg',
+    gitea: 'gitea',
+    forgejo: 'forgejo',
+    sourceforge: 'sourceforge',
+    sourcehut: 'sourcehut',
+    launchpad: 'launchpad',
+    savannah: 'savannah',
+    kde: 'kde',
+    npm: 'npm',
+    pypi: 'pypi',
+    dockerhub: 'dockerhub',
+    huggingface: 'huggingface',
+    codepen: 'codepen',
+    git: 'git',
+    steam: 'steam',
+    epicgames: 'epicgames',
+    gog: 'gog',
+    itch: 'itch',
+    microsoftstore: 'microsoftstore',
+    googleplay: 'googleplay',
+    appstore: 'appstore',
+    flathub: 'flathub',
+    snapcraft: 'snapcraft',
+    fdroid: 'fdroid',
+  };
 
-    // Package / development platforms
-    {url: props.npm, type: 'npm'},
-    {url: props.pypi, type: 'pypi'},
-    {url: props.dockerhub, type: 'dockerhub'},
-    {url: props.huggingface, type: 'huggingface'},
-    {url: props.codepen, type: 'codepen'},
-    {url: props.git, type: 'git'},
-
-    // Distribution / software stores
-    {url: props.steam, type: 'steam'},
-    {url: props.epicgames, type: 'epicgames'},
-    {url: props.gog, type: 'gog'},
-    {url: props.itch, type: 'itch'},
-    {url: props.microsoftstore, type: 'microsoftstore'},
-    {url: props.googleplay, type: 'googleplay'},
-    {url: props.appstore, type: 'appstore'},
-    {url: props.flathub, type: 'flathub'},
-    {url: props.snapcraft, type: 'snapcraft'},
-    {url: props.fdroid, type: 'fdroid'},
-  ];
-
-  return sources
+  return Object.entries(props)
     .filter(
-      (source): source is SourceLink =>
-        Boolean(source.url),
+      ([key, value]) =>
+        key !== 'icon' &&
+        Boolean(value) &&
+        Object.prototype.hasOwnProperty.call(sourceTypes, key),
     )
-    .map((source) => ({
-      url: source.url,
-      type: source.type,
+    .map(([key, value]) => ({
+      url: String(value),
+      type: sourceTypes[key],
     }));
 }
 
@@ -404,6 +415,9 @@ function getSourceTypeLabel(
   type: SourceType,
 ): string {
   switch (type) {
+    case 'url':
+      return 'Official website';
+
     case 'github':
       return 'GitHub';
 
@@ -490,95 +504,63 @@ function getSourceTypeLabel(
   }
 }
 
-export default function SourceBadge({
-  url,
-  github,
-  gitlab,
-  bitbucket,
-  codeberg,
-  gitea,
-  forgejo,
-  sourceforge,
-  sourcehut,
-  launchpad,
-  savannah,
-  kde,
-  npm,
-  pypi,
-  dockerhub,
-  huggingface,
-  codepen,
-  git,
+export default function SourceBadge(props: SourceBadgeProps) {
+  const sources = getSourceLinks(props);
 
-  steam,
-  epicgames,
-  gog,
-  itch,
-  microsoftstore,
-  googleplay,
-  appstore,
-  flathub,
-  snapcraft,
-  fdroid,
+  const sourceGroupStyle = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 28px)',
+    gridAutoRows: '28px',
+    alignItems: 'center',
+    justifyItems: 'center',
+    justifyContent: 'start',
+    alignContent: 'start',
+    columnGap: '0.25rem',
+    rowGap: '0.25rem',
+    width: 'fit-content',
+    maxWidth: '100%',
+    lineHeight: 0,
+    verticalAlign: 'middle',
+  };
 
-  icon,
-}: SourceBadgeProps) {
-  const sources = getSourceLinks({
-    url,
-    github,
-    gitlab,
-    bitbucket,
-    codeberg,
-    gitea,
-    forgejo,
-    sourceforge,
-    sourcehut,
-    launchpad,
-    savannah,
-    kde,
-    npm,
-    pypi,
-    dockerhub,
-    huggingface,
-    codepen,
-    git,
+  const sourceBadgeStyle = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 28,
+    height: 28,
+    minWidth: 28,
+    minHeight: 28,
+    flex: '0 0 28px',
+    margin: 0,
+    padding: 0,
+    lineHeight: 0,
+    verticalAlign: 'middle',
+    boxSizing: 'border-box' as const,
+  };
 
-    steam,
-    epicgames,
-    gog,
-    itch,
-    microsoftstore,
-    googleplay,
-    appstore,
-    flathub,
-    snapcraft,
-    fdroid,
-
-    icon,
-  });
+  const sourceIconBoxStyle = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 24,
+    height: 24,
+    minWidth: 24,
+    minHeight: 24,
+    flex: '0 0 24px',
+    margin: 0,
+    padding: 0,
+    lineHeight: 0,
+    boxSizing: 'border-box' as const,
+  };
 
   return (
-    <span className={styles.sourceGroup}>
-      {/* Official website */}
-      <a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={styles.sourceBadge}
-        title="Official website"
-        aria-label="Open official website"
-      >
-        <WebsiteIcon
-          url={url}
-          icon={icon}
-        />
-      </a>
-
-      {/* Source / development / distribution platforms */}
+    <span
+      className={styles.sourceGroup}
+      style={sourceGroupStyle}
+    >
       {sources.map((source) => {
-        const label = getSourceTypeLabel(
-          source.type,
-        );
+        const label = getSourceTypeLabel(source.type);
 
         return (
           <a
@@ -587,13 +569,17 @@ export default function SourceBadge({
             target="_blank"
             rel="noopener noreferrer"
             className={styles.sourceBadge}
-            title={`View on ${label}`}
-            aria-label={`View on ${label}`}
+            style={sourceBadgeStyle}
+            title={source.type === 'url' ? 'Official website' : `View on ${label}`}
+            aria-label={source.type === 'url' ? 'Open official website' : `View on ${label}`}
           >
-            <SourcePlatformIcon
-              type={source.type}
-              url={source.url}
-            />
+            <span style={sourceIconBoxStyle}>
+              <SourcePlatformIcon
+                type={source.type}
+                url={source.url}
+                icon={source.type === 'url' ? props.icon : undefined}
+              />
+            </span>
           </a>
         );
       })}

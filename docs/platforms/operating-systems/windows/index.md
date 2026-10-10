@@ -6,5 +6,6 @@ import PlatformBadges from '@site/src/components/PlatformBadges';
 
 # Windows Index
 
-1. [Windows Commands](/docs/platforms/operating-systems/windows/commands.md)
-2. [Windows Repair](/docs/platforms/operating-systems/windows/repair.md)
+1. [Commands](./commands.md)
+2. [Troubleshooting](./troubleshooting.md)
+3. [Guides](./guides.md)

@@ -2,7 +2,6 @@
   display: inline-flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.4rem;
   max-width: 100%;
   vertical-align: middle;
 }
@@ -11,35 +10,24 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   width: 1.9rem;
   height: 1.9rem;
-
   padding: 0.15rem;
-
   color: currentColor;
   line-height: 1;
-
   border-radius: 0.35rem;
-
   flex: 0 0 auto;
 }
 
 .icon {
   display: block;
-
   width: 1.5rem;
   height: 1.5rem;
-
   min-width: 1.5rem;
   min-height: 1.5rem;
-
   color: currentColor;
-
   fill: currentColor;
-
   flex: 0 0 auto;
-
   object-fit: contain;
 }
 

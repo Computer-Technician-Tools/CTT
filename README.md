@@ -80,7 +80,7 @@ Visit CTT:
 
 ## 🖼️ Preview
 
-<p align="center">
+ <p align="center">
   <img src="static/img/ctt-homepage.png" alt="CTT homepage preview">
 </p>
 
@@ -88,7 +88,7 @@ Visit CTT:
 
 ## 👥 The Story
 
-CTT was **created by [MRCYO](https://github.com/MRCYODev)** in **[2024](https://github.com/MRCYODev/Computer-Technician-Tools)**.
+**CTT** was created by **[MRCYO](https://github.com/MRCYODev)** in **[2024](https://github.com/MRCYODev/Computer-Technician-Tools)**.
 
 The project is maintained by:
 

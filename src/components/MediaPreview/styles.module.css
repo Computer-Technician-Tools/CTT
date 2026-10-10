@@ -1,0 +1,330 @@
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(var(--media-columns, 3), minmax(0, 1fr));
+  gap: clamp(0.5rem, 1.5vw, 0.9rem);
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  aspect-ratio: 16 / 10;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 0.75rem;
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+  cursor: zoom-in;
+  text-align: left;
+  isolation: isolate;
+}
+
+.tile:focus-visible,
+.control:focus-visible {
+  outline: 3px solid var(--ifm-color-primary);
+  outline-offset: 3px;
+}
+
+.thumbnail {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.tile:hover .thumbnail { filter: brightness(0.88); }
+
+.caption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 1.4rem 0.65rem 0.55rem;
+  overflow: hidden;
+  background: linear-gradient(transparent, rgb(0 0 0 / 78%));
+  color: #fff;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.playIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  padding-left: 0.15rem;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgb(255 255 255 / 65%);
+  border-radius: 50%;
+  background: rgb(0 0 0 / 65%);
+  color: white;
+  pointer-events: none;
+}
+
+.backdrop {
+  position: fixed;
+  z-index: 10000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.5rem, 2vw, 1.5rem);
+  background: rgb(0 0 0 / 88%);
+  overscroll-behavior: contain;
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  /* Fit the dialog to the media instead of stretching across the viewport. */
+  width: fit-content;
+  min-width: min(280px, 100%);
+  max-width: min(96vw, 1440px);
+  max-height: 94vh;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 0.9rem;
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+  box-shadow: 0 1.5rem 5rem rgb(0 0 0 / 35%);
+}
+
+.toolbar,
+.navigation {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.8rem;
+}
+
+.toolbar { border-bottom: 1px solid var(--ifm-color-emphasis-200); }
+.navigation {
+  justify-content: space-between;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.dialogTitle {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.counter { color: var(--ifm-color-emphasis-700); font-size: 0.85rem; white-space: nowrap; }
+
+.control {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 0.55rem;
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+  font: inherit;
+}
+
+.toolbar .control { min-width: 2.5rem; padding: 0.25rem 0.65rem; font-size: 1.5rem; line-height: 1; }
+.control:hover { background: var(--ifm-color-emphasis-200); }
+
+.stage {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  flex: 0 1 auto;
+  place-items: center;
+  overflow: auto;
+  padding: clamp(0.35rem, 1.5vw, 1rem);
+  background: rgb(0 0 0 / 94%);
+}
+
+.fullMedia {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(92vw, 1360px);
+  max-height: min(76vh, 1000px);
+  object-fit: contain;
+}
+
+video.fullMedia {
+  width: min(92vw, 1200px);
+  max-height: min(76vh, 1000px);
+}
+
+@media (max-width: 700px) {
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .backdrop { padding: 0.5rem; }
+  .dialog {
+    width: fit-content;
+    min-width: min(280px, 100%);
+    max-width: 100%;
+    max-height: 94dvh;
+    border-radius: 0.75rem;
+  }
+  .toolbar, .navigation { padding: 0.55rem; }
+  .stage { padding: 0.25rem; }
+  .fullMedia, video.fullMedia {
+    max-width: calc(100vw - 2rem);
+    max-height: 72dvh;
+  }
+  video.fullMedia { width: calc(100vw - 2rem); }
+  .counter { font-size: 0.75rem; }
+}
+
+@media (max-width: 380px) {
+  .gallery { grid-template-columns: minmax(0, 1fr); }
+  .tile { aspect-ratio: 16 / 9; }
+  .dialogTitle { font-size: 0.85rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thumbnail { scroll-behavior: auto; }
+}
+
+
+/* CTT custom video player controls */
+.videoPlayer {
+  width: fit-content;
+  max-width: min(94vw, 1440px);
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 0.55rem;
+  background: #080a0e;
+  color: #f7f8fa;
+}
+.videoPlayer .fullMedia {
+  display: block;
+  width: auto;
+  max-width: min(94vw, 1440px);
+  max-height: min(72vh, 900px);
+  margin: 0 auto;
+  background: #000;
+}
+.playerControls {
+  display: flex;
+  min-height: 3.2rem;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.7rem;
+  border-top: 1px solid rgb(255 255 255 / 10%);
+  background: linear-gradient(180deg, #171b23, #101319);
+}
+.playerButton {
+  display: inline-grid;
+  flex: 0 0 auto;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 13%);
+  border-radius: 0.55rem;
+  background: rgb(255 255 255 / 6%);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+.playerButton:hover, .downloadButton:hover { background: rgb(255 255 255 / 14%); }
+.playerButton:focus-visible, .timeline:focus-visible, .volumeSlider:focus-visible, .speedSelect:focus-visible, .downloadButton:focus-visible { outline: 2px solid var(--ifm-color-primary); outline-offset: 2px; }
+.timeLabel { flex: 0 0 auto; color: #d5d9e0; font-size: 0.76rem; font-variant-numeric: tabular-nums; }
+.timeline, .volumeSlider { min-width: 0; accent-color: var(--ifm-color-primary); cursor: pointer; }
+.timeline { flex: 1 1 auto; }
+.volumeSlider { flex: 0 1 5rem; width: 5rem; }
+.speedSelect { flex: 0 0 auto; max-width: 4.2rem; padding: 0.4rem 0.2rem; border: 1px solid rgb(255 255 255 / 16%); border-radius: 0.45rem; background: #1b2029; color: inherit; font-size: 0.78rem; }
+.downloadButton { display: inline-flex; flex: 0 0 auto; min-height: 2.25rem; align-items: center; justify-content: center; gap: 0.35rem; padding: 0.4rem 0.65rem; border: 1px solid rgb(255 255 255 / 18%); border-radius: 0.55rem; background: rgb(111 82 255 / 20%); color: #fff; font-size: 0.82rem; font-weight: 600; text-decoration: none; white-space: nowrap; }
+@media (max-width: 700px) {
+  .videoPlayer { width: 100%; max-width: 100%; }
+  .videoPlayer .fullMedia { width: 100%; max-width: 100%; max-height: 62dvh; }
+  .playerControls { flex-wrap: wrap; gap: 0.4rem; padding: 0.5rem; }
+  .timeline { order: 2; flex-basis: calc(100% - 0.5rem); }
+  .timeLabel { font-size: 0.7rem; }
+  .volumeSlider { display: none; }
+  .downloadButton { margin-left: auto; }
+  .downloadButton span { display: none; }
+}
+
+/* CTT advanced video player */
+.videoPlayer { outline: none; }
+.videoPlayer:focus-visible { outline: 2px solid var(--ifm-color-primary); outline-offset: 3px; }
+.playerButton { position: relative; }
+.playerButton small { position: absolute; right: -1px; bottom: 0; font-size: .48rem; line-height: 1; background: #171b23; border-radius: 2px; padding: 1px; }
+.playerButton svg { display: block; }
+.activePlayerButton { background: rgb(111 82 255 / 28%); border-color: rgb(151 130 255 / 75%); }
+.timeline { appearance: none; height: 5px; border-radius: 99px; background: linear-gradient(to right, var(--ifm-color-primary) 0 var(--ctt-progress, 0%), rgb(255 255 255 / 25%) var(--ctt-progress, 0%) 100%); }
+.timeline::-webkit-slider-thumb { appearance: none; width: 12px; height: 12px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 2px var(--ifm-color-primary); }
+.timeline::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 0 0 2px var(--ifm-color-primary); }
+.playerPanel, .chapterList { display: flex; flex-wrap: wrap; align-items: center; gap: .85rem; padding: .8rem 1rem; border-top: 1px solid rgb(255 255 255 / 10%); background: #141821; color: #f7f8fa; font-size: .85rem; }
+.playerPanel label { display: inline-flex; align-items: center; gap: .5rem; }
+.playerPanel input, .playerPanel select { min-height: 2rem; max-width: 7rem; border: 1px solid rgb(255 255 255 / 20%); border-radius: .4rem; background: #202631; color: inherit; padding: .25rem .45rem; }
+.customSpeed input { width: 5rem; }
+.panelAction { min-height: 2rem; border: 1px solid rgb(255 255 255 / 20%); border-radius: .4rem; padding: .25rem .6rem; background: rgb(111 82 255 / 25%); color: inherit; cursor: pointer; }
+.shortcutHint { flex: 1 1 100%; color: #aeb6c4; font-size: .75rem; }
+.chapterList { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); max-height: 12rem; overflow: auto; }
+.chapterList button { display: flex; justify-content: space-between; gap: .75rem; padding: .55rem .65rem; border: 1px solid rgb(255 255 255 / 10%); border-radius: .4rem; background: rgb(255 255 255 / 4%); color: inherit; text-align: left; cursor: pointer; }
+.chapterList button:hover { background: rgb(255 255 255 / 10%); }
+.chapterList time { color: #b8c0ce; font-variant-numeric: tabular-nums; }
+.playerError { padding: .6rem .8rem; color: #ffd2d2; background: #421d25; font-size: .85rem; }
+@media (max-width: 700px) {
+  .playerControls { gap: .35rem; }
+  .playerButton { width: 2.1rem; height: 2.1rem; }
+  .playerPanel { align-items: flex-start; flex-direction: column; gap: .65rem; }
+  .shortcutHint { line-height: 1.5; }
+  .chapterList { grid-template-columns: 1fr; }
+}
+
+/* Fullscreen must resize the entire player, not just enter the browser's
+   fullscreen state while retaining the modal's normal dimensions. */
+.videoPlayer:fullscreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #050609;
+}
+.videoPlayer:fullscreen .fullMedia {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 0;
+  min-height: 0;
+  max-width: 100%;
+  max-height: none;
+  object-fit: contain;
+}
+.videoPlayer:fullscreen .playerControls,
+.videoPlayer:fullscreen .playerPanel,
+.videoPlayer:fullscreen .chapterList {
+  flex: 0 0 auto;
+}
+.videoPlayer:fullscreen .playerControls {
+  padding-bottom: max(0.55rem, env(safe-area-inset-bottom));
+}
+
+/* The image/GIF preview shares the same clear download action as video. */
+.toolbar .downloadButton { margin-left: auto; }
+.toolbar .dialogTitle { flex: 1 1 auto; }
+
+@media (max-width: 700px) {
+  .videoPlayer:fullscreen .playerControls { gap: 0.3rem; }
+  .videoPlayer:fullscreen .downloadButton span { display: none; }
+}

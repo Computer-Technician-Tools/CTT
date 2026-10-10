@@ -1,20 +1,57 @@
-# Change Log
+# Change Logs
+
+## 01/10/2026
+
+### Added
+
+#### Emulators
+
+- Added
+    - [DuckStation](/docs/platforms/gaming/emulators/index.md#playstation)
+    - [PCSX2](/docs/platforms/gaming/emulators/index.md#playstation-2)
+    - [RPCS3](/docs/platforms/gaming/emulators/index.md#playstation-3)
+    - [shadPS4](/docs/platforms/gaming/emulators/index.md#playstation-4)
+    - [KytyPS5](/docs/platforms/gaming/emulators/index.md#playstation-5)
+    - [Vita3K](/docs/platforms/gaming/emulators/index.md#playstation-vita)
+    - [PPSSPP](/docs/platforms/gaming/emulators/index.md#playstation-portable)
+    - [xemu](/docs/platforms/gaming/emulators/index.md#xbox)
+    - [Xenia](/docs/platforms/gaming/emulators/index.md#xbox-360)
+    - [Dolphin](/docs/platforms/gaming/emulators/index.md#gamecube--wii)
+    - [Cemu](/docs/platforms/gaming/emulators/index.md#wii-u)
+    - [OpenWOL](/docs/platforms/operating-systems/windows/guides.md#wol-apps)
+    - [UpSnap](/docs/platforms/operating-systems/windows/guides.md#wol-apps)
+
+- Added image/video/gif viewer for easier preview.
+
+#### Guides
+
+- Added
+    - [Wake on Lan Guide](/docs/platforms/operating-systems/windows/guides.md#wake-on-lan) - big thanks to TKOD!.
+
+#### Troubleshoot
+
+- Added
+    - [System Reserved](/docs/platforms/operating-systems/windows/troubleshooting.md#hide-system-reserved)
+
+### Update
+
+Windows section updated, added [Guides](/docs/platforms/operating-systems/windows/guides.md), and updated [Troubleshooting](/docs/platforms/operating-systems/windows/troubleshooting.md) section
 
 ## 22/09/2026
 
-## Fixed
+### Fixed
 
 The css fixed for mobile.
 
-## Update
+### Update
 
 Updated the css for mobile use, now the tables changed to cards at the Android section
 
 ## 21/09/2026
 
-## Added
+### Added
 
-### Document & PDF Tools
+#### Document & PDF Tools
 - [Calibre](/docs/tools/utilities/index.md#document--pdf-tools)
 - [KOReader](/docs/tools/utilities/index.md#document--pdf-tools)
 - [Librera](/docs/tools/utilities/index.md#document--pdf-tools)
@@ -22,16 +59,16 @@ Updated the css for mobile use, now the tables changed to cards at the Android s
 - [PDF24](/docs/tools/utilities/index.md#document--pdf-tools)
 - [Okular](/docs/tools/utilities/index.md#document--pdf-tools)
 
-### Video Tools
+#### Video Tools
 - [OBS Studio](/docs/tools/utilities/index.md#video-tools)
 
-### Audio Tools
+#### Audio Tools
 - [Audacity](/docs/tools/utilities/index.md#audio-tools)
 
-### 3D Softwares
+#### 3D Softwares
 - [Blender](/docs/tools/utilities/index.md#3d-softwares)
 
-### Email Tools
+#### Email Tools
 - [Thunderbird](/docs/tools/utilities/index.md#email-tools)
 - [K-9 Mail](/docs/tools/utilities/index.md#email-tools)
 
@@ -39,57 +76,57 @@ Updated the css for mobile use, now the tables changed to cards at the Android s
 
 ## 20/09/2026
 
-## Update
+### Update
 
 [Get Started](/docs/getting-started.md) updated
 
-## Added
+### Added
 
-### Keyboard and Mouse Software
+#### Keyboard and Mouse Software
 - [OpenLogi](/docs/tools/utilities/index.md#keyboard-and-mouse-software)
 - [OpenRazer](/docs/tools/utilities/index.md#keyboard-and-mouse-software)
 
-### RGB Control
+#### RGB Control
 - [OpenRGB](/docs/tools/utilities/index.md#rgb-control)
 
-### Effects and Visuals
+#### Effects and Visuals
 - [After Effects](/docs/tools/utilities/index.md#effects-and-visuals)
 - [Alight Motion](/docs/tools/utilities/index.md#effects-and-visuals)
 
-### Photo Editing
+#### Photo Editing
 - [Photopea](/docs/tools/utilities/index.md#photo-editing)
 - [GIMP](/docs/tools/utilities/index.md#photo-editing) - [PhotoGIMP](/docs/tools/utilities/index.md#photo-editing)
 - [Inkscape](/docs/tools/utilities/index.md#photo-editing)
 - [Krita](/docs/tools/utilities/index.md#photo-editing)
 - [Affinity](/docs/tools/utilities/index.md#photo-editing)
 
-### Gaming Tools
+#### Gaming Tools
 - [Framepacer](/docs/tools/utilities/index.md#gaming-tools)
 - [Lossless Scaling](/docs/tools/utilities/index.md#gaming-tools)
 
-### Wallpapers
+#### Wallpapers
 - [Wallpaper Engine](/docs/tools/utilities/index.md#wallpapers)
 - [Lively](/docs/tools/utilities/index.md#wallpapers)
 - [ScreenPlay](/docs/tools/utilities/index.md#wallpapers)
 
-### Screenshot Tools
+#### Screenshot Tools
 - [ShareX](/docs/tools/utilities/index.md#screenshot-tools)
 - [Flameshot](/docs/tools/utilities/index.md#screenshot-tools)
 - [Greenshot](/docs/tools/utilities/index.md#screenshot-tools)
 
-### DNS
+#### DNS
 - [DNS Jumper](/docs/tools/network/index.md)
 
 ---
 
 ## 11/09/2026
 
-## Update
+### Update
 
 - GSM/USSD/MMI Codes moved to [Troubleshooting](/docs/platforms/mobile/android/troubleshooting.md#troubleshooting)
 - Updated Website Image
 
-## Added
+### Added
 
 - New Servers list at [Windows Time/Clock Syncrhronization](/docs/platforms/operating-systems/windows/repair.md#add-more-servers-to-the-list) 
 
@@ -97,7 +134,7 @@ Updated the css for mobile use, now the tables changed to cards at the Android s
 
 ## 10/09/2026
 
-## Added
+### Added
 
 - [Windows Index](/docs/platforms/operating-systems/windows/index.md)
 - New Repair [Windows Time/Clock Syncrhronization](/docs/platforms/operating-systems/windows/repair.md#timeclock-synchronization) Guide
@@ -106,7 +143,7 @@ Updated the css for mobile use, now the tables changed to cards at the Android s
 
 ## 09/09/2026
 
-## Updated
+### Updated
 
 Fixed some CSS issues.
 
@@ -114,11 +151,11 @@ Fixed some CSS issues.
 
 ## 08/09/2026
 
-## Added
+### Added
 
 New Windows Commands.
 
-## Fixed
+### Fixed
 
 Updated some css issues for the website.
 
@@ -126,15 +163,15 @@ Updated some css issues for the website.
 
 ## 04/09/2026
 
-## Added
+### Added
 
-### Media Players
+#### Media Players
 - [VLC](/docs/tools/utilities/index.md#media-players)
 - [MPV](/docs/tools/utilities/index.md#media-players)
 - [MPC-HC](/docs/tools/utilities/index.md#media-players)
 - [Haruna](/docs/tools/utilities/index.md#media-players)
 
-### Video Editing
+#### Video Editing
 - [DaVinci Resolve](/docs/tools/utilities/index.md#video-editing)
 - [Kdenlive](/docs/tools/utilities/index.md#video-editing)
 - [Shotcut](/docs/tools/utilities/index.md#video-editing)
@@ -144,7 +181,7 @@ Updated some css issues for the website.
 
 ## 03/09/2026
 
-## Added
+### Added
 
 - [Rivatuner Statistics Server (RTSS)](/docs/tools/benchmark/index.md#performance-monitoring), Thanks to TKOD!.
 - [PC Part Picker](/docs/tools/guides/index.md#guides), Thanks to TKOD!.
@@ -159,7 +196,7 @@ Big thanks to TKOD for the idea!.
 - [QEMU](/docs/tools/utilities/index.md#virtualization)
 - [WinBoat](/docs/tools/utilities/index.md#virtualization)
 
-## Updated 
+### Updated 
 
 - [Browser Extensions](/docs/platforms/browsers/other/extensions.md) Description, and some other things.
 
