@@ -12,7 +12,7 @@ Before you begin, make sure you have:
 
 ## 2. Fork and clone the repository
 
-Fork the [CTT repository](https://github.com/Computer-Technician-Tools/CTT) on GitHub, then clone **your fork**:
+Fork the [CTT repository](https://github.com/Computer-Technician-Tools/CTT/fork) on GitHub, then clone **your fork**:
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/CTT.git
