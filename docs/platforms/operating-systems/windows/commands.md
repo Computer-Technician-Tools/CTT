@@ -4,7 +4,7 @@ sidebar_position: 3
 
 import PlatformBadges from '@site/src/components/PlatformBadges';
 
-# Windows Commands
+# Commands
 
 :::note
 This page contains commonly useful Windows Command Prompt commands for troubleshooting, system maintenance, hardware information, and networking.

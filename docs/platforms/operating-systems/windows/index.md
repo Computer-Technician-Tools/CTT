@@ -9,3 +9,4 @@ import PlatformBadges from '@site/src/components/PlatformBadges';
 1. [Commands](./commands.md)
 2. [Troubleshooting](./troubleshooting.md)
 3. [Guides](./guides.md)
+4. [Network](./network.md) - Coming soon

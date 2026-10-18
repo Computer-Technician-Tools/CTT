@@ -141,7 +141,7 @@ const sidebars: SidebarsConfig = {
               items: [
                 'platforms/operating-systems/windows/commands',
                 'platforms/operating-systems/windows/guides',
-                'platforms/operating-systems/windows/networking',
+                'platforms/operating-systems/windows/network',
                 'platforms/operating-systems/windows/troubleshooting',
               ],
             },
@@ -163,7 +163,7 @@ const sidebars: SidebarsConfig = {
             },
             {
               type: 'category',
-              label: 'macOS',
+              label: 'MacOS',
               collapsible: true,
               collapsed: true,
               link: {
@@ -172,6 +172,7 @@ const sidebars: SidebarsConfig = {
               },
               items: [],
             },
+            /* Paused
             {
               type: 'category',
               label: 'ChromeOS',
@@ -183,6 +184,8 @@ const sidebars: SidebarsConfig = {
               },
               items: [],
             },
+            */
+            /* Paused for now at least
             {
               type: 'category',
               label: 'BSD',
@@ -210,6 +213,8 @@ const sidebars: SidebarsConfig = {
                 },
               ],
             },
+            */
+           /* Paused
             {
               type: 'category',
               label: 'Other',
@@ -221,9 +226,10 @@ const sidebars: SidebarsConfig = {
               },
               items: [],
             },
+            */
           ],
         },
-
+            
         {
           type: 'category',
           label: 'Mobile',
@@ -248,6 +254,7 @@ const sidebars: SidebarsConfig = {
                 'platforms/mobile/android/diagnostics',
                 'platforms/mobile/android/repair',
                 'platforms/mobile/android/troubleshooting',
+                'platforms/mobile/android/apps',
               ],
             },
             {

@@ -4,6 +4,8 @@ title: Operating Systems
 
 # Operating Systems
 
-Operating system reference material, commands, repair information, networking, troubleshooting, and system administration.
+The index for Operating Systems directories.
 
-This section is still being expanded. More documentation will be added over time.
+- [Windows](./windows/index.md)
+- [Linux](./linux/index.md)
+- [MacOS](./macos/index.md) - We need maintainers

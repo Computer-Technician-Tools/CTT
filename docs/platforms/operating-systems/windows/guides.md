@@ -40,11 +40,11 @@ Is through the **Control Panel**:
 `Control Panel` > `Network and Sharing Center` > on your left panel, `Change adapter settings`.
 :::
 
-Right click on your network adapter:
+Right click on your **Network Adapter**:
 
 <a href="/img/assets/windows/network/network-adapter.png"><img src="/img/assets/windows/network/network-adapter.png" alt="Network Adapter" /></a>
 
-Right click at your **Network Adapter** then **Properties** > **Configure** > **Yes** > and then on the top, You can see the **Power Managment** tab and Enable **Allow the computer to turn off this device to save power** and **Allow this device to wake the computer** and the last setting **Only allow a magic packet to wake the computer** > Then click on the **Advanced** tab, at the **Property** scroll down until you see those settings:
+and then **Properties** > **Configure** > **Yes** > and then on the top, You can see the **Power Managment** tab and Enable **Allow the computer to turn off this device to save power** and **Allow this device to wake the computer** and the last setting **Only allow a magic packet to wake the computer** > Then click on the **Advanced** tab, at the **Property** scroll down until you see those settings:
 
 1. `Wake from power off state`: **Enable**
 2. `Wake on Link (Wake on Link Setting)`: **Enable/Forced**

@@ -71,6 +71,7 @@ MMI codes are combinations of numbers, asterisks, and hash symbols entered in th
 | Nothing Phone | `*#*#682#*#*` | Offline update tool |
 
 > Some service codes can change device settings or erase data. Check the exact device documentation before using a code that changes system state.
+
 ## GSM / USSD / MMI Codes
 
 GSM is a cellular communication standard. USSD is a live text-based session with a carrier; codes normally begin with `*` and end with `#`. Carrier support and dialing formats vary.

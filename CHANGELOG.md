@@ -1,5 +1,17 @@
 # Change Logs
 
+
+## 18/10/2026
+
+## Added
+
+Added new apps Section
+- [Apps](/docs/platforms/mobile/android/apps.md)
+
+## Updated
+
+Updated few sections, and removed some operating systems for now.
+
 ## 01/10/2026
 
 ### Added
