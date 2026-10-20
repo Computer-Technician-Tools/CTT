@@ -1,31 +1,19 @@
+/*
+ * One group per SourceBadge. The group sizes to its content (one 28px slot
+ * for a single link) instead of reserving three fixed columns, so separate
+ * badges in the same cell line up on one even pitch and can be centered.
+ */
 .sourceGroup {
-  display: inline-grid !important;
-
-  /* Exactly three source slots per row. */
-  grid-template-columns: repeat(3, 28px) !important;
-  grid-auto-columns: 28px !important;
-  grid-auto-rows: 28px !important;
-  grid-auto-flow: row !important;
-
+  display: inline-flex !important;
+  flex-wrap: wrap !important;
   align-items: center !important;
-  justify-items: center !important;
-  align-content: start !important;
-  justify-content: start !important;
-
-  column-gap: 4px !important;
-  row-gap: 4px !important;
-
-  /* 3 × 28px + 2 × 4px = 92px. */
-  width: max-content !important;
-  min-width: 28px !important;
-  max-width: 92px !important;
-  height: auto !important;
-  min-height: 28px !important;
-
-  margin: 0 4px 0 0 !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  width: auto !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  margin: 2px 2px !important;
   padding: 0 !important;
-
-  white-space: normal !important;
   line-height: 0 !important;
   vertical-align: middle !important;
   box-sizing: border-box !important;
@@ -139,25 +127,6 @@
 }
 
 /*
- * Docusaurus tables:
- * keep enough room for three 28px source slots while allowing the table
- * wrapper to scroll naturally on small screens.
- */
-:global(.theme-doc-markdown table th:last-child),
-:global(.theme-doc-markdown table td:last-child) {
-  min-width: 100px !important;
-  vertical-align: middle !important;
-}
-
-:global(.theme-doc-markdown table td:last-child .sourceGroup),
-:global(.theme-doc-markdown table th:last-child .sourceGroup) {
-  width: 92px !important;
-  min-width: 92px !important;
-  max-width: 92px !important;
-  white-space: normal !important;
-}
-
-/*
  * Narrow layouts: do not compress the source grid or let the source column
  * force the whole document viewport wider than necessary. Docusaurus' table
  * wrapper remains the horizontal scrolling boundary.
@@ -165,10 +134,5 @@
 @media (max-width: 996px) {
   .sourceGroup {
     flex-shrink: 0 !important;
-  }
-
-  :global(.theme-doc-markdown table td:last-child),
-  :global(.theme-doc-markdown table th:last-child) {
-    min-width: 100px !important;
   }
 }

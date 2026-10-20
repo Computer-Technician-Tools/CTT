@@ -113,7 +113,14 @@ const config: Config = {
         // --------------------------------------------------------
 
         theme: {
-          customCss: './src/css/custom.css',
+          // Load order matters: theme palettes first, then base styles, then
+          // themes and effects, and responsive rules last.
+          customCss: [
+            './src/css/theme-palettes.css',
+            './src/css/base.css',
+            './src/css/themes-effects.css',
+            './src/css/responsive.css',
+          ],
         },
       } satisfies Preset.Options,
     ],

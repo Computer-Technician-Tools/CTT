@@ -1,0 +1,1623 @@
+/* ============================================================
+   CTT — THEMES, EFFECTS AND ANIMATIONS
+   Per-theme overrides (light/dark, Galaxy, seasonal themes), glass UI,
+   glows, the Galaxy star field and every @keyframes animation.
+   Keyframes are global by name, so they can live anywhere in this file.
+   ============================================================ */
+
+@keyframes christmas-lights-glow {
+  0%,
+  100% {
+    opacity: 0.78;
+    filter: brightness(0.92);
+  }
+
+  25% {
+    opacity: 1;
+    filter: brightness(1.15);
+  }
+
+  50% {
+    opacity: 0.82;
+    filter: brightness(0.96);
+  }
+
+  75% {
+    opacity: 1;
+    filter: brightness(1.18);
+  }
+}
+
+@keyframes christmas-snow-far {
+  from {
+    transform: translate3d(0, -120px, 0);
+  }
+
+  to {
+    transform: translate3d(45px, 110vh, 0);
+  }
+}
+
+@keyframes christmas-snow-near {
+  from {
+    transform: translate3d(-35px, -150px, 0);
+  }
+
+  to {
+    transform: translate3d(70px, 110vh, 0);
+  }
+}
+
+html[data-tech-theme="default"][data-theme="light"] .navbar__toggle:hover {
+  background: #f5f6f8 !important;
+}
+
+/* Navbar search — LIGHT */
+html[data-tech-theme="default"][data-theme="light"] .navbar__search-input {
+  background: #f5f6f8 !important;
+  border: 1px solid #d9dce1 !important;
+  color: #1f2937 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 1px 2px rgba(31, 41, 55, 0.08) !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .navbar__search-input:hover {
+  background: #ffffff !important;
+  border-color: #b9c2cc !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .navbar__search-input:focus {
+  background: #ffffff !important;
+  border-color: #1261a0 !important;
+  box-shadow: 0 0 0 2px rgba(18, 97, 160, 0.12) !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .navbar__search-input::placeholder {
+  color: #68707d !important;
+}
+
+/* Mobile navbar — LIGHT */
+html[data-tech-theme="default"][data-theme="light"] .navbar-sidebar {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .navbar-sidebar__brand,
+html[data-tech-theme="default"][data-theme="light"] .navbar-sidebar__items {
+  background: #ffffff !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .navbar-sidebar .menu__link {
+  color: #68707d !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .navbar-sidebar .menu__link:hover,
+html[data-tech-theme="default"][data-theme="light"] .navbar-sidebar .menu__link--active {
+  color: #1261a0 !important;
+  background: #f5f7fa !important;
+}
+
+/* Sidebar — LIGHT */
+html[data-tech-theme="default"][data-theme="light"] .theme-doc-sidebar-container,
+html[data-tech-theme="default"][data-theme="light"] .theme-doc-sidebar-menu,
+html[data-tech-theme="default"][data-theme="light"] .menu {
+  background: #f8f9fb !important;
+  color: #1f2937 !important;
+  border-color: #d9dce1 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .menu__link {
+  color: #4b5563 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .menu__link:hover {
+  color: #1261a0 !important;
+  background: #eef3f8 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .menu__link--active {
+  color: #1261a0 !important;
+  background: rgba(18, 97, 160, 0.10) !important;
+}
+
+/* Content navigation — LIGHT */
+html[data-tech-theme="default"][data-theme="light"] .breadcrumbs__link,
+html[data-tech-theme="default"][data-theme="light"] .table-of-contents__link {
+  color: #68707d !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .breadcrumbs__link:hover,
+html[data-tech-theme="default"][data-theme="light"] .table-of-contents__link:hover,
+html[data-tech-theme="default"][data-theme="light"] .table-of-contents__link--active {
+  color: #1261a0 !important;
+}
+
+/* Typography — LIGHT */
+html[data-tech-theme="default"][data-theme="light"] h1,
+html[data-tech-theme="default"][data-theme="light"] h2,
+html[data-tech-theme="default"][data-theme="light"] h3,
+html[data-tech-theme="default"][data-theme="light"] h4,
+html[data-tech-theme="default"][data-theme="light"] h5,
+html[data-tech-theme="default"][data-theme="light"] h6 {
+  color: #172033 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] p,
+html[data-tech-theme="default"][data-theme="light"] li,
+html[data-tech-theme="default"][data-theme="light"] dt,
+html[data-tech-theme="default"][data-theme="light"] dd {
+  color: #1f2937 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] a {
+  color: #1261a0 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] a:hover {
+  color: #146bb1 !important;
+}
+
+/* Tables — LIGHT */
+html[data-tech-theme="default"][data-theme="light"] table,
+html[data-tech-theme="default"][data-theme="light"] .table-wrapper table {
+  background: #ffffff !important;
+  border-color: #d9dce1 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] table th {
+  background: #f5f6f8 !important;
+  color: #1f2937 !important;
+  border-color: #d9dce1 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] table td {
+  background: transparent !important;
+  color: #1f2937 !important;
+  border-color: #d9dce1 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] table tr:nth-child(even) {
+  background: #fafbfc !important;
+}
+
+/* Cards / pagination — LIGHT */
+html[data-tech-theme="default"][data-theme="light"] .card,
+html[data-tech-theme="default"][data-theme="light"] .pagination-nav__link {
+  background: #ffffff !important;
+  border-color: #d9dce1 !important;
+  color: #1f2937 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .card:hover,
+html[data-tech-theme="default"][data-theme="light"] .pagination-nav__link:hover {
+  border-color: #1261a0 !important;
+  box-shadow: 0 6px 22px rgba(18, 97, 160, 0.08) !important;
+}
+
+/* Code — LIGHT */
+html[data-tech-theme="default"][data-theme="light"] code {
+  background: #f5f6f8 !important;
+  border-color: #d9dce1 !important;
+  color: #1261a0 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] pre,
+html[data-tech-theme="default"][data-theme="light"] .codeBlockContainer {
+  border-color: #d9dce1 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] pre code {
+  background: transparent !important;
+  color: inherit !important;
+}
+
+/* Blockquotes / alerts — LIGHT */
+html[data-tech-theme="default"][data-theme="light"] blockquote {
+  background: rgba(18, 97, 160, 0.055) !important;
+  border-left-color: #1261a0 !important;
+  color: #68707d !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .alert {
+  color: #1f2937 !important;
+}
+
+/* Footer — LIGHT */
+html[data-tech-theme="default"][data-theme="light"] .footer {
+  background: #f5f7fa !important;
+  color: #68707d !important;
+  border-top: 1px solid #d9dce1 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .footer__title {
+  color: #1f2937 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .footer__link-item {
+  color: #4b5563 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .footer__link-item:hover {
+  color: #1261a0 !important;
+}
+
+/* Hero — LIGHT */
+html[data-tech-theme="default"][data-theme="light"] .hero--primary {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(18, 97, 160, 0.075), transparent 55%),
+    #f5f7fa !important;
+  color: #1f2937 !important;
+  border-bottom: 1px solid #d9dce1 !important;
+}
+
+/* ========================================================================
+   DEFAULT THEME — DARK
+   ======================================================================== */
+html[data-tech-theme="default"][data-theme="dark"] {
+  color-scheme: dark !important;
+
+  --ctt-page-bg: #151a22;
+  --ctt-surface-1: #1b2029;
+  --ctt-surface-2: #232a34;
+
+  --ctt-text: #e5e7eb;
+  --ctt-text-muted: #a7adb7;
+
+  --ctt-accent: #5daee9;
+  --ctt-accent-hover: #75baed;
+
+  --ctt-navbar-bg: #10141b;
+  --ctt-navbar-text: #e5e7eb;
+  --ctt-navbar-muted: #a7adb7;
+
+  --ctt-footer-bg: #10141b;
+  --ctt-footer-text: #a7adb7;
+
+  --ctt-control-bg: #232a34;
+  --ctt-control-border: #3a4350;
+  --ctt-control-text: #e5e7eb;
+
+  --ctt-code-bg: #232a34;
+  --ctt-code-text: #75baed;
+
+  --ctt-hero-bg: #151a22;
+  --ctt-hero-text: #e5e7eb;
+  --ctt-hero-muted: #a7adb7;
+
+  --ctt-focus: #5daee9;
+  --ctt-border: #303744;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] body,
+html[data-tech-theme="default"][data-theme="dark"] #__docusaurus,
+html[data-tech-theme="default"][data-theme="dark"] .main-wrapper,
+html[data-tech-theme="default"][data-theme="dark"] main {
+  background: #151a22 !important;
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .navbar {
+  background: #10141b !important;
+  border-bottom-color: #303744 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .navbar__brand,
+html[data-tech-theme="default"][data-theme="dark"] .navbar__title,
+html[data-tech-theme="default"][data-theme="dark"] .navbar__link,
+html[data-tech-theme="default"][data-theme="dark"] .navbar__item,
+html[data-tech-theme="default"][data-theme="dark"] .navbar__toggle {
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .navbar__link:hover {
+  color: #75baed !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .navbar__search-input {
+  background: #232a34 !important;
+  border-color: #3a4350 !important;
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .navbar-sidebar {
+  background: #151a22 !important;
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .theme-doc-sidebar-container,
+html[data-tech-theme="default"][data-theme="dark"] .theme-doc-sidebar-menu,
+html[data-tech-theme="default"][data-theme="dark"] .menu {
+  background: #1b2029 !important;
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .menu__link {
+  color: #a7adb7 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .menu__link:hover {
+  color: #e5e7eb !important;
+  background: #232a34 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .menu__link--active {
+  color: #75baed !important;
+  background: rgba(93, 174, 233, 0.12) !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] h1,
+html[data-tech-theme="default"][data-theme="dark"] h2,
+html[data-tech-theme="default"][data-theme="dark"] h3,
+html[data-tech-theme="default"][data-theme="dark"] h4,
+html[data-tech-theme="default"][data-theme="dark"] h5,
+html[data-tech-theme="default"][data-theme="dark"] h6 {
+  color: #f3f4f6 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] p,
+html[data-tech-theme="default"][data-theme="dark"] li,
+html[data-tech-theme="default"][data-theme="dark"] td,
+html[data-tech-theme="default"][data-theme="dark"] th {
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] a {
+  color: #5daee9 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] a:hover {
+  color: #75baed !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] table,
+html[data-tech-theme="default"][data-theme="dark"] .card,
+html[data-tech-theme="default"][data-theme="dark"] .pagination-nav__link {
+  background: #1b2029 !important;
+  border-color: #303744 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] table th {
+  background: #232a34 !important;
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] table td {
+  border-color: #303744 !important;
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] table tr:nth-child(even) {
+  background: #202630 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] code {
+  background: #232a34 !important;
+  color: #75baed !important;
+  border-color: #303744 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] blockquote {
+  background: rgba(93, 174, 233, 0.08) !important;
+  border-left-color: #5daee9 !important;
+  color: #a7adb7 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .footer {
+  background: #10141b !important;
+  color: #a7adb7 !important;
+  border-top-color: #303744 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .footer__title {
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .footer__link-item {
+  color: #a7adb7 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .footer__link-item:hover {
+  color: #75baed !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .hero--primary {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(93, 174, 233, 0.10), transparent 55%),
+    #151a22 !important;
+  color: #e5e7eb !important;
+  border-bottom-color: #303744 !important;
+}
+
+/* ========================================================================
+   GALAXY — RESTORE STAR FIELD
+   ======================================================================== */
+html[data-tech-theme="galaxy"] {
+  color-scheme: dark !important;
+
+  --ctt-page-bg: #05060d;
+  --ctt-surface-1: #0a0c18;
+  --ctt-surface-2: #101426;
+  --ctt-text: #eef1ff;
+  --ctt-text-muted: #b7bdd8;
+  --ctt-accent: #8ea7ff;
+  --ctt-accent-hover: #bdcaff;
+  --ctt-navbar-bg: rgba(7, 8, 17, 0.90);
+  --ctt-navbar-text: #eef1ff;
+  --ctt-navbar-muted: #969fbd;
+  --ctt-footer-bg: rgba(5, 6, 13, 0.94);
+  --ctt-footer-text: #969fbd;
+  --ctt-control-bg: #0a0c18;
+  --ctt-control-border: #202641;
+  --ctt-control-text: #eef1ff;
+  --ctt-code-bg: #101426;
+  --ctt-code-text: #a8baff;
+  --ctt-hero-bg: #10152a;
+  --ctt-hero-text: #eef1ff;
+  --ctt-hero-muted: #b7bdd8;
+  --ctt-focus: #8ea7ff;
+  --ctt-border: #202641;
+}
+
+/* The application background is transparent so the stars can be seen. */
+html[data-tech-theme="galaxy"] body {
+  background: #05060d !important;
+  color: #eef1ff !important;
+  position: relative;
+  overflow-x: hidden !important;
+}
+
+html[data-tech-theme="galaxy"] #__docusaurus {
+  color: #eef1ff !important;
+  position: relative;
+  isolation: isolate;
+}
+
+html[data-tech-theme="galaxy"] .main-wrapper,
+html[data-tech-theme="galaxy"] main {
+  background: transparent !important;
+  color: #eef1ff !important;
+}
+
+/* Distant galaxy layer */
+html[data-tech-theme="galaxy"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none !important;
+  z-index: -2;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgba(92, 77, 220, 0.18),
+      transparent 48%
+    ),
+    radial-gradient(
+      ellipse at 12% 18%,
+      rgba(72, 98, 255, 0.11),
+      transparent 40%
+    ),
+    radial-gradient(
+      ellipse at 88% 60%,
+      rgba(151, 92, 255, 0.09),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.82) 0 0.7px,
+      transparent 1.35px
+    ),
+    radial-gradient(
+      circle,
+      rgba(180, 195, 255, 0.58) 0 0.7px,
+      transparent 1.45px
+    ),
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.38) 0 0.55px,
+      transparent 1.2px
+    );
+
+  background-repeat:
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    repeat,
+    repeat,
+    repeat;
+
+  background-size:
+    cover,
+    cover,
+    cover,
+    89px 107px,
+    137px 151px,
+    193px 211px;
+
+  background-position:
+    center,
+    center,
+    center,
+    17px 31px,
+    73px 103px,
+    121px 51px;
+}
+
+/* Foreground stars */
+html[data-tech-theme="galaxy"] body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none !important;
+  z-index: -1;
+
+  background-image:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.98) 0 1px,
+      rgba(185, 201, 255, 0.60) 1px,
+      transparent 2.5px
+    ),
+    radial-gradient(
+      circle,
+      rgba(157, 176, 255, 0.88) 0 0.8px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle,
+      rgba(220, 225, 255, 0.52) 0 0.55px,
+      transparent 1.7px
+    );
+
+  background-repeat: repeat;
+  background-size:
+    173px 191px,
+    251px 269px,
+    113px 137px;
+
+  background-position:
+    41px 61px,
+    117px 29px,
+    11px 89px;
+
+  opacity: 0.72;
+}
+
+/* Keep UI above the star layers */
+html[data-tech-theme="galaxy"] .navbar,
+html[data-tech-theme="galaxy"] .theme-doc-sidebar-container,
+html[data-tech-theme="galaxy"] .footer {
+  position: relative;
+  z-index: 10 !important;
+}
+
+/* Never override Docusaurus' native mobile drawer positioning. */
+html[data-tech-theme="galaxy"] .navbar-sidebar {
+  z-index: 1200 !important;
+}
+
+/* Galaxy navbar */
+html[data-tech-theme="galaxy"] .navbar {
+  background: rgba(7, 8, 17, 0.88) !important;
+  border-bottom: 1px solid rgba(142, 167, 255, 0.18) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Galaxy sidebar */
+html[data-tech-theme="galaxy"] .theme-doc-sidebar-container,
+html[data-tech-theme="galaxy"] .theme-doc-sidebar-menu,
+html[data-tech-theme="galaxy"] .menu {
+  background: rgba(5, 6, 13, 0.76) !important;
+  border-color: rgba(142, 167, 255, 0.12) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Galaxy content surfaces */
+html[data-tech-theme="galaxy"] .card,
+html[data-tech-theme="galaxy"] .pagination-nav__link {
+  background: rgba(10, 12, 24, 0.82) !important;
+  border-color: rgba(142, 167, 255, 0.16) !important;
+}
+
+html[data-tech-theme="galaxy"] table {
+  background: rgba(10, 12, 24, 0.88) !important;
+  border-color: #202641 !important;
+}
+
+html[data-tech-theme="galaxy"] table th {
+  background: rgba(16, 20, 38, 0.94) !important;
+  color: #eef1ff !important;
+}
+
+html[data-tech-theme="galaxy"] table td {
+  background: transparent !important;
+  color: #eef1ff !important;
+  border-color: #202641 !important;
+}
+
+html[data-tech-theme="galaxy"] code {
+  background: #101426 !important;
+  color: #a8baff !important;
+  border-color: #202641 !important;
+}
+
+/* Galaxy hero gets its own visible star/glow treatment */
+html[data-tech-theme="galaxy"] .hero--primary {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 50% 110%,
+      rgba(111, 91, 255, 0.28),
+      transparent 52%
+    ),
+    radial-gradient(
+      ellipse at 15% 20%,
+      rgba(76, 112, 255, 0.14),
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse at 85% 30%,
+      rgba(166, 105, 255, 0.12),
+      transparent 40%
+    ),
+    #10152a !important;
+  border-bottom: 1px solid rgba(142, 167, 255, 0.18) !important;
+}
+
+html[data-tech-theme="galaxy"] .hero--primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.92) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(180,195,255,.68) 0 .7px, transparent 1.6px);
+  background-size: 97px 113px, 151px 173px;
+  background-position: 20px 31px, 71px 83px;
+  opacity: 0.48;
+}
+
+html[data-tech-theme="galaxy"] .hero--primary .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================================================================
+   HALLOWEEN — RESTORE STORM / THUNDERSTRIKE EFFECTS
+   ======================================================================== */
+html[data-tech-theme="halloween"] {
+  color-scheme: dark !important;
+
+  --ctt-page-bg: #100b12;
+  --ctt-surface-1: #19101d;
+  --ctt-surface-2: #251629;
+  --ctt-text: #fff4df;
+  --ctt-text-muted: #d7c6b0;
+  --ctt-accent: #ff7518;
+  --ctt-accent-hover: #ffa967;
+  --ctt-navbar-bg: rgba(19, 12, 22, 0.94);
+  --ctt-navbar-text: #fff4df;
+  --ctt-navbar-muted: #cbb9c9;
+  --ctt-footer-bg: #0c0810;
+  --ctt-footer-text: #cbb9c9;
+  --ctt-control-bg: #19101d;
+  --ctt-control-border: #4a273d;
+  --ctt-control-text: #fff4df;
+  --ctt-code-bg: #251629;
+  --ctt-code-text: #ffa967;
+  --ctt-hero-bg: #19101d;
+  --ctt-hero-text: #fff4df;
+  --ctt-hero-muted: #d7c6b0;
+  --ctt-focus: #ff7518;
+  --ctt-border: #4a273d;
+}
+
+/* Atmospheric storm background */
+html[data-tech-theme="halloween"] body {
+  position: relative;
+  background:
+    radial-gradient(
+      ellipse at 50% -10%,
+      rgba(110, 47, 143, 0.22),
+      transparent 48%
+    ),
+    radial-gradient(
+      ellipse at 20% 70%,
+      rgba(255, 117, 24, 0.055),
+      transparent 38%
+    ),
+    #100b12 !important;
+  color: #fff4df !important;
+  overflow-x: hidden !important;
+}
+
+/* Storm clouds + distant lightning ambience */
+html[data-tech-theme="halloween"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none !important;
+  z-index: -2;
+
+  background:
+    radial-gradient(
+      ellipse at 20% 10%,
+      rgba(93, 48, 111, 0.18),
+      transparent 38%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(55, 35, 76, 0.20),
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse at 50% 95%,
+      rgba(255, 117, 24, 0.07),
+      transparent 45%
+    );
+
+  animation: ctt-halloween-storm-pulse 7s ease-in-out infinite;
+}
+
+/* Lightning flash */
+html[data-tech-theme="halloween"] body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none !important;
+  z-index: 999;
+
+  background: rgba(255, 246, 235, 0);
+  opacity: 0;
+
+  animation: ctt-halloween-thunder-flash 8s linear infinite;
+}
+
+@keyframes ctt-halloween-storm-pulse {
+  0%, 100% {
+    opacity: 0.72;
+    transform: scale(1);
+  }
+
+  45% {
+    opacity: 0.90;
+    transform: scale(1.015);
+  }
+
+  50% {
+    opacity: 0.74;
+    transform: scale(1);
+  }
+}
+
+@keyframes ctt-halloween-thunder-flash {
+  0%, 91%, 100% {
+    opacity: 0;
+  }
+
+  92% {
+    opacity: 0.06;
+  }
+
+  92.4% {
+    opacity: 0.42;
+  }
+
+  92.8% {
+    opacity: 0.04;
+  }
+
+  93.2% {
+    opacity: 0.22;
+  }
+
+  93.7% {
+    opacity: 0;
+  }
+
+  94.2% {
+    opacity: 0.12;
+  }
+
+  94.7% {
+    opacity: 0;
+  }
+}
+
+/* Halloween navbar */
+html[data-tech-theme="halloween"] .navbar {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(19, 12, 22, 0.98),
+      rgba(16, 10, 18, 0.96)
+    ) !important;
+  border-bottom: 1px solid #4a273d !important;
+  box-shadow:
+    0 1px 0 rgba(255, 117, 24, 0.28),
+    0 6px 22px rgba(0, 0, 0, 0.24) !important;
+}
+
+html[data-tech-theme="halloween"] .navbar__title,
+html[data-tech-theme="halloween"] .navbar__link {
+  color: #fff4df !important;
+}
+
+html[data-tech-theme="halloween"] .navbar__link:hover {
+  color: #ff8e3d !important;
+}
+
+/* Halloween hero */
+html[data-tech-theme="halloween"] .hero--primary {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(255, 117, 24, 0.14),
+      transparent 48%
+    ),
+    radial-gradient(
+      ellipse at 20% 100%,
+      rgba(128, 52, 170, 0.16),
+      transparent 45%
+    ),
+    linear-gradient(
+      180deg,
+      #25152b 0%,
+      #17101c 55%,
+      #100b12 100%
+    ) !important;
+  border-bottom-color: #4a273d !important;
+}
+
+/* Stylized lightning bolt */
+html[data-tech-theme="halloween"] .hero--primary::before {
+  content: "";
+  position: absolute;
+  top: -2%;
+  right: 14%;
+  width: 115px;
+  height: 82%;
+  pointer-events: none;
+  opacity: 0.18;
+  filter: drop-shadow(0 0 10px rgba(210, 197, 255, 0.75));
+
+  background:
+    linear-gradient(
+      116deg,
+      transparent 0 43%,
+      rgba(226, 220, 255, 0.95) 43% 46%,
+      transparent 46% 56%,
+      rgba(226, 220, 255, 0.95) 56% 59%,
+      transparent 59%
+    );
+
+  clip-path: polygon(
+    54% 0,
+    40% 32%,
+    61% 32%,
+    31% 62%,
+    49% 62%,
+    22% 100%,
+    67% 55%,
+    49% 55%,
+    77% 27%,
+    57% 27%
+  );
+
+  animation: ctt-halloween-bolt 8s linear infinite;
+}
+
+@keyframes ctt-halloween-bolt {
+  0%, 91%, 100% {
+    opacity: 0;
+    filter: brightness(0.8) drop-shadow(0 0 4px rgba(210, 197, 255, 0.2));
+  }
+
+  92% {
+    opacity: 0.18;
+  }
+
+  92.35% {
+    opacity: 0.95;
+    filter: brightness(1.8) drop-shadow(0 0 20px rgba(220, 215, 255, 0.95));
+  }
+
+  92.8% {
+    opacity: 0.10;
+  }
+
+  93.3% {
+    opacity: 0.65;
+  }
+
+  93.8% {
+    opacity: 0;
+  }
+}
+
+/* Halloween cards / content */
+html[data-tech-theme="halloween"] .card,
+html[data-tech-theme="halloween"] .pagination-nav__link {
+  background: rgba(25, 16, 29, 0.92) !important;
+  border-color: #4a273d !important;
+}
+
+html[data-tech-theme="halloween"] .card:hover,
+html[data-tech-theme="halloween"] .pagination-nav__link:hover {
+  border-color: #ff7518 !important;
+  box-shadow: 0 8px 28px rgba(255, 117, 24, 0.10) !important;
+}
+
+html[data-tech-theme="halloween"] code {
+  background: #251629 !important;
+  color: #ffa967 !important;
+  border-color: #4a273d !important;
+}
+
+html[data-tech-theme="halloween"] blockquote {
+  background: rgba(255, 117, 24, 0.07) !important;
+  border-left-color: #ff7518 !important;
+  color: #d7c6b0 !important;
+}
+
+html[data-tech-theme="halloween"] .footer {
+  background: #0c0810 !important;
+  color: #cbb9c9 !important;
+  border-top: 1px solid #4a273d !important;
+}
+
+/* ========================================================================
+   ALL THEME PICKERS / NATIVE CONTROLS
+   ======================================================================== */
+html[data-tech-theme] select,
+html[data-tech-theme] input,
+html[data-tech-theme] textarea,
+html[data-tech-theme] button {
+  font: inherit;
+}
+
+html[data-tech-theme="default"][data-theme="light"] select,
+html[data-tech-theme="default"][data-theme="light"] input,
+html[data-tech-theme="default"][data-theme="light"] textarea {
+  color-scheme: light !important;
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border-color: #d9dce1 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] select,
+html[data-tech-theme="default"][data-theme="dark"] input,
+html[data-tech-theme="default"][data-theme="dark"] textarea {
+  color-scheme: dark !important;
+  background-color: #1b2029 !important;
+  color: #e5e7eb !important;
+  border-color: #303744 !important;
+}
+
+/* ========================================================================
+   FINAL HERO SPACING
+   ======================================================================== */
+html[data-tech-theme] .hero--primary .container {
+  padding-top: 4rem !important;
+  padding-bottom: 11rem !important;
+}
+
+/* ========================================================================
+   EFFECT SAFETY
+   ======================================================================== */
+html[data-tech-theme="galaxy"] body::before,
+html[data-tech-theme="galaxy"] body::after,
+html[data-tech-theme="halloween"] body::before,
+html[data-tech-theme="halloween"] body::after,
+html[data-tech-theme="halloween"] .hero--primary::before {
+  pointer-events: none !important;
+}
+
+/* ========================================================================
+   GALAXY FINAL POLISH — ANIMATED STARS + GLASS UI
+   ========================================================================
+   The Galaxy theme is intentionally subtle:
+   - stars drift very slowly instead of looking like a static texture
+   - star brightness gently twinkles
+   - the navbar/search/sidebar use translucent glass
+   - the hero keeps the blue/purple galaxy glow
+   - all movement remains disabled for prefers-reduced-motion
+   ======================================================================== */
+html[data-tech-theme="galaxy"] {
+  --galaxy-glass: rgba(8, 10, 22, 0.54);
+  --galaxy-glass-strong: rgba(8, 10, 22, 0.72);
+  --galaxy-glass-border: rgba(155, 174, 255, 0.20);
+  --galaxy-glass-highlight: rgba(255, 255, 255, 0.075);
+  --galaxy-glow-blue: rgba(84, 123, 255, 0.16);
+  --galaxy-glow-purple: rgba(145, 92, 255, 0.15);
+}
+
+/* ------------------------------------------------------------------------
+   Galaxy star-field ownership
+   ------------------------------------------------------------------------
+   The complete Galaxy star system lives in module 10 so there is one source
+   of truth for the body/hero star layers and their animations.
+   ------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------
+   Glassy navbar
+   ------------------------------------------------------------------------ */
+html[data-tech-theme="galaxy"] .navbar {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(12, 15, 31, 0.70),
+      rgba(7, 9, 20, 0.50)
+    ) !important;
+
+  border-bottom: 1px solid var(--galaxy-glass-border) !important;
+
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.22),
+    inset 0 -1px 0 var(--galaxy-glass-highlight) !important;
+
+  backdrop-filter: blur(18px) saturate(135%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(135%) !important;
+}
+
+/* Make the navbar feel transparent rather than like a solid block */
+html[data-tech-theme="galaxy"] .navbar__inner {
+  background: transparent !important;
+}
+
+html[data-tech-theme="galaxy"] .navbar__brand,
+html[data-tech-theme="galaxy"] .navbar__title,
+html[data-tech-theme="galaxy"] .navbar__link {
+  color: #eef1ff !important;
+}
+
+html[data-tech-theme="galaxy"] .navbar__link:hover {
+  color: #bdcaff !important;
+}
+
+/* ------------------------------------------------------------------------
+   Glassy search box
+   ------------------------------------------------------------------------ */
+html[data-tech-theme="galaxy"] .navbar__search-input {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18, 23, 48, 0.68),
+      rgba(8, 11, 26, 0.54)
+    ) !important;
+
+  border: 1px solid rgba(155, 174, 255, 0.24) !important;
+  color: #eef1ff !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 5px 22px rgba(0, 0, 0, 0.20) !important;
+
+  backdrop-filter: blur(16px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+}
+
+html[data-tech-theme="galaxy"] .navbar__search-input:hover {
+  border-color: rgba(155, 174, 255, 0.38) !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(24, 30, 61, 0.74),
+      rgba(9, 12, 29, 0.62)
+    ) !important;
+}
+
+html[data-tech-theme="galaxy"] .navbar__search-input:focus {
+  border-color: rgba(142, 167, 255, 0.62) !important;
+  box-shadow:
+    0 0 0 2px rgba(142, 167, 255, 0.12),
+    0 8px 28px rgba(57, 74, 170, 0.20) !important;
+}
+
+html[data-tech-theme="galaxy"] .navbar__search-input::placeholder {
+  color: #b7bdd8 !important;
+}
+
+/* ------------------------------------------------------------------------
+   Glassy sidebar
+   ------------------------------------------------------------------------ */
+html[data-tech-theme="galaxy"] .theme-doc-sidebar-container,
+html[data-tech-theme="galaxy"] .theme-doc-sidebar-menu,
+html[data-tech-theme="galaxy"] .menu {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(10, 13, 29, 0.62),
+      rgba(5, 7, 17, 0.48)
+    ) !important;
+
+  border-color: rgba(155, 174, 255, 0.13) !important;
+
+  box-shadow:
+    inset -1px 0 0 rgba(255, 255, 255, 0.025) !important;
+
+  backdrop-filter: blur(16px) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(125%) !important;
+}
+
+html[data-tech-theme="galaxy"] .menu__link:hover {
+  background: rgba(142, 167, 255, 0.075) !important;
+}
+
+html[data-tech-theme="galaxy"] .menu__link--active {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(142, 167, 255, 0.15),
+      rgba(142, 167, 255, 0.045)
+    ) !important;
+
+  box-shadow:
+    inset 2px 0 0 #8ea7ff !important;
+}
+
+/* ------------------------------------------------------------------------
+   Glassy hero
+   ------------------------------------------------------------------------ */
+html[data-tech-theme="galaxy"] .hero--primary {
+  background:
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgba(109, 86, 255, 0.24),
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 15% 15%,
+      rgba(73, 112, 255, 0.16),
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse at 88% 25%,
+      rgba(167, 102, 255, 0.13),
+      transparent 40%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(20, 27, 58, 0.86),
+      rgba(10, 14, 31, 0.84)
+    ) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    inset 0 -1px 0 rgba(142, 167, 255, 0.13) !important;
+
+  backdrop-filter: blur(3px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(3px) saturate(120%) !important;
+}
+
+/* Animated stars inside the hero */
+html[data-tech-theme="galaxy"] .hero--primary::before {
+  animation:
+    ctt-galaxy-hero-stars 36s linear infinite,
+    ctt-galaxy-hero-twinkle 6.5s ease-in-out infinite !important;
+
+  will-change: background-position, opacity;
+}
+
+@keyframes ctt-galaxy-hero-stars {
+  0% {
+    background-position:
+      20px 31px,
+      71px 83px;
+  }
+
+  50% {
+    background-position:
+      67px 78px,
+      118px 126px;
+  }
+
+  100% {
+    background-position:
+      114px 125px,
+      165px 169px;
+  }
+}
+
+@keyframes ctt-galaxy-hero-twinkle {
+  0%, 100% {
+    opacity: 0.38;
+  }
+
+  30% {
+    opacity: 0.58;
+  }
+
+  52% {
+    opacity: 0.32;
+  }
+
+  76% {
+    opacity: 0.52;
+  }
+}
+
+/* ------------------------------------------------------------------------
+   Glass cards / pagination / tables
+   ------------------------------------------------------------------------ */
+html[data-tech-theme="galaxy"] .card,
+html[data-tech-theme="galaxy"] .pagination-nav__link {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(18, 22, 44, 0.72),
+      rgba(7, 9, 20, 0.58)
+    ) !important;
+
+  border-color: rgba(155, 174, 255, 0.17) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 8px 30px rgba(0, 0, 0, 0.15) !important;
+
+  backdrop-filter: blur(12px) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(125%) !important;
+}
+
+html[data-tech-theme="galaxy"] .card:hover,
+html[data-tech-theme="galaxy"] .pagination-nav__link:hover {
+  border-color: rgba(142, 167, 255, 0.40) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    0 10px 35px rgba(67, 79, 190, 0.17) !important;
+}
+
+html[data-tech-theme="galaxy"] table {
+  background: rgba(8, 11, 24, 0.72) !important;
+  border-color: rgba(155, 174, 255, 0.16) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+html[data-tech-theme="galaxy"] table th {
+  background: rgba(22, 27, 52, 0.78) !important;
+}
+
+html[data-tech-theme="galaxy"] table tr:nth-child(even) {
+  background: rgba(19, 24, 45, 0.38) !important;
+}
+
+/* ------------------------------------------------------------------------
+   Glassy footer
+   ------------------------------------------------------------------------ */
+html[data-tech-theme="galaxy"] .footer {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7, 9, 19, 0.70),
+      rgba(4, 5, 11, 0.86)
+    ) !important;
+
+  border-top: 1px solid rgba(155, 174, 255, 0.13) !important;
+
+  backdrop-filter: blur(18px) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(125%) !important;
+}
+
+/* ------------------------------------------------------------------------
+   Galaxy theme selector / controls
+   ------------------------------------------------------------------------ */
+html[data-tech-theme="galaxy"] select,
+html[data-tech-theme="galaxy"] input,
+html[data-tech-theme="galaxy"] textarea {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18, 23, 48, 0.76),
+      rgba(8, 10, 23, 0.70)
+    ) !important;
+
+  color: #eef1ff !important;
+  border-color: rgba(155, 174, 255, 0.24) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 5px 18px rgba(0, 0, 0, 0.15) !important;
+
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
+
+html[data-tech-theme="galaxy"] select:focus,
+html[data-tech-theme="galaxy"] input:focus,
+html[data-tech-theme="galaxy"] textarea:focus {
+  border-color: rgba(142, 167, 255, 0.58) !important;
+  outline: none !important;
+  box-shadow:
+    0 0 0 2px rgba(142, 167, 255, 0.11),
+    0 8px 26px rgba(64, 80, 185, 0.17) !important;
+}
+
+/* Native option popups do not inherit the glass control styling. Explicitly
+   provide a dark palette so Galaxy's menu remains readable on Windows and
+   other platforms that render the popup outside the page's CSS backdrop. */
+html[data-tech-theme="galaxy"] select,
+html[data-tech-theme="galaxy"] .picker select {
+  color-scheme: dark !important;
+  background-color: #0b1024 !important;
+  color: #eef1ff !important;
+}
+
+html[data-tech-theme="galaxy"] select option,
+html[data-tech-theme="galaxy"] .picker select option {
+  background-color: #0b1024 !important;
+  color: #eef1ff !important;
+}
+
+html[data-tech-theme="galaxy"] select option:checked,
+html[data-tech-theme="galaxy"] .picker select option:checked {
+  background-color: #26335c !important;
+  color: #ffffff !important;
+}
+
+/* ------------------------------------------------------------------------
+   Keep Galaxy effects above/below the correct layers
+   ------------------------------------------------------------------------ */
+html[data-tech-theme="galaxy"] .navbar,
+html[data-tech-theme="galaxy"] .theme-doc-sidebar-container,
+html[data-tech-theme="galaxy"] .footer {
+  isolation: isolate;
+}
+
+html[data-tech-theme="galaxy"] .hero--primary .container,
+html[data-tech-theme="galaxy"] .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* ==========================================================================
+   GALAXY v12 — TRUE SCATTERED STAR FIELD
+   ==========================================================================
+   The previous Galaxy versions still contained older repeating star textures
+   earlier in this stylesheet. Those textures were visually responsible for
+   the obvious rows / identical star positions.
+
+   v12 deliberately overrides every Galaxy star layer at the end of the file:
+   - no repeating star tiles
+   - no repeating background-size patterns
+   - irregular, individually positioned stars
+   - separate distant / foreground fields
+   - subtle field drift and global twinkle
+   - hero uses the same irregular approach
+   - no change to the working mobile drawer
+   ========================================================================== */
+/* --------------------------------------------------------------------------
+   Main distant star field
+   -------------------------------------------------------------------------- */
+html[data-tech-theme="galaxy"] body::before {
+  content: "";
+  position: fixed;
+  inset: -6vh -6vw;
+  width: 112vw;
+  height: 112vh;
+  pointer-events: none !important;
+  z-index: 0 !important;
+
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(92, 77, 220, 0.18), transparent 48%),
+    radial-gradient(ellipse at 12% 18%, rgba(72, 98, 255, 0.11), transparent 40%),
+    radial-gradient(ellipse at 88% 60%, rgba(151, 92, 255, 0.09), transparent 42%),
+
+    radial-gradient(circle at 4% 8%, rgba(255,255,255,.72) 0 1px, transparent 1.9px),
+    radial-gradient(circle at 11% 19%, rgba(184,199,255,.55) 0 .7px, transparent 1.6px),
+    radial-gradient(circle at 19% 6%, rgba(220,225,255,.42) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 27% 15%, rgba(255,255,255,.64) 0 .8px, transparent 1.7px),
+    radial-gradient(circle at 36% 8%, rgba(180,195,255,.50) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 44% 21%, rgba(255,255,255,.70) 0 1px, transparent 1.9px),
+    radial-gradient(circle at 53% 5%, rgba(208,217,255,.46) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 61% 16%, rgba(255,255,255,.62) 0 .8px, transparent 1.7px),
+    radial-gradient(circle at 70% 9%, rgba(181,197,255,.48) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 79% 23%, rgba(255,255,255,.68) 0 .9px, transparent 1.8px),
+    radial-gradient(circle at 88% 7%, rgba(211,220,255,.45) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 96% 18%, rgba(255,255,255,.58) 0 .7px, transparent 1.6px),
+
+    radial-gradient(circle at 7% 34%, rgba(203,214,255,.45) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 16% 43%, rgba(255,255,255,.70) 0 .9px, transparent 1.8px),
+    radial-gradient(circle at 25% 31%, rgba(178,194,255,.48) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 34% 39%, rgba(255,255,255,.56) 0 .7px, transparent 1.6px),
+    radial-gradient(circle at 42% 29%, rgba(212,220,255,.43) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 51% 45%, rgba(255,255,255,.66) 0 .8px, transparent 1.7px),
+    radial-gradient(circle at 59% 34%, rgba(182,198,255,.46) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 68% 42%, rgba(255,255,255,.58) 0 .8px, transparent 1.7px),
+    radial-gradient(circle at 77% 30%, rgba(203,213,255,.44) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 86% 46%, rgba(255,255,255,.64) 0 .9px, transparent 1.8px),
+    radial-gradient(circle at 94% 36%, rgba(184,199,255,.47) 0 .6px, transparent 1.5px),
+
+    radial-gradient(circle at 3% 57%, rgba(255,255,255,.60) 0 .8px, transparent 1.7px),
+    radial-gradient(circle at 12% 68%, rgba(181,197,255,.44) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 21% 53%, rgba(255,255,255,.67) 0 .9px, transparent 1.8px),
+    radial-gradient(circle at 30% 64%, rgba(205,215,255,.45) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 39% 55%, rgba(255,255,255,.58) 0 .8px, transparent 1.7px),
+    radial-gradient(circle at 48% 70%, rgba(180,196,255,.46) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 57% 59%, rgba(255,255,255,.70) 0 .9px, transparent 1.8px),
+    radial-gradient(circle at 66% 72%, rgba(204,214,255,.42) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 75% 55%, rgba(255,255,255,.60) 0 .8px, transparent 1.7px),
+    radial-gradient(circle at 84% 67%, rgba(184,199,255,.47) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 93% 58%, rgba(255,255,255,.64) 0 .9px, transparent 1.8px),
+
+    radial-gradient(circle at 8% 84%, rgba(204,214,255,.42) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 18% 94%, rgba(255,255,255,.60) 0 .8px, transparent 1.7px),
+    radial-gradient(circle at 29% 78%, rgba(181,197,255,.46) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 38% 91%, rgba(255,255,255,.68) 0 .9px, transparent 1.8px),
+    radial-gradient(circle at 49% 82%, rgba(205,215,255,.43) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 58% 96%, rgba(255,255,255,.58) 0 .8px, transparent 1.7px),
+    radial-gradient(circle at 69% 85%, rgba(181,197,255,.44) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 80% 93%, rgba(255,255,255,.66) 0 .9px, transparent 1.8px),
+    radial-gradient(circle at 91% 81%, rgba(203,214,255,.44) 0 .6px, transparent 1.5px);
+
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: .78;
+
+  animation:
+    ctt-galaxy-v12-back-drift 68s ease-in-out infinite,
+    ctt-galaxy-v12-back-twinkle 9s ease-in-out infinite;
+
+  will-change: transform, opacity;
+}
+
+/* --------------------------------------------------------------------------
+   Main foreground star field
+   -------------------------------------------------------------------------- */
+html[data-tech-theme="galaxy"] body::after {
+  content: "";
+  position: fixed;
+  inset: -8vh -8vw;
+  width: 116vw;
+  height: 116vh;
+  pointer-events: none !important;
+  z-index: 0 !important;
+
+  background:
+    radial-gradient(circle at 6% 13%, rgba(255,255,255,.86) 0 1px, transparent 2px),
+    radial-gradient(circle at 17% 4%, rgba(188,204,255,.65) 0 .7px, transparent 1.6px),
+    radial-gradient(circle at 29% 24%, rgba(255,255,255,.78) 0 .8px, transparent 1.8px),
+    radial-gradient(circle at 41% 11%, rgba(207,218,255,.62) 0 .7px, transparent 1.6px),
+    radial-gradient(circle at 54% 27%, rgba(255,255,255,.82) 0 .9px, transparent 1.9px),
+    radial-gradient(circle at 66% 6%, rgba(181,199,255,.60) 0 .7px, transparent 1.6px),
+    radial-gradient(circle at 78% 19%, rgba(255,255,255,.74) 0 .8px, transparent 1.8px),
+    radial-gradient(circle at 91% 9%, rgba(205,216,255,.62) 0 .7px, transparent 1.6px),
+
+    radial-gradient(circle at 2% 38%, rgba(192,207,255,.58) 0 .7px, transparent 1.6px),
+    radial-gradient(circle at 14% 51%, rgba(255,255,255,.82) 0 .9px, transparent 1.9px),
+    radial-gradient(circle at 24% 36%, rgba(183,200,255,.61) 0 .7px, transparent 1.6px),
+    radial-gradient(circle at 36% 48%, rgba(255,255,255,.76) 0 .8px, transparent 1.8px),
+    radial-gradient(circle at 48% 33%, rgba(211,220,255,.58) 0 .7px, transparent 1.6px),
+    radial-gradient(circle at 60% 54%, rgba(255,255,255,.84) 0 .9px, transparent 1.9px),
+    radial-gradient(circle at 72% 39%, rgba(188,204,255,.59) 0 .7px, transparent 1.6px),
+    radial-gradient(circle at 83% 52%, rgba(255,255,255,.77) 0 .8px, transparent 1.8px),
+    radial-gradient(circle at 96% 43%, rgba(202,214,255,.57) 0 .7px, transparent 1.6px),
+
+    radial-gradient(circle at 9% 72%, rgba(255,255,255,.78) 0 .8px, transparent 1.8px),
+    radial-gradient(circle at 19% 61%, rgba(184,201,255,.58) 0 .7px, transparent 1.6px),
+    radial-gradient(circle at 32% 76%, rgba(255,255,255,.84) 0 .9px, transparent 1.9px),
+    radial-gradient(circle at 44% 65%, rgba(208,219,255,.60) 0 .7px, transparent 1.6px),
+    radial-gradient(circle at 55% 81%, rgba(255,255,255,.76) 0 .8px, transparent 1.8px),
+    radial-gradient(circle at 67% 69%, rgba(186,202,255,.58) 0 .7px, transparent 1.6px),
+    radial-gradient(circle at 79% 83%, rgba(255,255,255,.82) 0 .9px, transparent 1.9px),
+    radial-gradient(circle at 90% 70%, rgba(203,215,255,.59) 0 .7px, transparent 1.6px),
+
+    radial-gradient(circle at 5% 92%, rgba(188,203,255,.54) 0 .7px, transparent 1.6px),
+    radial-gradient(circle at 27% 90%, rgba(255,255,255,.76) 0 .8px, transparent 1.8px),
+    radial-gradient(circle at 40% 97%, rgba(201,213,255,.56) 0 .7px, transparent 1.6px),
+    radial-gradient(circle at 63% 92%, rgba(255,255,255,.80) 0 .9px, transparent 1.9px),
+    radial-gradient(circle at 74% 98%, rgba(184,200,255,.57) 0 .7px, transparent 1.6px),
+    radial-gradient(circle at 95% 88%, rgba(255,255,255,.72) 0 .8px, transparent 1.8px);
+
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: .52;
+
+  animation:
+    ctt-galaxy-v12-front-drift 42s ease-in-out infinite,
+    ctt-galaxy-v12-front-twinkle 6.5s ease-in-out infinite;
+
+  will-change: transform, opacity;
+}
+
+/* --------------------------------------------------------------------------
+   Hero star field — remove the old tiled texture completely
+   -------------------------------------------------------------------------- */
+html[data-tech-theme="galaxy"] .hero--primary::before {
+  content: "";
+  position: absolute;
+  inset: -5%;
+  pointer-events: none;
+  z-index: 0;
+
+  background:
+    radial-gradient(circle at 8% 17%, rgba(255,255,255,.64) 0 .8px, transparent 1.8px),
+    radial-gradient(circle at 19% 42%, rgba(190,204,255,.52) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 31% 12%, rgba(255,255,255,.70) 0 .9px, transparent 1.9px),
+    radial-gradient(circle at 44% 29%, rgba(205,216,255,.50) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 58% 9%, rgba(255,255,255,.68) 0 .8px, transparent 1.8px),
+    radial-gradient(circle at 71% 36%, rgba(185,201,255,.50) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 84% 15%, rgba(255,255,255,.66) 0 .9px, transparent 1.9px),
+    radial-gradient(circle at 94% 48%, rgba(202,213,255,.48) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 12% 73%, rgba(255,255,255,.62) 0 .8px, transparent 1.8px),
+    radial-gradient(circle at 28% 88%, rgba(183,199,255,.48) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 46% 64%, rgba(255,255,255,.66) 0 .8px, transparent 1.8px),
+    radial-gradient(circle at 63% 83%, rgba(201,212,255,.48) 0 .6px, transparent 1.5px),
+    radial-gradient(circle at 77% 67%, rgba(255,255,255,.64) 0 .9px, transparent 1.9px),
+    radial-gradient(circle at 91% 91%, rgba(188,203,255,.46) 0 .6px, transparent 1.5px);
+
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: .42;
+
+  animation:
+    ctt-galaxy-v12-hero-drift 34s ease-in-out infinite,
+    ctt-galaxy-v12-hero-twinkle 7s ease-in-out infinite;
+
+  will-change: transform, opacity;
+}
+
+/* --------------------------------------------------------------------------
+   v12 animation — the FIELD moves, not a repeating tile
+   -------------------------------------------------------------------------- */
+@keyframes ctt-galaxy-v12-back-drift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1.01);
+  }
+  50% {
+    transform: translate3d(-1.2vw, 0.8vh, 0) scale(1.018);
+  }
+}
+
+@keyframes ctt-galaxy-v12-front-drift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1.01);
+  }
+  50% {
+    transform: translate3d(1.7vw, -1.1vh, 0) scale(1.022);
+  }
+}
+
+@keyframes ctt-galaxy-v12-hero-drift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(1.2vw, -0.6vh, 0) scale(1.015);
+  }
+}
+
+@keyframes ctt-galaxy-v12-back-twinkle {
+  0%, 100% { opacity: .72; }
+  27% { opacity: .88; }
+  51% { opacity: .66; }
+  73% { opacity: .82; }
+}
+
+@keyframes ctt-galaxy-v12-front-twinkle {
+  0%, 100% { opacity: .44; }
+  24% { opacity: .60; }
+  47% { opacity: .38; }
+  71% { opacity: .55; }
+}
+
+@keyframes ctt-galaxy-v12-hero-twinkle {
+  0%, 100% { opacity: .34; }
+  31% { opacity: .48; }
+  53% { opacity: .28; }
+  76% { opacity: .43; }
+}

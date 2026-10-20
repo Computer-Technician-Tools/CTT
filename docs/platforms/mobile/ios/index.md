@@ -2,8 +2,9 @@
 title: iOS
 ---
 
+import PlatformBadges from '@site/src/components/PlatformBadges';
+import SourceBadge from '@site/src/components/SourceBadge';
+
 # iOS
 
-iOS and iPhone reference material, diagnostics, repair, firmware, and troubleshooting.
-
-This section is still being expanded. More documentation will be added over time.
+> Coming Soon

@@ -108,3 +108,18 @@
 .badge[data-platform='free'] .icon { color: #22c55e; fill: currentColor; }
 .badge[data-platform='paid'] .icon { color: #a78bfa; fill: currentColor; }
 .badge[data-platform='freemium'] .icon { color: #38bdf8; fill: currentColor; }
+/* macOS wordmark: wider than a square icon, so the badge grows to fit it. */
+.badge[data-platform='macos'] {
+  width: auto;
+  min-width: 2.6rem;
+  padding: 0 0.3rem;
+}
+
+.wordmark {
+  display: block;
+  width: 2.1rem;
+  height: auto;
+  max-width: none;
+  object-fit: contain;
+  flex: 0 0 auto;
+}

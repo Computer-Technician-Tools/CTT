@@ -82,7 +82,13 @@ function setMobileTocActiveLink(activeLink: HTMLAnchorElement | null): void {
     .querySelectorAll<HTMLAnchorElement>('.table-of-contents a[href^="#"]')
     .forEach((link) => {
       const active = link === activeLink;
-      link.toggleAttribute('data-ctt-toc-active', active);
+      // The CSS matches data-ctt-toc-active="true", so write that exact value.
+      // toggleAttribute() would create an empty attribute that never matches.
+      if (active) {
+        link.setAttribute('data-ctt-toc-active', 'true');
+      } else {
+        link.removeAttribute('data-ctt-toc-active');
+      }
       if (active) {
         link.setAttribute('aria-current', 'location');
       } else {
@@ -711,6 +717,13 @@ function CTTMediaViewer() {
       let alt = '';
 
       if (image) {
+        // Platform and source badge icons are decorative controls, never content images.
+        if (image.closest('[data-ctt-icons]')) return;
+        // Icons inside ordinary page links (Play Store, Firefox, GitHub badges)
+        // must keep working as links. Only open the viewer when the image is not
+        // wrapped by a link, or when the link itself points at a media file.
+        const wrappingLink = image.closest('a[href]') as HTMLAnchorElement | null;
+        if (wrappingLink && !isCTTMediaHref(wrappingLink.href)) return;
         source = image.currentSrc || image.getAttribute('src');
         alt = image.getAttribute('alt') || '';
         title = getCTTMediaTitle(image, 'Image preview');

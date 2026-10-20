@@ -208,9 +208,12 @@ function findImageSource(node: React.ReactNode): {src: string; alt?: string; tit
 /** Intercepts links to media files and linked Markdown images. */
 export function MediaPreviewAnchor(props: React.AnchorHTMLAttributes<HTMLAnchorElement>): React.JSX.Element {
   const href = typeof props.href === 'string' ? props.href : '';
-  const linkedImage = findImageSource(props.children);
+  // Only links that point directly at a media file open the viewer. An icon or
+  // logo wrapped in a normal page link (store badges, source buttons) must
+  // keep navigating, so we never fall back to the image inside the link.
   const mediaHref = href && MEDIA_FILE_RE.test(href) ? href : '';
-  const src = mediaHref || linkedImage?.src || '';
+  const linkedImage = mediaHref ? findImageSource(props.children) : null;
+  const src = mediaHref;
 
   if (src) {
     const type: MediaType = /\.(?:mp4|webm|ogv|ogg|mov|m4v)(?:[?#].*)?$/i.test(src) ? 'video' : 'image';

@@ -405,10 +405,52 @@ function getSourceLinks(
         Boolean(value) &&
         Object.prototype.hasOwnProperty.call(sourceTypes, key),
     )
-    .map(([key, value]) => ({
-      url: String(value),
-      type: sourceTypes[key],
-    }));
+    .map(([key, value]) => {
+      const url = String(value);
+      // A plain `url=` prop is a generic link. Detect known hosts so GitHub,
+      // Play Store, F-Droid, etc. get their own icon and tooltip.
+      const type = key === 'url' ? inferSourceType(url) : sourceTypes[key];
+      return {url, type};
+    });
+}
+
+/** Maps a link's hostname to a known source type. Unknown hosts stay 'url'. */
+const HOST_TYPES: Array<[RegExp, SourceType]> = [
+  [/(^|\.)github\.com$/, 'github'],
+  [/(^|\.)gitlab\.com$/, 'gitlab'],
+  [/(^|\.)bitbucket\.org$/, 'bitbucket'],
+  [/(^|\.)codeberg\.org$/, 'codeberg'],
+  [/(^|\.)sourceforge\.net$/, 'sourceforge'],
+  [/(^|\.)sr\.ht$/, 'sourcehut'],
+  [/(^|\.)launchpad\.net$/, 'launchpad'],
+  [/(^|\.)savannah\.gnu\.org$/, 'savannah'],
+  [/(^|\.)invent\.kde\.org$/, 'kde'],
+  [/(^|\.)npmjs\.com$/, 'npm'],
+  [/(^|\.)pypi\.org$/, 'pypi'],
+  [/(^|\.)hub\.docker\.com$/, 'dockerhub'],
+  [/(^|\.)huggingface\.co$/, 'huggingface'],
+  [/(^|\.)codepen\.io$/, 'codepen'],
+  [/(^|\.)store\.steampowered\.com$/, 'steam'],
+  [/(^|\.)epicgames\.com$/, 'epicgames'],
+  [/(^|\.)gog\.com$/, 'gog'],
+  [/(^|\.)itch\.io$/, 'itch'],
+  [/(^|\.)apps\.microsoft\.com$/, 'microsoftstore'],
+  [/(^|\.)play\.google\.com$/, 'googleplay'],
+  [/(^|\.)apps\.apple\.com$/, 'appstore'],
+  [/(^|\.)flathub\.org$/, 'flathub'],
+  [/(^|\.)snapcraft\.io$/, 'snapcraft'],
+  [/(^|\.)f-droid\.org$/, 'fdroid'],
+];
+
+function inferSourceType(url: string): SourceType {
+  let host = '';
+  try {
+    host = new URL(url).hostname.toLowerCase();
+  } catch {
+    return 'url';
+  }
+  const match = HOST_TYPES.find(([pattern]) => pattern.test(host));
+  return match ? match[1] : 'url';
 }
 
 function getSourceTypeLabel(
@@ -507,57 +549,10 @@ function getSourceTypeLabel(
 export default function SourceBadge(props: SourceBadgeProps) {
   const sources = getSourceLinks(props);
 
-  const sourceGroupStyle = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 28px)',
-    gridAutoRows: '28px',
-    alignItems: 'center',
-    justifyItems: 'center',
-    justifyContent: 'start',
-    alignContent: 'start',
-    columnGap: '0.25rem',
-    rowGap: '0.25rem',
-    width: 'fit-content',
-    maxWidth: '100%',
-    lineHeight: 0,
-    verticalAlign: 'middle',
-  };
-
-  const sourceBadgeStyle = {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 28,
-    height: 28,
-    minWidth: 28,
-    minHeight: 28,
-    flex: '0 0 28px',
-    margin: 0,
-    padding: 0,
-    lineHeight: 0,
-    verticalAlign: 'middle',
-    boxSizing: 'border-box' as const,
-  };
-
-  const sourceIconBoxStyle = {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 24,
-    height: 24,
-    minWidth: 24,
-    minHeight: 24,
-    flex: '0 0 24px',
-    margin: 0,
-    padding: 0,
-    lineHeight: 0,
-    boxSizing: 'border-box' as const,
-  };
-
   return (
     <span
       className={styles.sourceGroup}
-      style={sourceGroupStyle}
+      data-ctt-icons=""
     >
       {sources.map((source) => {
         const label = getSourceTypeLabel(source.type);
@@ -569,11 +564,10 @@ export default function SourceBadge(props: SourceBadgeProps) {
             target="_blank"
             rel="noopener noreferrer"
             className={styles.sourceBadge}
-            style={sourceBadgeStyle}
             title={source.type === 'url' ? 'Official website' : `View on ${label}`}
             aria-label={source.type === 'url' ? 'Open official website' : `View on ${label}`}
           >
-            <span style={sourceIconBoxStyle}>
+            <span>
               <SourcePlatformIcon
                 type={source.type}
                 url={source.url}

@@ -1,7 +1,819 @@
 /* ============================================================
-   AMOLED
+   CTT — THEME PALETTES
+   Core color palettes for every CTT theme (default, catppuccin, nord,
+   dracula, TKOD, Suprise, amoled, halloween, christmas, galaxy, custom).
+   Loads first so the base rules below can refine it, as before.
    ============================================================ */
 
+/*
+ * ============================================================
+ * CTT GLOBAL THEME SYSTEM
+ * ============================================================
+ *
+ * Themes:
+ *   - Default
+ *   - Catppuccin
+ *   - Nord
+ *   - Dracula
+ *   - TKOD
+ *   - Suprise
+ *   - AMOLED
+ *   - Halloween
+ *   - Christmas
+ *   - Galaxy
+ *   - Custom
+ *
+ * Theme selector values:
+ *   default
+ *   catppuccin
+ *   nord
+ *   dracula
+ *   TKOD
+ *   Suprise
+ *   amoled
+ *   halloween
+ *   christmas
+ *   galaxy
+ *   custom
+ */
+/* ============================================================
+   DEFAULT CTT THEME
+   ============================================================ */
+:root {
+  --ifm-color-primary: #1261a0;
+  --ifm-color-primary-dark: #10578f;
+  --ifm-color-primary-darker: #0f5287;
+  --ifm-color-primary-darkest: #0c446f;
+  --ifm-color-primary-light: #146bb1;
+  --ifm-color-primary-lighter: #1670b9;
+  --ifm-color-primary-lightest: #2a7fbd;
+
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: #f8f9fb;
+
+  --ifm-color-content: #1f2937;
+  --ifm-color-content-secondary: #68707d;
+
+  --ifm-code-font-size: 95%;
+
+  --docusaurus-highlighted-code-line-bg: rgba(18, 97, 160, 0.08);
+
+  --ctt-border: #d9dce1;
+  --ctt-surface: #ffffff;
+  --ctt-surface-secondary: #f5f6f8;
+  --ctt-muted: #68707d;
+}
+
+/* Default theme: complete site-wide light palette. */
+html[data-tech-theme='default'] {
+  color-scheme: light;
+
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: #f8f9fb;
+
+  --ifm-color-content: #1f2937;
+  --ifm-color-content-secondary: #68707d;
+
+  --ctt-border: #d9dce1;
+  --ctt-surface: #ffffff;
+  --ctt-surface-secondary: #f5f6f8;
+  --ctt-muted: #68707d;
+
+  --docusaurus-highlighted-code-line-bg: rgba(18, 97, 160, 0.08);
+}
+
+/* Docusaurus dark mode defaults, only when no CTT theme is selected. */
+html[data-theme='dark']:not([data-tech-theme]) {
+  --ifm-color-primary: #5daee9;
+  --ifm-color-primary-dark: #45a2e5;
+  --ifm-color-primary-darker: #379ce1;
+  --ifm-color-primary-darkest: #1d83cb;
+  --ifm-color-primary-light: #75baed;
+  --ifm-color-primary-lighter: #84c0ef;
+  --ifm-color-primary-lightest: #add5f5;
+
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+
+  --ctt-border: #30333a;
+  --ctt-surface: #1b1c1f;
+  --ctt-surface-secondary: #23252a;
+  --ctt-muted: #a7adb7;
+}
+
+/* ============================================================
+   CATPPUCCIN
+   Latte / Mocha inspired
+   ============================================================ */
+html[data-tech-theme='catppuccin'] {
+  --ifm-background-color: #eff1f5;
+  --ifm-background-surface-color: #e6e9ef;
+
+  --ifm-color-content: #4c4f69;
+  --ifm-color-content-secondary: #6c6f85;
+
+  --ifm-color-primary: #8839ef;
+  --ifm-color-primary-dark: #7a2cdd;
+  --ifm-color-primary-darker: #6d25c7;
+  --ifm-color-primary-darkest: #5f22ac;
+  --ifm-color-primary-light: #9648f1;
+  --ifm-color-primary-lighter: #a15af3;
+  --ifm-color-primary-lightest: #b77af6;
+
+  --ctt-border: #ccd0da;
+  --ctt-surface: #ffffff;
+  --ctt-surface-secondary: #e6e9ef;
+  --ctt-muted: #6c6f85;
+
+  --docusaurus-highlighted-code-line-bg: rgba(136, 57, 239, 0.10);
+}
+
+html[data-theme='dark'][data-tech-theme='catppuccin'] {
+  --ifm-background-color: #1e1e2e;
+  --ifm-background-surface-color: #181825;
+
+  --ifm-color-content: #cdd6f4;
+  --ifm-color-content-secondary: #a6adc8;
+
+  --ifm-color-primary: #cba6f7;
+  --ifm-color-primary-dark: #bd91f4;
+  --ifm-color-primary-darker: #b486f2;
+  --ifm-color-primary-darkest: #9d62ed;
+  --ifm-color-primary-light: #d9bbfa;
+  --ifm-color-primary-lighter: #e0c6fb;
+  --ifm-color-primary-lightest: #f5edfe;
+
+  --ctt-border: #45475a;
+  --ctt-surface: #313244;
+  --ctt-surface-secondary: #181825;
+  --ctt-muted: #a6adc8;
+
+  --docusaurus-highlighted-code-line-bg: rgba(203, 166, 247, 0.12);
+}
+
+/* ============================================================
+   NORD
+   ============================================================ */
+html[data-tech-theme='nord'] {
+  --ifm-background-color: #eceff4;
+  --ifm-background-surface-color: #e5e9f0;
+
+  --ifm-color-content: #2e3440;
+  --ifm-color-content-secondary: #4c566a;
+
+  --ifm-color-primary: #5e81ac;
+  --ifm-color-primary-dark: #52749d;
+  --ifm-color-primary-darker: #4c6d95;
+  --ifm-color-primary-darkest: #405b7d;
+  --ifm-color-primary-light: #6b8db5;
+  --ifm-color-primary-lighter: #7799be;
+  --ifm-color-primary-lightest: #8fbcbb;
+
+  --ctt-border: #d8dee9;
+  --ctt-surface: #eceff4;
+  --ctt-surface-secondary: #e5e9f0;
+  --ctt-muted: #4c566a;
+
+  --docusaurus-highlighted-code-line-bg: rgba(94, 129, 172, 0.12);
+}
+
+html[data-theme='dark'][data-tech-theme='nord'] {
+  --ifm-background-color: #2e3440;
+  --ifm-background-surface-color: #3b4252;
+
+  --ifm-color-content: #eceff4;
+  --ifm-color-content-secondary: #d8dee9;
+
+  --ifm-color-primary: #88c0d0;
+  --ifm-color-primary-dark: #71b5c8;
+  --ifm-color-primary-darker: #66b0c4;
+  --ifm-color-primary-darkest: #479eb4;
+  --ifm-color-primary-light: #9fcbd8;
+  --ifm-color-primary-lighter: #aad1dc;
+  --ifm-color-primary-lightest: #d0e7ed;
+
+  --ctt-border: #4c566a;
+  --ctt-surface: #3b4252;
+  --ctt-surface-secondary: #434c5e;
+  --ctt-muted: #d8dee9;
+
+  --docusaurus-highlighted-code-line-bg: rgba(136, 192, 208, 0.12);
+}
+
+/* ============================================================
+   DRACULA
+   ============================================================ */
+html[data-tech-theme='dracula'] {
+  --ifm-background-color: #f8f8f2;
+  --ifm-background-surface-color: #efeddf;
+
+  --ifm-color-content: #282a36;
+  --ifm-color-content-secondary: #6272a4;
+
+  --ifm-color-primary: #7c5ab8;
+  --ifm-color-primary-dark: #704da9;
+  --ifm-color-primary-darker: #67479c;
+  --ifm-color-primary-darkest: #543b80;
+  --ifm-color-primary-light: #8b6bc2;
+  --ifm-color-primary-lighter: #997bc9;
+  --ifm-color-primary-lightest: #b7a1df;
+
+  --ctt-border: #d7d5ca;
+  --ctt-surface: #f8f8f2;
+  --ctt-surface-secondary: #efeddf;
+  --ctt-muted: #6272a4;
+
+  --docusaurus-highlighted-code-line-bg: rgba(98, 114, 164, 0.12);
+}
+
+html[data-theme='dark'][data-tech-theme='dracula'] {
+  --ifm-background-color: #282a36;
+  --ifm-background-surface-color: #21222c;
+
+  --ifm-color-content: #f8f8f2;
+  --ifm-color-content-secondary: #bdc0d0;
+
+  --ifm-color-primary: #bd93f9;
+  --ifm-color-primary-dark: #ad7ff6;
+  --ifm-color-primary-darker: #a372f4;
+  --ifm-color-primary-darkest: #884cf0;
+  --ifm-color-primary-light: #cdaafa;
+  --ifm-color-primary-lighter: #d6b7fb;
+  --ifm-color-primary-lightest: #ecddfe;
+
+  --ctt-border: #44475a;
+  --ctt-surface: #343746;
+  --ctt-surface-secondary: #21222c;
+  --ctt-muted: #bdc0d0;
+
+  --docusaurus-highlighted-code-line-bg: rgba(189, 147, 249, 0.20);
+}
+
+/* ============================================================
+   TKOD
+   Purple-focused theme
+   ============================================================ */
+html[data-tech-theme='TKOD'] {
+  --ifm-background-color: #0d0022;
+  --ifm-background-surface-color: #23003f;
+
+  --ifm-color-content: #f5eaff;
+  --ifm-color-content-secondary: #d5bce8;
+
+  --ifm-color-primary: #b12eef;
+  --ifm-color-primary-dark: #b12eef;
+  --ifm-color-primary-darker: #a525e3;
+  --ifm-color-primary-darkest: #8617bd;
+  --ifm-color-primary-light: #ce5cff;
+  --ifm-color-primary-lighter: #d775ff;
+  --ifm-color-primary-lightest: #e5a8ff;
+
+  --ctt-border: #54206f;
+  --ctt-surface: #23003f;
+  --ctt-surface-secondary: #310052;
+  --ctt-muted: #cbb0df;
+
+  --docusaurus-highlighted-code-line-bg: rgba(195, 67, 255, 0.16);
+}
+
+/* ============================================================
+   TKOD HERO
+   ============================================================ */
+html[data-tech-theme='TKOD'] .hero--primary {
+  --ifm-hero-background-color: #23003f !important;
+}
+
+/* ============================================================
+   TKOD SIDEBAR
+   ============================================================ */
+/* Sidebar link hover */
+html[data-tech-theme='TKOD'] .menu__link:hover {
+  color: #FFD700 !important;
+}
+
+/* Sidebar active link */
+html[data-tech-theme='TKOD'] .menu__link--active {
+  color: #FFD700 !important;
+}
+
+/* Sidebar category text when hovered */
+html[data-tech-theme='TKOD'] .menu__caret:hover {
+  color: #FFD700 !important;
+}
+
+/* ============================================================
+   TKOD TABLE OF CONTENTS
+   ============================================================ */
+html[data-tech-theme='TKOD'] .table-of-contents__link:hover,
+html[data-tech-theme='TKOD'] .table-of-contents__link--active {
+  color: #FFD700 !important;
+}
+
+/* ============================================================
+   TKOD BREADCRUMBS
+   ============================================================ */
+html[data-tech-theme='TKOD'] .breadcrumbs__link:hover {
+  color: #FFD700 !important;
+}
+
+/* ============================================================
+   TKOD DARK MODE
+   ============================================================ */
+html[data-theme='dark'][data-tech-theme='TKOD'] {
+  --ifm-background-color: #0d0022;
+  --ifm-background-surface-color: #23003f;
+
+  --ifm-color-content: #f5eaff;
+  --ifm-color-content-secondary: #d5bce8;
+
+  --ifm-color-primary: #b12eef;
+  --ifm-color-primary-dark: #b12eef;
+  --ifm-color-primary-darker: #a525e3;
+  --ifm-color-primary-darkest: #8617bd;
+  --ifm-color-primary-light: #ce5cff;
+  --ifm-color-primary-lighter: #d775ff;
+  --ifm-color-primary-lightest: #e5a8ff;
+
+  --ctt-border: #5a2375;
+  --ctt-surface: #23003f;
+  --ctt-surface-secondary: #310052;
+  --ctt-muted: #cbb0df;
+
+  --docusaurus-highlighted-code-line-bg: rgba(195, 67, 255, 0.18);
+}
+
+/* ============================================================
+   TKOD ALERTS / ADMONITIONS
+   ============================================================ */
+html[data-tech-theme='TKOD'] .alert {
+  color: #f5eaff !important;
+  background: #23003f !important;
+  border-color: #c343ff !important;
+}
+
+html[data-tech-theme='TKOD'] .alert__title {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+html[data-tech-theme='TKOD'] .alert p,
+html[data-tech-theme='TKOD'] .alert li,
+html[data-tech-theme='TKOD'] .alert strong,
+html[data-tech-theme='TKOD'] .alert em {
+  color: #f5eaff !important;
+}
+
+html[data-tech-theme='TKOD'] .alert a {
+  color: #e5a8ff !important;
+}
+
+html[data-tech-theme='TKOD'] .alert a:hover {
+  color: #ffffff !important;
+}
+
+html[data-tech-theme='TKOD'] .alert svg {
+  fill: currentColor;
+}
+
+/* Warning */
+html[data-tech-theme='TKOD'] .alert--warning {
+  --ifm-alert-background-color: #2d1640;
+  --ifm-alert-background-color-highlight: #3b1d52;
+  --ifm-alert-foreground-color: #fff1c2;
+  --ifm-alert-border-color: #ffbf3f;
+
+  color: #fff1c2 !important;
+  background: #2d1640 !important;
+  border-color: #ffbf3f !important;
+}
+
+html[data-tech-theme='TKOD'] .alert--warning .alert__title {
+  color: #ffd866 !important;
+}
+
+html[data-tech-theme='TKOD'] .alert--warning svg {
+  color: #ffd866 !important;
+}
+
+/* Info */
+html[data-tech-theme='TKOD'] .alert--info {
+  --ifm-alert-background-color: #21113d;
+  --ifm-alert-background-color-highlight: #2d1852;
+  --ifm-alert-foreground-color: #f1ddff;
+  --ifm-alert-border-color: #9d5cff;
+
+  color: #f1ddff !important;
+  background: #21113d !important;
+  border-color: #9d5cff !important;
+}
+
+html[data-tech-theme='TKOD'] .alert--info .alert__title {
+  color: #d9aaff !important;
+}
+
+/* Success */
+html[data-tech-theme='TKOD'] .alert--success {
+  --ifm-alert-background-color: #122d27;
+  --ifm-alert-background-color-highlight: #193d34;
+  --ifm-alert-foreground-color: #d4fff1;
+  --ifm-alert-border-color: #42d6ad;
+
+  color: #d4fff1 !important;
+  background: #122d27 !important;
+  border-color: #42d6ad !important;
+}
+
+html[data-tech-theme='TKOD'] .alert--success .alert__title {
+  color: #72e8c5 !important;
+}
+
+/* Danger */
+html[data-tech-theme='TKOD'] .alert--danger {
+  --ifm-alert-background-color: #351324;
+  --ifm-alert-background-color-highlight: #48182e;
+  --ifm-alert-foreground-color: #ffe0e7;
+  --ifm-alert-border-color: #ff4664;
+
+  color: #ffe0e7 !important;
+  background: #351324 !important;
+  border-color: #ff4664 !important;
+}
+
+html[data-tech-theme='TKOD'] .alert--danger .alert__title {
+  color: #ff7188 !important;
+}
+
+/* ============================================================
+   Suprise
+   TKOD-inspired red / crimson premium theme
+   ============================================================ */
+html[data-tech-theme='Suprise'] {
+  --ifm-background-color: #11090b;
+
+  --ifm-color-content: #f7e9eb;
+  --ifm-color-content-secondary: #d1afb5;
+
+  --ifm-color-primary: #ff3347;
+  --ifm-color-primary-dark: #ed263b;
+  --ifm-color-primary-darker: #d91e32;
+  --ifm-color-primary-darkest: #b91629;
+
+  --ifm-color-primary-light: #ff5969;
+  --ifm-color-primary-lighter: #ff7583;
+  --ifm-color-primary-lightest: #ffadb6;
+
+  --ctt-border: #4b252b;
+  --ctt-surface: #1c0d10;
+  --ctt-surface-secondary: #281216;
+  --ctt-muted: #d1afb5;
+
+  --docusaurus-highlighted-code-line-bg: rgba(255, 51, 71, 0.14);
+}
+
+html[data-theme='dark'][data-tech-theme='Suprise'] {
+  --ifm-background-color: #11090b;
+  --ifm-background-surface-color: #1c0d10;
+
+  --ifm-color-content: #f7e9eb;
+  --ifm-color-content-secondary: #d1afb5;
+
+  --ifm-color-primary: #ff3347;
+  --ifm-color-primary-dark: #ed263b;
+  --ifm-color-primary-darker: #d91e32;
+  --ifm-color-primary-darkest: #b91629;
+
+  --ifm-color-primary-light: #ff5969;
+  --ifm-color-primary-lighter: #ff7583;
+  --ifm-color-primary-lightest: #ffadb6;
+
+  --ctt-border: #4b252b;
+  --ctt-surface: #1c0d10;
+  --ctt-surface-secondary: #281216;
+  --ctt-muted: #d1afb5;
+
+  --docusaurus-highlighted-code-line-bg: rgba(255, 51, 71, 0.16);
+}
+
+/* ============================================================
+   Suprise READABILITY
+   ============================================================ */
+html[data-tech-theme='Suprise'] body {
+  color: #f7e9eb;
+  background: #11090b;
+}
+
+html[data-tech-theme='Suprise'] p,
+html[data-tech-theme='Suprise'] li,
+html[data-tech-theme='Suprise'] td,
+html[data-tech-theme='Suprise'] th {
+  color: #f7e9eb;
+}
+
+html[data-tech-theme='Suprise'] h1,
+html[data-tech-theme='Suprise'] h2,
+html[data-tech-theme='Suprise'] h3,
+html[data-tech-theme='Suprise'] h4,
+html[data-tech-theme='Suprise'] h5,
+html[data-tech-theme='Suprise'] h6 {
+  color: #ffffff;
+}
+
+/* ============================================================
+   Suprise LINKS
+   ============================================================ */
+html[data-tech-theme='Suprise'] a {
+  color: #ff5969;
+  transition:
+    color 160ms ease,
+    text-shadow 160ms ease;
+}
+
+html[data-tech-theme='Suprise'] a:hover {
+  color: #ffadb6;
+  text-shadow:
+    0 0 12px rgba(255, 51, 71, 0.24);
+}
+
+/* ============================================================
+   Suprise NAVBAR
+   ============================================================ */
+html[data-tech-theme='Suprise'] .navbar {
+  background: #170b0e;
+  border-bottom: 1px solid #4b252b;
+}
+
+html[data-tech-theme='Suprise'] .navbar__title,
+html[data-tech-theme='Suprise'] .navbar__link {
+  color: #f7e9eb;
+}
+
+html[data-tech-theme='Suprise'] .navbar__link:hover {
+  color: #ff5969;
+}
+
+/* ============================================================
+   Suprise SIDEBAR
+   ============================================================ */
+html[data-tech-theme='Suprise'] .menu {
+  background: #11090b;
+}
+
+html[data-tech-theme='Suprise'] .menu__link {
+  color: #d1afb5;
+}
+
+html[data-tech-theme='Suprise'] .menu__link:hover {
+  color: #ffffff;
+  
+}
+
+html[data-tech-theme='Suprise'] .menu__link--active {
+  color: #ff7583;
+  background: rgba(255, 51, 71, 0.12);
+  border-left: 3px solid #ff3347;
+}
+
+/* ============================================================
+   Suprise BREADCRUMBS / TOC
+   ============================================================ */
+html[data-tech-theme='Suprise'] .breadcrumbs__link,
+html[data-tech-theme='Suprise'] .table-of-contents__link {
+  color: #d1afb5;
+}
+
+html[data-tech-theme='Suprise'] .breadcrumbs__link:hover,
+html[data-tech-theme='Suprise'] .table-of-contents__link:hover,
+html[data-tech-theme='Suprise'] .table-of-contents__link--active {
+  color: #ff5969;
+}
+
+/* ============================================================
+   Suprise TABLES
+   ============================================================ */
+html[data-tech-theme='Suprise'] table {
+  border-color: #4b252b;
+}
+
+html[data-tech-theme='Suprise'] table th {
+  background: #281216;
+  color: #ffffff;
+}
+
+html[data-tech-theme='Suprise'] table td {
+  color: #f7e9eb;
+  border-color: #4b252b;
+}
+
+html[data-tech-theme='Suprise'] table tr:nth-child(2n) {
+  background: rgba(255, 51, 71, 0.05);
+}
+
+/* ============================================================
+   Suprise CODE
+   ============================================================ */
+html[data-tech-theme='Suprise'] code {
+  background: #281216;
+  border: 1px solid #4b252b;
+  color: #ffadb6;
+}
+
+html[data-tech-theme='Suprise'] pre code {
+  background: transparent;
+  border: 0;
+  color: inherit;
+}
+
+/* ============================================================
+   Suprise BLOCKQUOTES
+   ============================================================ */
+html[data-tech-theme='Suprise'] blockquote {
+  border-left-color: #ff3347;
+  background: rgba(255, 51, 71, 0.07);
+  color: #d1afb5;
+}
+
+/* ============================================================
+   Suprise PAGINATION
+   ============================================================ */
+html[data-tech-theme='Suprise'] .pagination-nav__link {
+  
+  border-color: #4b252b;
+}
+
+html[data-tech-theme='Suprise'] .pagination-nav__link:hover {
+  border-color: #ff3347;
+  box-shadow:
+    0 0 18px rgba(255, 51, 71, 0.08);
+}
+
+/* ============================================================
+   Suprise ADMONITIONS
+   ============================================================ */
+html[data-tech-theme='Suprise'] .alert {
+  color: #f7e9eb !important;
+  background: #1c0d10 !important;
+  border-color: #ff3347 !important;
+}
+
+html[data-tech-theme='Suprise'] .alert p,
+html[data-tech-theme='Suprise'] .alert li,
+html[data-tech-theme='Suprise'] .alert strong,
+html[data-tech-theme='Suprise'] .alert em {
+  color: #f7e9eb !important;
+}
+
+html[data-tech-theme='Suprise'] .alert__title {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+html[data-tech-theme='Suprise'] .alert a {
+  color: #ffadb6 !important;
+}
+
+html[data-tech-theme='Suprise'] .alert a:hover {
+  color: #ffffff !important;
+}
+
+html[data-tech-theme='Suprise'] .alert--warning {
+  --ifm-alert-background-color: #321b12;
+  --ifm-alert-background-color-highlight: #462319;
+  --ifm-alert-foreground-color: #fff1c2;
+  --ifm-alert-border-color: #ffbf3f;
+
+  color: #fff1c2 !important;
+  background: #321b12 !important;
+  border-color: #ffbf3f !important;
+}
+
+html[data-tech-theme='Suprise'] .alert--warning .alert__title,
+html[data-tech-theme='Suprise'] .alert--warning svg {
+  color: #ffd866 !important;
+}
+
+html[data-tech-theme='Suprise'] .alert--info {
+  --ifm-alert-background-color: #24121b;
+  --ifm-alert-background-color-highlight: #351827;
+  --ifm-alert-foreground-color: #ffe2e8;
+  --ifm-alert-border-color: #ff5969;
+
+  color: #ffe2e8 !important;
+  background: #24121b !important;
+  border-color: #ff5969 !important;
+}
+
+html[data-tech-theme='Suprise'] .alert--success {
+  --ifm-alert-background-color: #122d27;
+  --ifm-alert-background-color-highlight: #193d34;
+  --ifm-alert-foreground-color: #d4fff1;
+  --ifm-alert-border-color: #42d6ad;
+
+  color: #d4fff1 !important;
+  background: #122d27 !important;
+  border-color: #42d6ad !important;
+}
+
+html[data-tech-theme='Suprise'] .alert--danger {
+  --ifm-alert-background-color: #351018;
+  --ifm-alert-background-color-highlight: #4a1420;
+  --ifm-alert-foreground-color: #ffe0e7;
+  --ifm-alert-border-color: #ff4664;
+
+  color: #ffe0e7 !important;
+  background: #351018 !important;
+  border-color: #ff4664 !important;
+}
+
+html[data-tech-theme='Suprise'] .alert--danger .alert__title {
+  color: #ff7583 !important;
+}
+
+/* ============================================================
+   Suprise FOOTER
+   ============================================================ */
+html[data-tech-theme='Suprise'] .footer {
+  background: #0b0708;
+  color: #d1afb5;
+}
+
+html[data-tech-theme='Suprise'] .footer__title {
+  color: #ffffff;
+}
+
+html[data-tech-theme='Suprise'] .footer__link-item {
+  color: #d1afb5;
+}
+
+html[data-tech-theme='Suprise'] .footer__link-item:hover {
+  color: #ff5969;
+}
+
+/* ============================================================
+   Suprise SEARCH
+   ============================================================ */
+html[data-tech-theme='Suprise']
+.search-local-container
+.search-local-modal {
+  
+  border-color: #4b252b;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.72),
+    0 0 30px rgba(255, 51, 71, 0.10);
+}
+
+html[data-tech-theme='Suprise']
+.search-local-container
+.search-local-input {
+  color: #f7e9eb;
+  
+  border-bottom-color: #4b252b;
+}
+
+html[data-tech-theme='Suprise']
+.search-local-container
+.search-local-input::placeholder {
+  color: #d1afb5;
+}
+
+html[data-tech-theme='Suprise']
+.search-local-container
+.search-local-result:hover,
+html[data-tech-theme='Suprise']
+.search-local-container
+.search-local-result[aria-selected='true'] {
+  background: #281216;
+}
+
+html[data-tech-theme='Suprise']
+.search-local-container
+.search-local-result-title {
+  color: #ffffff;
+}
+
+html[data-tech-theme='Suprise']
+.search-local-container
+.search-local-result-content {
+  color: #d1afb5;
+}
+
+/* ============================================================
+   Suprise ACCENTS
+   ============================================================ */
+html[data-tech-theme='Suprise']
+.theme-doc-markdown
+strong {
+  color: #ff5969;
+}
+
+html[data-tech-theme='Suprise']
+.theme-doc-markdown
+hr {
+  border-color: #4b252b;
+}
+
+/* ============================================================
+   AMOLED
+   ============================================================ */
 html[data-tech-theme='amoled'] {
   --ifm-background-color: #000000;
   --ifm-background-surface-color: #050505;
@@ -25,11 +837,9 @@ html[data-tech-theme='amoled'] {
   --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.08);
 }
 
-
 /* ============================================================
    HALLOWEEN
    ============================================================ */
-
 html[data-tech-theme='halloween'] {
   --ifm-background-color: #100b12;
   --ifm-background-surface-color: #19101d;
@@ -57,12 +867,10 @@ html[data-tech-theme='halloween'] .navbar {
   box-shadow: 0 1px 0 #ff7518;
 }
 
-
 /* ============================================================
    CHRISTMAS
    Green + red + snow
    ============================================================ */
-
 html[data-tech-theme='christmas'] {
   --ifm-background-color: #f5f8f5;
   --ifm-background-surface-color: #ffffff;
@@ -109,11 +917,9 @@ html[data-theme='dark'][data-tech-theme='christmas'] {
   --docusaurus-highlighted-code-line-bg: rgba(255, 75, 92, 0.13);
 }
 
-
 /* ============================================================
    CHRISTMAS LIGHTS
    ============================================================ */
-
 html[data-tech-theme='christmas'] .navbar::before {
   content: '';
 
@@ -162,34 +968,9 @@ html[data-tech-theme='christmas'] .navbar::after {
   animation: christmas-lights-glow 2.6s ease-in-out infinite;
 }
 
-@keyframes christmas-lights-glow {
-  0%,
-  100% {
-    opacity: 0.78;
-    filter: brightness(0.92);
-  }
-
-  25% {
-    opacity: 1;
-    filter: brightness(1.15);
-  }
-
-  50% {
-    opacity: 0.82;
-    filter: brightness(0.96);
-  }
-
-  75% {
-    opacity: 1;
-    filter: brightness(1.18);
-  }
-}
-
-
 /* ============================================================
    CHRISTMAS SNOW
    ============================================================ */
-
 html[data-tech-theme='christmas'] .main-wrapper {
   position: relative;
   overflow: hidden;
@@ -211,9 +992,7 @@ html[data-tech-theme='christmas'] .main-wrapper::after {
   will-change: transform;
 }
 
-
 /* Distant snow */
-
 html[data-tech-theme='christmas'] .main-wrapper::before {
   background-image:
     radial-gradient(circle, rgba(255,255,255,.90) 0 1px, transparent 1.5px),
@@ -235,9 +1014,7 @@ html[data-tech-theme='christmas'] .main-wrapper::before {
   animation: christmas-snow-far 18s linear infinite;
 }
 
-
 /* Foreground snow */
-
 html[data-tech-theme='christmas'] .main-wrapper::after {
   background-image:
     radial-gradient(circle, rgba(255,255,255,.96) 0 2px, transparent 3px),
@@ -259,26 +1036,6 @@ html[data-tech-theme='christmas'] .main-wrapper::after {
   animation: christmas-snow-near 11s linear infinite;
 }
 
-@keyframes christmas-snow-far {
-  from {
-    transform: translate3d(0, -120px, 0);
-  }
-
-  to {
-    transform: translate3d(45px, 110vh, 0);
-  }
-}
-
-@keyframes christmas-snow-near {
-  from {
-    transform: translate3d(-35px, -150px, 0);
-  }
-
-  to {
-    transform: translate3d(70px, 110vh, 0);
-  }
-}
-
 html[data-tech-theme='christmas'] .navbar,
 html[data-tech-theme='christmas'] .theme-doc-sidebar-container,
 html[data-tech-theme='christmas'] .container,
@@ -287,9 +1044,7 @@ html[data-tech-theme='christmas'] .footer {
   z-index: 1;
 }
 
-
 /* Christmas cards */
-
 html[data-tech-theme='christmas'] .card,
 html[data-tech-theme='christmas'] .pagination-nav__link {
   border-color: var(--ctt-border);
@@ -304,11 +1059,9 @@ html[data-tech-theme='christmas'] .pagination-nav__link:hover {
     0 6px 22px rgba(178, 31, 45, 0.10);
 }
 
-
 /* ============================================================
    AMOLED
    ============================================================ */
-
 html[data-tech-theme='amoled'] {
   --ifm-background-color: #000000;
   --ifm-background-surface-color: #050505;
@@ -344,13 +1097,11 @@ html[data-tech-theme='amoled'] .pagination-nav__link {
   border-color: #202020;
 }
 
-
 /* ============================================================
    GALAXY
    Deep space + smooth multi-layer star animation
    Dark-only theme
    ============================================================ */
-
 html[data-tech-theme='galaxy'] {
   color-scheme: dark;
 
@@ -415,7 +1166,6 @@ html[data-tech-theme='galaxy'] body {
 }
 
 /* Galaxy star layers are owned by 10-galaxy-stars-and-resource-cards.css. */
-
 /* Keep website above stars */
 html[data-tech-theme='galaxy'] .navbar,
 html[data-tech-theme='galaxy'] .main-wrapper,
@@ -481,7 +1231,6 @@ html[data-tech-theme='galaxy'] button {
    CUSTOM
    Suprise red / crimson palette moved here
    ============================================================ */
-
 html[data-tech-theme='custom'] {
   --ifm-background-color: #11090b;
   --ifm-background-surface-color: #1c0d10;
@@ -533,11 +1282,9 @@ html[data-theme='dark'][data-tech-theme='custom'] {
 /* ============================================================
    UNIVERSAL THEME STYLING
    ============================================================ */
-
 /* ============================================================
    DEFAULT THEME — SITE-WIDE STYLING
    ============================================================ */
-
 html[data-tech-theme='default'] body {
   color: var(--ifm-color-content);
   background: var(--ifm-background-color);
@@ -680,11 +1427,9 @@ html[data-tech-theme] a:hover {
   color: var(--ifm-color-primary-light);
 }
 
-
 /* ============================================================
    NAVBAR
    ============================================================ */
-
 html[data-tech-theme] .navbar {
   background: var(--ifm-background-surface-color);
   border-bottom: 1px solid var(--ctt-border);
@@ -693,7 +1438,6 @@ html[data-tech-theme] .navbar {
 /* ============================================================
    DEFAULT THEME NAVBAR
    ============================================================ */
-
 html[data-tech-theme='default'] .navbar {
   background: #151a22;
   border-bottom: 1px solid #30333a;
@@ -717,11 +1461,9 @@ html[data-tech-theme] .navbar__link:hover {
   color: var(--ifm-color-primary);
 }
 
-
 /* ============================================================
    SIDEBAR
    ============================================================ */
-
 html[data-tech-theme] .menu {
   background: var(--ifm-background-color);
 }
@@ -745,11 +1487,9 @@ html[data-tech-theme] .menu__link--active {
   );
 }
 
-
 /* ============================================================
    BREADCRUMBS / TOC
    ============================================================ */
-
 html[data-tech-theme] .breadcrumbs__link,
 html[data-tech-theme] .table-of-contents__link {
   color: var(--ifm-color-content-secondary);
@@ -761,11 +1501,9 @@ html[data-tech-theme] .table-of-contents__link--active {
   color: var(--ifm-color-primary);
 }
 
-
 /* ============================================================
    TABLES
    ============================================================ */
-
 html[data-tech-theme] table {
   border-color: var(--ctt-border);
 }
@@ -788,11 +1526,9 @@ html[data-tech-theme] table tr:nth-child(2n) {
   );
 }
 
-
 /* ============================================================
    INLINE CODE
    ============================================================ */
-
 html[data-tech-theme] code {
   background: var(--ctt-surface-secondary);
   border: 1px solid var(--ctt-border);
@@ -805,12 +1541,9 @@ html[data-tech-theme] pre code {
   color: inherit;
 }
 
-
-
 /* ============================================================
    CHRISTMAS — WINTER NIGHT
    ============================================================ */
-
 html[data-tech-theme='christmas'],
 html[data-tech-theme='christmas'] body {
   --ctt-christmas-red: #ef3340;
@@ -879,17 +1612,9 @@ html[data-tech-theme='christmas'][data-theme='dark'] .main-wrapper::after {
   opacity: .72;
 }
 
-@media (max-width: 996px) {
-  html[data-tech-theme='christmas'][data-theme='dark'] .main-wrapper::after {
-    height: 16px;
-  }
-}
-
-
 /* ============================================================
    CHRISTMAS — CANVAS SNOW + CANDLE LIGHTS
    ============================================================ */
-
 /* Let the animated canvas be visible through the winter-night page. */
 html.ctt-theme-effects-active[data-tech-theme='christmas'] .main-wrapper {
   background: transparent !important;

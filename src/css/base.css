@@ -1,0 +1,2365 @@
+/* ============================================================
+   CTT — BASE SITE STYLES
+   Layout, navbar, sidebar, search, homepage hero, shared components,
+   footer, tables and the design tokens (CSS variables).
+   Loads after theme-palettes.css and before themes-effects.css.
+   ============================================================ */
+
+/* ============================================================
+   BLOCKQUOTES
+   ============================================================ */
+html[data-tech-theme] blockquote {
+  border-left-color: var(--ifm-color-primary);
+
+  color: var(--ifm-color-content-secondary);
+
+  background: color-mix(
+    in srgb,
+    var(--ifm-color-primary) 6%,
+    transparent
+  );
+}
+
+/* ============================================================
+   PAGINATION
+   ============================================================ */
+html[data-tech-theme] .pagination-nav__link {
+  border-color: var(--ctt-border);
+  background: var(--ctt-surface);
+}
+
+html[data-tech-theme] .pagination-nav__link:hover {
+  border-color: var(--ifm-color-primary);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+html[data-tech-theme] .footer {
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-color-content-secondary);
+}
+
+html[data-tech-theme] .footer__title {
+  color: var(--ifm-color-content);
+}
+
+html[data-tech-theme] .footer__link-item {
+  color: var(--ifm-color-content-secondary);
+}
+
+html[data-tech-theme] .footer__link-item:hover {
+  color: var(--ifm-color-primary);
+}
+
+/* ============================================================
+   ADMONITIONS
+   ============================================================ */
+html[data-tech-theme] .alert {
+  color: var(--ifm-color-content);
+}
+
+html[data-tech-theme] .alert p,
+html[data-tech-theme] .alert li,
+html[data-tech-theme] .alert strong,
+html[data-tech-theme] .alert em {
+  color: inherit;
+}
+
+/* ============================================================
+   SEARCH POPUP
+   ============================================================ */
+html[data-tech-theme] .search-local-container {
+  --search-local-modal-width: min(720px, calc(100vw - 32px));
+}
+
+html[data-tech-theme] .search-local-container .search-local-modal {
+  width: var(--search-local-modal-width);
+
+  max-height:
+    min(720px, calc(100vh - 80px));
+
+  background: var(--ctt-surface);
+
+  border: 1px solid var(--ctt-border);
+  border-radius: 10px;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.35),
+    0 8px 24px rgba(0, 0, 0, 0.20);
+
+  overflow: hidden;
+}
+
+html[data-tech-theme] .search-local-container .search-local-input {
+  color: var(--ifm-color-content);
+  background: var(--ctt-surface);
+  border-bottom: 1px solid var(--ctt-border);
+}
+
+html[data-tech-theme]
+.search-local-container
+.search-local-input::placeholder {
+  color: var(--ctt-muted);
+}
+
+html[data-tech-theme]
+.search-local-container
+.search-local-result {
+  color: var(--ifm-color-content);
+}
+
+html[data-tech-theme]
+.search-local-container
+.search-local-result:hover,
+html[data-tech-theme]
+.search-local-container
+.search-local-result[aria-selected='true'] {
+  background: color-mix(
+    in srgb,
+    var(--ifm-color-primary) 10%,
+    var(--ctt-surface)
+  );
+}
+
+html[data-tech-theme]
+.search-local-container
+.search-local-result-title {
+  color: var(--ifm-color-content);
+}
+
+html[data-tech-theme]
+.search-local-container
+.search-local-result-content {
+  color: var(--ifm-color-content-secondary);
+}
+
+/* ============================================================
+   CTT RESPONSIVE / LAYERING FIXES
+   ============================================================ */
+/*
+ * Theme effects are decoration only. They must never create a
+ * stacking context above the Docusaurus UI or interfere with scrolling.
+ */
+html[data-tech-theme='galaxy'] body::before,
+html[data-tech-theme='galaxy'] body::after,
+html[data-tech-theme='christmas'] .main-wrapper::before,
+html[data-tech-theme='christmas'] .main-wrapper::after {
+  pointer-events: none !important;
+}
+
+/* Keep the actual Docusaurus application above animated backgrounds. */
+html[data-tech-theme='galaxy'] #__docusaurus,
+html[data-tech-theme='christmas'] #__docusaurus {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   NAVBAR — DO NOT LET THEME EFFECTS BREAK STICKY BEHAVIOUR
+   ============================================================ */
+html[data-tech-theme='galaxy'] .navbar,
+html[data-tech-theme='christmas'] .navbar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+}
+
+html[data-tech-theme='galaxy'] .navbar__inner,
+html[data-tech-theme='christmas'] .navbar__inner {
+  position: relative;
+  z-index: 2;
+}
+
+/* Mobile navigation drawer must always sit above the theme effects. */
+html[data-tech-theme='galaxy'] .navbar-sidebar,
+html[data-tech-theme='christmas'] .navbar-sidebar {
+  position: fixed !important;
+  z-index: 1100 !important;
+}
+
+html[data-tech-theme='galaxy'] .navbar-sidebar__backdrop,
+html[data-tech-theme='christmas'] .navbar-sidebar__backdrop {
+  z-index: 1090 !important;
+}
+
+/* Prevent the Christmas pseudo-element from changing navbar layout. */
+html[data-tech-theme='christmas'] .navbar::before,
+html[data-tech-theme='christmas'] .navbar::after {
+  pointer-events: none !important;
+}
+
+/* ============================================================
+   CHRISTMAS — SNOW MUST NOT CLIP THE PAGE
+   ============================================================ */
+html[data-tech-theme='christmas'] .main-wrapper {
+  position: relative !important;
+  overflow: visible !important;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* The snow is fixed to the viewport, not to the document's width. */
+html[data-tech-theme='christmas'] .main-wrapper::before,
+html[data-tech-theme='christmas'] .main-wrapper::after {
+  position: fixed !important;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  max-width: 100vw;
+  overflow: visible;
+  z-index: 0 !important;
+}
+
+/* ============================================================
+   GALAXY — STARS STAY BEHIND THE SITE
+   ============================================================ */
+html[data-tech-theme='galaxy'] body {
+  overflow-x: hidden;
+}
+
+html[data-tech-theme='galaxy'] body::before,
+html[data-tech-theme='galaxy'] body::after {
+  position: fixed !important;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  z-index: 0 !important;
+}
+
+html[data-tech-theme='galaxy'] .main-wrapper,
+html[data-tech-theme='galaxy'] .theme-doc-sidebar-container,
+html[data-tech-theme='galaxy'] .footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   CTT SEARCH UI — Docusaurus / Algolia-inspired local search
+   ============================================================
+
+   The current @easyops-cn/docusaurus-search-local renderer uses
+   `.searchBar .dropdownMenu` and CSS variables. Older CTT rules
+   targeted `.search-local-modal`, which is not the active element.
+   Keep the search implementation intact and style its real surface.
+*/
+html[data-tech-theme] {
+  --ctt-search-bar-bg: var(--ctt-surface-secondary);
+  --ctt-search-bar-bg-hover: color-mix(in srgb, var(--ctt-surface-secondary) 86%, var(--ifm-color-primary));
+  --ctt-search-bar-border: var(--ctt-border);
+  --ctt-search-modal-bg: var(--ctt-surface);
+  --ctt-search-modal-border: var(--ctt-border);
+  --ctt-search-hit-bg: var(--ctt-surface-secondary);
+  --ctt-search-hit-active: var(--ifm-color-primary);
+  --ctt-search-hit-text: var(--ifm-color-content);
+  --ctt-search-muted: var(--ctt-muted);
+}
+
+/* Search trigger in the navbar. */
+html[data-tech-theme] .navbar__search-input {
+  background-color: var(--ctt-search-bar-bg) !important;
+  background-image: none !important;
+  border: 1px solid var(--ctt-search-bar-border) !important;
+  border-radius: 30px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035),
+              0 1px 2px rgba(0, 0, 0, 0.12) !important;
+  color: var(--ifm-color-content) !important;
+  transition: background-color 140ms ease,
+              border-color 140ms ease,
+              box-shadow 140ms ease !important;
+  height: 2.3rem !important;
+  padding: 0 .1rem 0 2.20rem !important;
+
+}
+
+html[data-tech-theme] .navbar__search-input:hover {
+  background-color: var(--ctt-search-bar-bg-hover) !important;
+  border-color: color-mix(in srgb, var(--ifm-color-primary) 35%, var(--ctt-search-bar-border)) !important;
+}
+
+html[data-tech-theme] .navbar__search-input:focus {
+  background-color: var(--ctt-search-modal-bg) !important;
+  border-color: var(--ifm-color-primary) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ifm-color-primary) 18%, transparent),
+              0 3px 12px rgba(0, 0, 0, 0.16) !important;
+}
+
+html[data-tech-theme] .navbar__search-input::placeholder {
+  color: var(--ctt-search-muted) !important;
+  opacity: 1;
+}
+
+/* Give the modal the larger, spacious Docusaurus-style desktop layout. */
+html[data-tech-theme] .searchBar .dropdownMenu {
+  width: min(800px, calc(100vw - 32px)) !important;
+  max-width: calc(100vw - 32px) !important;
+  max-height: min(720px, calc(100vh - 40px)) !important;
+  min-height: min(520px, calc(100vh - 72px));
+  margin-top: 8px !important;
+  padding: 12px !important;
+  background: var(--ctt-search-modal-bg) !important;
+  border: 1px solid var(--ctt-search-modal-border) !important;
+  border-radius: 10px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    0 20px 60px rgba(0, 0, 0, 0.42),
+    0 4px 18px rgba(0, 0, 0, 0.22) !important;
+}
+
+/* Search field inside the expanded panel. */
+html[data-tech-theme] .searchBar .dropdownMenu input {
+  color: var(--ifm-color-content) !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--ctt-search-modal-border) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  min-height: 52px;
+}
+
+html[data-tech-theme] .searchBar .dropdownMenu input:focus {
+  outline: none !important;
+  border-bottom-color: var(--ifm-color-primary) !important;
+  box-shadow: 0 1px 0 var(--ifm-color-primary) !important;
+}
+
+html[data-tech-theme] .searchBar .dropdownMenu input::placeholder {
+  color: var(--ctt-search-muted) !important;
+}
+
+/* Individual result cards. */
+html[data-tech-theme] .searchBar .dropdownMenu .suggestion {
+  background: var(--ctt-search-hit-bg) !important;
+  color: var(--ctt-search-hit-text) !important;
+  border: 1px solid transparent;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  transition: background-color 120ms ease,
+              border-color 120ms ease,
+              transform 120ms ease;
+}
+
+html[data-tech-theme] .searchBar .dropdownMenu .suggestion:hover {
+  background: color-mix(in srgb, var(--ifm-color-primary) 7%, var(--ctt-search-hit-bg)) !important;
+  border-color: color-mix(in srgb, var(--ifm-color-primary) 22%, transparent);
+}
+
+/* Keyboard-selected result: use a readable tinted accent rather than
+   the old full-strength primary color. */
+html[data-tech-theme] .searchBar .dropdownMenu .suggestion.cursor {
+  background: color-mix(in srgb, var(--ifm-color-primary) 16%, var(--ctt-search-hit-bg)) !important;
+  border-color: color-mix(in srgb, var(--ifm-color-primary) 34%, var(--ctt-search-modal-border)) !important;
+  color: var(--ifm-color-content) !important;
+  box-shadow: inset 3px 0 0 var(--ifm-color-primary) !important;
+}
+
+html[data-tech-theme] .searchBar .dropdownMenu .suggestion.cursor,
+html[data-tech-theme] .searchBar .dropdownMenu .suggestion.cursor mark,
+html[data-tech-theme] .searchBar .dropdownMenu .suggestion.cursor .hitTree,
+html[data-tech-theme] .searchBar .dropdownMenu .suggestion.cursor .hitIcon,
+html[data-tech-theme] .searchBar .dropdownMenu .suggestion.cursor .hitPath {
+  color: var(--ifm-color-content) !important;
+}
+
+html[data-tech-theme] .searchBar .dropdownMenu .suggestion mark {
+  background: none !important;
+  color: var(--ifm-color-primary) !important;
+  font-weight: 700;
+}
+
+html[data-tech-theme] .searchBar .dropdownMenu .suggestion.cursor mark {
+  color: var(--ifm-color-primary-light) !important;
+}
+
+/* Make the path/metadata quieter, like the Docusaurus search UI. */
+html[data-tech-theme] .searchBar .dropdownMenu .hitPath,
+html[data-tech-theme] .searchBar .dropdownMenu .hitTree,
+html[data-tech-theme] .searchBar .dropdownMenu .hitIcon,
+html[data-tech-theme] .searchBar .dropdownMenu .hitFooter a {
+  color: var(--ctt-search-muted) !important;
+}
+
+/* Keep the modal above every CTT visual effect. */
+html.ctt-theme-effects-active .searchBar .dropdownMenu {
+  position: relative;
+  z-index: 1001;
+}
+
+/* ============================================================
+   CTT HOMEPAGE / HERO
+   ============================================================ */
+html[data-tech-theme] .hero--primary {
+  --ctt-hero-bg: var(--ifm-background-surface-color);
+  --ctt-hero-text: var(--ifm-color-content);
+  --ctt-hero-muted: var(--ifm-color-content-secondary);
+
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--ifm-color-primary) 12%, transparent),
+      transparent 55%
+    ),
+    var(--ctt-hero-bg);
+  color: var(--ctt-hero-text);
+  border-bottom: 1px solid var(--ctt-border);
+}
+
+html[data-tech-theme] .hero--primary .hero__title {
+  position: relative;
+  margin-bottom: 1rem;
+  color: var(--ctt-hero-text);
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+html[data-tech-theme] .hero--primary .hero__subtitle {
+  position: relative;
+  max-width: 850px;
+  margin: 0 auto 2rem;
+  color: var(--ctt-hero-muted);
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+  line-height: 1.65;
+  text-wrap: balance;
+}
+
+html[data-tech-theme] .hero--primary .button {
+  position: relative;
+  min-height: 46px;
+  padding: 0.7rem 1.35rem;
+  border: 1px solid color-mix(
+    in srgb,
+    var(--ifm-color-primary) 35%,
+    var(--ctt-border)
+  );
+  border-radius: 9px;
+  background: var(--ctt-surface);
+  color: var(--ifm-color-primary);
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
+}
+
+html[data-tech-theme] .hero--primary .button:hover {
+  transform: translateY(-2px);
+  background: color-mix(
+    in srgb,
+    var(--ifm-color-primary) 10%,
+    var(--ctt-surface)
+  );
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary-light);
+  box-shadow:
+    0 8px 26px color-mix(
+      in srgb,
+      var(--ifm-color-primary) 14%,
+      transparent
+    );
+}
+
+html[data-tech-theme] .hero--primary .button:active {
+  transform: translateY(0);
+}
+
+html[data-tech-theme] .hero--primary .button.button--primary {
+  background: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+  color: #ffffff;
+  box-shadow:
+    0 6px 22px color-mix(
+      in srgb,
+      var(--ifm-color-primary) 20%,
+      transparent
+    );
+}
+
+html[data-tech-theme] .hero--primary .button.button--primary:hover {
+  background: var(--ifm-color-primary-light);
+  border-color: var(--ifm-color-primary-light);
+  color: #ffffff;
+  box-shadow:
+    0 9px 30px color-mix(
+      in srgb,
+      var(--ifm-color-primary) 28%,
+      transparent
+    );
+}
+
+html[data-tech-theme] .hero--primary .container {
+  position: relative;
+  z-index: 2;
+  padding-top: 3rem;
+  padding-bottom: 11rem;
+}
+
+/* Default */
+html[data-tech-theme='default'] .hero--primary {
+  --ctt-hero-bg: #f5f7fa;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(18, 97, 160, 0.08),
+      transparent 55%
+    ),
+    #f5f7fa;
+  border-bottom-color: #d9dce1;
+}
+
+/* Catppuccin */
+html[data-tech-theme='catppuccin'] .hero--primary {
+  --ctt-hero-bg: #e6e9ef;
+}
+
+html[data-theme='dark'][data-tech-theme='catppuccin'] .hero--primary {
+  --ctt-hero-bg: #181825;
+}
+
+/* Nord */
+html[data-tech-theme='nord'] .hero--primary {
+  --ctt-hero-bg: #e5e9f0;
+}
+
+html[data-theme='dark'][data-tech-theme='nord'] .hero--primary {
+  --ctt-hero-bg: #252c38;
+}
+
+/* Dracula */
+html[data-tech-theme='dracula'] .hero--primary {
+  --ctt-hero-bg: #efeddf;
+}
+
+html[data-theme='dark'][data-tech-theme='dracula'] .hero--primary {
+  --ctt-hero-bg: #21222c;
+}
+
+/* TKOD */
+html[data-tech-theme='TKOD'] .hero--primary {
+  --ctt-hero-bg: #19002f;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(177, 46, 239, 0.24),
+      transparent 58%
+    ),
+    linear-gradient(180deg, #2a0050 0%, #19002f 100%);
+  border-bottom-color: #54206f;
+}
+
+/* Suprise */
+html[data-tech-theme='Suprise'] .hero--primary {
+  --ctt-hero-bg: #1c0d10;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 51, 71, 0.16),
+      transparent 55%
+    ),
+    linear-gradient(180deg, #241015 0%, #11090b 100%);
+}
+
+/* AMOLED */
+html[data-tech-theme='amoled'] .hero--primary {
+  --ctt-hero-bg: #000000;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(125, 183, 255, 0.10),
+      transparent 55%
+    ),
+    #000000;
+  border-bottom-color: #202020;
+}
+
+/* Halloween */
+html[data-tech-theme='halloween'] .hero--primary {
+  --ctt-hero-bg: #19101d;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 117, 24, 0.16),
+      transparent 55%
+    ),
+    linear-gradient(180deg, #25152b 0%, #100b12 100%);
+}
+
+/* Christmas */
+html[data-tech-theme='christmas'] .hero--primary {
+  --ctt-hero-bg: #edf4ef;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(178, 31, 45, 0.10),
+      transparent 55%
+    ),
+    #edf4ef;
+}
+
+html[data-theme='dark'][data-tech-theme='christmas'] .hero--primary {
+  --ctt-hero-bg: #0d1d12;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 75, 92, 0.13),
+      transparent 55%
+    ),
+    #0d1d12;
+}
+
+/* Galaxy */
+html[data-tech-theme='galaxy'] .hero--primary {
+  --ctt-hero-bg: #293752;
+  background:
+    radial-gradient(
+      ellipse at 50% 115%,
+      rgba(111, 91, 255, 0.22),
+      transparent 52%
+    ),
+    radial-gradient(
+      ellipse at 15% 20%,
+      rgba(76, 112, 255, 0.12),
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse at 85% 30%,
+      rgba(166, 105, 255, 0.10),
+      transparent 40%
+    ),
+    #293752;
+  border-bottom-color: rgba(142, 167, 255, 0.18);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.16);
+}
+
+html[data-tech-theme='galaxy'] .hero--primary .hero__title {
+  text-shadow: 0 2px 20px rgba(255, 255, 255, 0.08);
+}
+
+html[data-tech-theme='galaxy'] .hero--primary .button.button--primary {
+  background: #8ea7ff;
+  border-color: #8ea7ff;
+  color: #080b16;
+  box-shadow: 0 8px 30px rgba(142, 167, 255, 0.22);
+}
+
+html[data-tech-theme='galaxy'] .hero--primary .button.button--primary:hover {
+  background: #bdcaff;
+  border-color: #bdcaff;
+  color: #080b16;
+  box-shadow: 0 10px 38px rgba(142, 167, 255, 0.32);
+}
+
+/* Custom */
+html[data-tech-theme='custom'] .hero--primary {
+  --ctt-hero-bg: #1c0d10;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 51, 71, 0.16),
+      transparent 55%
+    ),
+    linear-gradient(180deg, #241015 0%, #11090b 100%);
+}
+
+/* ============================================================
+   FINAL DEFAULT THEME OVERRIDES
+   Keep the Default theme independent from the other CTT themes.
+   Docusaurus controls light/dark with [data-theme].
+   ============================================================ */
+html[data-tech-theme='default'][data-theme='light'] {
+  color-scheme: light;
+  --ifm-color-primary: #1261a0;
+  --ifm-color-primary-dark: #10578f;
+  --ifm-color-primary-darker: #0f5287;
+  --ifm-color-primary-darkest: #0c446f;
+  --ifm-color-primary-light: #146bb1;
+  --ifm-color-primary-lighter: #1670b9;
+  --ifm-color-primary-lightest: #2a7fbd;
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: #f8f9fb;
+  --ifm-color-content: #1f2937;
+  --ifm-color-content-secondary: #68707d;
+  --ctt-border: #d9dce1;
+  --ctt-surface: #ffffff;
+  --ctt-surface-secondary: #f5f6f8;
+  --ctt-muted: #68707d;
+  --docusaurus-highlighted-code-line-bg: rgba(18, 97, 160, 0.08);
+}
+
+html[data-tech-theme='default'][data-theme='dark'] {
+  color-scheme: dark;
+  --ifm-color-primary: #5daee9;
+  --ifm-color-primary-dark: #45a2e5;
+  --ifm-color-primary-darker: #379ce1;
+  --ifm-color-primary-darkest: #1d83cb;
+  --ifm-color-primary-light: #75baed;
+  --ifm-color-primary-lighter: #84c0ef;
+  --ifm-color-primary-lightest: #add5f5;
+  --ifm-background-color: #151a22;
+  --ifm-background-surface-color: #1b2029;
+  --ifm-color-content: #e5e7eb;
+  --ifm-color-content-secondary: #a7adb7;
+  --ctt-border: #303744;
+  --ctt-surface: #1b2029;
+  --ctt-surface-secondary: #232a34;
+  --ctt-muted: #a7adb7;
+  --docusaurus-highlighted-code-line-bg: rgba(93, 174, 233, 0.12);
+}
+
+/* Page surfaces and typography */
+html[data-tech-theme='default'] body,
+html[data-tech-theme='default'] .main-wrapper,
+html[data-tech-theme='default'] main {
+  color: var(--ifm-color-content) !important;
+  background: var(--ifm-background-color) !important;
+}
+
+html[data-tech-theme='default'] p,
+html[data-tech-theme='default'] li,
+html[data-tech-theme='default'] td,
+html[data-tech-theme='default'] th,
+html[data-tech-theme='default'] h1,
+html[data-tech-theme='default'] h2,
+html[data-tech-theme='default'] h3,
+html[data-tech-theme='default'] h4,
+html[data-tech-theme='default'] h5,
+html[data-tech-theme='default'] h6 {
+  color: var(--ifm-color-content);
+}
+
+html[data-tech-theme='default'] a {
+  color: var(--ifm-color-primary);
+}
+
+html[data-tech-theme='default'] a:hover {
+  color: var(--ifm-color-primary-light);
+}
+
+/* Navbar */
+html[data-tech-theme='default'][data-theme='light'] .navbar {
+  background: #151a22 !important;
+  border-bottom-color: #30333a !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .navbar__title,
+html[data-tech-theme='default'][data-theme='light'] .navbar__link {
+  color: #ffffff !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .navbar__link:hover {
+  color: #5daee9 !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .navbar {
+  background: #10141b !important;
+  border-bottom-color: #303744 !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .navbar__title,
+html[data-tech-theme='default'][data-theme='dark'] .navbar__link {
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .navbar__link:hover {
+  color: #75baed !important;
+}
+
+/* Sidebar / TOC */
+html[data-tech-theme='default'] .theme-doc-sidebar-container,
+html[data-tech-theme='default'] .menu {
+  background: var(--ifm-background-surface-color) !important;
+  border-color: var(--ctt-border);
+}
+
+html[data-tech-theme='default'] .menu__link {
+  color: var(--ifm-color-content-secondary) !important;
+}
+
+html[data-tech-theme='default'] .menu__link:hover {
+  color: var(--ifm-color-content) !important;
+  background: var(--ctt-surface-secondary) !important;
+}
+
+html[data-tech-theme='default'] .menu__link--active {
+  color: var(--ifm-color-primary) !important;
+  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent) !important;
+}
+
+html[data-tech-theme='default'] .breadcrumbs__link,
+html[data-tech-theme='default'] .table-of-contents__link {
+  color: var(--ifm-color-content-secondary) !important;
+}
+
+html[data-tech-theme='default'] .breadcrumbs__link:hover,
+html[data-tech-theme='default'] .table-of-contents__link:hover,
+html[data-tech-theme='default'] .table-of-contents__link--active {
+  color: var(--ifm-color-primary) !important;
+}
+
+/* Tables */
+html[data-tech-theme='default'] table {
+  background: var(--ctt-surface) !important;
+  border-color: var(--ctt-border) !important;
+}
+
+html[data-tech-theme='default'] table th {
+  background: var(--ctt-surface-secondary) !important;
+  color: var(--ifm-color-content) !important;
+  border-color: var(--ctt-border) !important;
+}
+
+html[data-tech-theme='default'] table td {
+  color: var(--ifm-color-content) !important;
+  border-color: var(--ctt-border) !important;
+}
+
+html[data-tech-theme='default'] table tr:nth-child(2n) {
+  background: color-mix(in srgb, var(--ctt-surface-secondary) 55%, var(--ctt-surface)) !important;
+}
+
+/* Code / quotes / cards */
+html[data-tech-theme='default'] code {
+  background: var(--ctt-surface-secondary) !important;
+  border-color: var(--ctt-border) !important;
+  color: var(--ifm-color-primary) !important;
+}
+
+html[data-tech-theme='default'] blockquote {
+  border-left-color: var(--ifm-color-primary) !important;
+  background: color-mix(in srgb, var(--ifm-color-primary) 7%, var(--ifm-background-color)) !important;
+  color: var(--ifm-color-content-secondary) !important;
+}
+
+html[data-tech-theme='default'] .pagination-nav__link,
+html[data-tech-theme='default'] .card {
+  background: var(--ctt-surface) !important;
+  border-color: var(--ctt-border) !important;
+}
+
+html[data-tech-theme='default'] .pagination-nav__link:hover,
+html[data-tech-theme='default'] .card:hover {
+  border-color: var(--ifm-color-primary) !important;
+}
+
+/* Search */
+html[data-tech-theme='default'] .navbar__search-input {
+  background-color: var(--ctt-search-bar-bg) !important;
+  border-color: var(--ctt-search-bar-border) !important;
+  color: var(--ifm-color-content) !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .navbar__search-input {
+  background-color: #232a34 !important;
+  border-color: #30333a !important;
+  color: #ffffff !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .navbar__search-input::placeholder {
+  color: #a7adb7 !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .navbar__search-input {
+  background-color: #232a34 !important;
+  border-color: #3a4350 !important;
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .navbar__search-input::placeholder {
+  color: #a7adb7 !important;
+}
+
+/* Footer */
+html[data-tech-theme='default'] .footer {
+  background: #151a22 !important;
+  color: #c7ced8 !important;
+}
+
+html[data-tech-theme='default'] .footer__title {
+  color: #ffffff !important;
+}
+
+html[data-tech-theme='default'] .footer__link-item {
+  color: #c7ced8 !important;
+}
+
+html[data-tech-theme='default'] .footer__link-item:hover {
+  color: #5daee9 !important;
+}
+
+/* Hero */
+html[data-tech-theme='default'][data-theme='light'] .hero--primary {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(18, 97, 160, 0.08), transparent 55%),
+    #f5f7fa !important;
+  border-bottom-color: #d9dce1 !important;
+  color: #1f2937 !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .hero--primary {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(93, 174, 233, 0.10), transparent 55%),
+    #151a22 !important;
+  border-bottom-color: #303744 !important;
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme='default'] .hero--primary .hero__title,
+html[data-tech-theme='default'] .hero--primary .hero__subtitle {
+  color: inherit !important;
+}
+
+/* ============================================================
+   CTT DEFAULT THEME — FINAL LIGHT/DARK OVERRIDE
+   This block is intentionally last so it wins over all previous
+   theme and Docusaurus rules.
+   ============================================================ */
+/* -------------------------
+   DEFAULT / LIGHT
+   ------------------------- */
+html[data-tech-theme='default'][data-theme='light'] body,
+html[data-tech-theme='default'][data-theme='light'] .main-wrapper,
+html[data-tech-theme='default'][data-theme='light'] main {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .navbar {
+  background: #ffffff !important;
+  border-bottom: 1px solid #d9dce1 !important;
+  color: #1f2937 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .navbar__title,
+html[data-tech-theme='default'][data-theme='light'] .navbar__link,
+html[data-tech-theme='default'][data-theme='light'] .navbar__item {
+  color: #1f2937 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .navbar__link:hover {
+  color: #1261a0 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .navbar__search-input {
+  background: #f5f6f8 !important;
+  border: 1px solid #d9dce1 !important;
+  color: #1f2937 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .navbar__search-input::placeholder {
+  color: #68707d !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .theme-doc-sidebar-container,
+html[data-tech-theme='default'][data-theme='light'] .menu,
+html[data-tech-theme='default'][data-theme='light'] .theme-doc-sidebar-menu {
+  background: #f8f9fb !important;
+  color: #1f2937 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .menu__link {
+  color: #4b5563 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .menu__link:hover {
+  color: #1261a0 !important;
+  background: #eef3f8 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .menu__link--active {
+  color: #1261a0 !important;
+  background: rgba(18, 97, 160, 0.10) !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .breadcrumbs__link,
+html[data-tech-theme='default'][data-theme='light'] .table-of-contents__link {
+  color: #68707d !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .breadcrumbs__link:hover,
+html[data-tech-theme='default'][data-theme='light'] .table-of-contents__link:hover,
+html[data-tech-theme='default'][data-theme='light'] .table-of-contents__link--active {
+  color: #1261a0 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] table,
+html[data-tech-theme='default'][data-theme='light'] .card,
+html[data-tech-theme='default'][data-theme='light'] .pagination-nav__link {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+  border-color: #d9dce1 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] table th {
+  background: #f5f6f8 !important;
+  color: #1f2937 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] table td {
+  color: #1f2937 !important;
+  border-color: #d9dce1 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] table tr:nth-child(2n) {
+  background: #fafbfc !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] code {
+  background: #f5f6f8 !important;
+  color: #1261a0 !important;
+  border-color: #d9dce1 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] blockquote {
+  background: rgba(18, 97, 160, 0.06) !important;
+  color: #68707d !important;
+  border-left-color: #1261a0 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .footer {
+  background: #f8f9fb !important;
+  color: #68707d !important;
+  border-top: 1px solid #d9dce1 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .footer__title {
+  color: #1f2937 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .footer__link-item {
+  color: #4b5563 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .footer__link-item:hover {
+  color: #1261a0 !important;
+}
+
+html[data-tech-theme='default'][data-theme='light'] .hero--primary {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(18, 97, 160, 0.08), transparent 55%),
+    #f5f7fa !important;
+  color: #1f2937 !important;
+  border-bottom-color: #d9dce1 !important;
+}
+
+/* -------------------------
+   DEFAULT / DARK
+   ------------------------- */
+html[data-tech-theme='default'][data-theme='dark'] body,
+html[data-tech-theme='default'][data-theme='dark'] .main-wrapper,
+html[data-tech-theme='default'][data-theme='dark'] main {
+  background: #151a22 !important;
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .navbar {
+  background: #10141b !important;
+  border-bottom: 1px solid #303744 !important;
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .navbar__title,
+html[data-tech-theme='default'][data-theme='dark'] .navbar__link,
+html[data-tech-theme='default'][data-theme='dark'] .navbar__item {
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .navbar__link:hover {
+  color: #75baed !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .navbar__search-input {
+  background: #232a34 !important;
+  border: 1px solid #3a4350 !important;
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .navbar__search-input::placeholder {
+  color: #a7adb7 !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .theme-doc-sidebar-container,
+html[data-tech-theme='default'][data-theme='dark'] .menu,
+html[data-tech-theme='default'][data-theme='dark'] .theme-doc-sidebar-menu {
+  background: #1b2029 !important;
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .menu__link {
+  color: #a7adb7 !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .menu__link:hover {
+  color: #e5e7eb !important;
+  background: #232a34 !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .menu__link--active {
+  color: #75baed !important;
+  background: rgba(93, 174, 233, 0.12) !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .breadcrumbs__link,
+html[data-tech-theme='default'][data-theme='dark'] .table-of-contents__link {
+  color: #a7adb7 !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .breadcrumbs__link:hover,
+html[data-tech-theme='default'][data-theme='dark'] .table-of-contents__link:hover,
+html[data-tech-theme='default'][data-theme='dark'] .table-of-contents__link--active {
+  color: #75baed !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] table,
+html[data-tech-theme='default'][data-theme='dark'] .card,
+html[data-tech-theme='default'][data-theme='dark'] .pagination-nav__link {
+  background: #1b2029 !important;
+  color: #e5e7eb !important;
+  border-color: #303744 !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] table th {
+  background: #232a34 !important;
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] table td {
+  color: #e5e7eb !important;
+  border-color: #303744 !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] table tr:nth-child(2n) {
+  background: #202630 !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] code {
+  background: #232a34 !important;
+  color: #75baed !important;
+  border-color: #303744 !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] blockquote {
+  background: rgba(93, 174, 233, 0.08) !important;
+  color: #a7adb7 !important;
+  border-left-color: #5daee9 !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .footer {
+  background: #10141b !important;
+  color: #a7adb7 !important;
+  border-top: 1px solid #303744 !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .footer__title {
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .footer__link-item {
+  color: #a7adb7 !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .footer__link-item:hover {
+  color: #75baed !important;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .hero--primary {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(93, 174, 233, 0.10), transparent 55%),
+    #151a22 !important;
+  color: #e5e7eb !important;
+  border-bottom-color: #303744 !important;
+}
+
+/* ---------- Default / Light ---------- */
+html[data-tech-theme="default"][data-theme="light"] {
+  color-scheme: light !important;
+  --ifm-background-color: #ffffff !important;
+  --ifm-background-surface-color: #f8f9fb !important;
+  --ifm-color-content: #1f2937 !important;
+  --ifm-color-content-secondary: #68707d !important;
+  --ifm-color-primary: #1261a0 !important;
+  --ifm-color-primary-dark: #10578f !important;
+  --ifm-color-primary-darker: #0f5287 !important;
+  --ifm-color-primary-darkest: #0c446f !important;
+  --ifm-color-primary-light: #146bb1 !important;
+  --ifm-color-primary-lighter: #1670b9 !important;
+  --ifm-color-primary-lightest: #2a7fbd !important;
+  --ctt-border: #d9dce1 !important;
+  --ctt-surface: #ffffff !important;
+  --ctt-surface-secondary: #f5f6f8 !important;
+  --ctt-muted: #68707d !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] body,
+html[data-tech-theme="default"][data-theme="light"] .main-wrapper,
+html[data-tech-theme="default"][data-theme="light"] main {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .navbar {
+  background: #151a22 !important;
+  border-bottom: 1px solid #30333a !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .navbar__title,
+html[data-tech-theme="default"][data-theme="light"] .navbar__link,
+html[data-tech-theme="default"][data-theme="light"] .navbar__item,
+html[data-tech-theme="default"][data-theme="light"] .navbar__toggle {
+  color: #ffffff !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .navbar__link:hover,
+html[data-tech-theme="default"][data-theme="light"] .navbar__item:hover {
+  color: #5daee9 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .theme-doc-sidebar-container,
+html[data-tech-theme="default"][data-theme="light"] .menu {
+  background: #f8f9fb !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .menu__link {
+  color: #4b5563 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .menu__link:hover {
+  color: #1261a0 !important;
+  background: #eef3f8 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .menu__link--active {
+  color: #1261a0 !important;
+  background: rgba(18, 97, 160, 0.10) !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .hero--primary {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(18, 97, 160, 0.08), transparent 55%),
+    #f5f7fa !important;
+  color: #1f2937 !important;
+  border-bottom: 1px solid #d9dce1 !important;
+}
+
+/* ---------- Default / Dark ---------- */
+html[data-tech-theme="default"][data-theme="dark"] {
+  color-scheme: dark !important;
+  --ifm-background-color: #151a22 !important;
+  --ifm-background-surface-color: #1b2029 !important;
+  --ifm-color-content: #e5e7eb !important;
+  --ifm-color-content-secondary: #a7adb7 !important;
+  --ifm-color-primary: #5daee9 !important;
+  --ifm-color-primary-dark: #45a2e5 !important;
+  --ifm-color-primary-darker: #379ce1 !important;
+  --ifm-color-primary-darkest: #1d83cb !important;
+  --ifm-color-primary-light: #75baed !important;
+  --ifm-color-primary-lighter: #84c0ef !important;
+  --ifm-color-primary-lightest: #add5f5 !important;
+  --ctt-border: #303744 !important;
+  --ctt-surface: #1b2029 !important;
+  --ctt-surface-secondary: #232a34 !important;
+  --ctt-muted: #a7adb7 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] body,
+html[data-tech-theme="default"][data-theme="dark"] .main-wrapper,
+html[data-tech-theme="default"][data-theme="dark"] main {
+  background: #151a22 !important;
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .navbar {
+  background: #10141b !important;
+  border-bottom: 1px solid #303744 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .navbar__title,
+html[data-tech-theme="default"][data-theme="dark"] .navbar__link,
+html[data-tech-theme="default"][data-theme="dark"] .navbar__item,
+html[data-tech-theme="default"][data-theme="dark"] .navbar__toggle {
+  color: #e5e7eb !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .navbar__link:hover,
+html[data-tech-theme="default"][data-theme="dark"] .navbar__item:hover {
+  color: #75baed !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .theme-doc-sidebar-container,
+html[data-tech-theme="default"][data-theme="dark"] .menu {
+  background: #1b2029 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .menu__link {
+  color: #a7adb7 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .menu__link:hover {
+  color: #e5e7eb !important;
+  background: #232a34 !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .menu__link--active {
+  color: #75baed !important;
+  background: rgba(93, 174, 233, 0.14) !important;
+}
+
+html[data-tech-theme="default"][data-theme="dark"] .hero--primary {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(93, 174, 233, 0.10), transparent 55%),
+    #151a22 !important;
+  color: #e5e7eb !important;
+  border-bottom: 1px solid #303744 !important;
+}
+
+/* ---------- Shared Default content ---------- */
+html[data-tech-theme="default"] h1,
+html[data-tech-theme="default"] h2,
+html[data-tech-theme="default"] h3,
+html[data-tech-theme="default"] h4,
+html[data-tech-theme="default"] h5,
+html[data-tech-theme="default"] h6,
+html[data-tech-theme="default"] p,
+html[data-tech-theme="default"] li,
+html[data-tech-theme="default"] td,
+html[data-tech-theme="default"] th {
+  color: var(--ifm-color-content) !important;
+}
+
+html[data-tech-theme="default"] a {
+  color: var(--ifm-color-primary) !important;
+}
+
+html[data-tech-theme="default"] a:hover {
+  color: var(--ifm-color-primary-light) !important;
+}
+
+html[data-tech-theme="default"] table,
+html[data-tech-theme="default"] .card,
+html[data-tech-theme="default"] .pagination-nav__link {
+  background: var(--ctt-surface) !important;
+  border-color: var(--ctt-border) !important;
+}
+
+html[data-tech-theme="default"] table th {
+  background: var(--ctt-surface-secondary) !important;
+}
+
+html[data-tech-theme="default"] table tr:nth-child(even) {
+  background: color-mix(in srgb, var(--ctt-surface-secondary) 55%, var(--ctt-surface)) !important;
+}
+
+html[data-tech-theme="default"] code {
+  background: var(--ctt-surface-secondary) !important;
+  color: var(--ifm-color-primary) !important;
+  border-color: var(--ctt-border) !important;
+}
+
+html[data-tech-theme="default"] .footer {
+  background: #151a22 !important;
+  color: #c7ced8 !important;
+}
+
+html[data-tech-theme="default"] .footer__title {
+  color: #ffffff !important;
+}
+
+html[data-tech-theme="default"] .footer__link-item {
+  color: #c7ced8 !important;
+}
+
+html[data-tech-theme="default"] .footer__link-item:hover {
+  color: #5daee9 !important;
+}
+
+/* Search is readable against the dark Default navbar in both modes. */
+html[data-tech-theme="default"] .navbar__search-input {
+  background: #232a34 !important;
+  border-color: #3a4350 !important;
+  color: #ffffff !important;
+}
+
+html[data-tech-theme="default"] .navbar__search-input::placeholder {
+  color: #a7adb7 !important;
+}
+
+/* ============================================================
+   CTT — FINAL THEME NORMALIZATION
+   ============================================================
+   This section is intentionally last.
+
+   It normalizes the visual contract for every CTT theme:
+   - page/background surfaces
+   - navbar and mobile navigation
+   - sidebar / TOC / breadcrumbs
+   - links and headings
+   - tables
+   - inline code and code blocks
+   - cards / pagination
+   - admonitions
+   - forms / native controls
+   - search
+   - footer
+   - hero
+   - focus / selection / scrollbar
+   - responsive hero and content spacing
+
+   Docusaurus may set data-theme independently of the CTT selector.
+   CTT themes therefore own their colors through CSS variables.
+   Dark-only themes intentionally stay dark.
+   ============================================================ */
+/* ============================================================
+   GLOBAL THEME TOKENS
+   ============================================================ */
+html[data-tech-theme] {
+  --ctt-page-bg: var(--ifm-background-color);
+  --ctt-surface-1: var(--ctt-surface);
+  --ctt-surface-2: var(--ctt-surface-secondary);
+  --ctt-text: var(--ifm-color-content);
+  --ctt-text-muted: var(--ifm-color-content-secondary);
+  --ctt-accent: var(--ifm-color-primary);
+  --ctt-accent-hover: var(--ifm-color-primary-light);
+  --ctt-navbar-bg: var(--ifm-background-surface-color);
+  --ctt-navbar-text: var(--ifm-color-content);
+  --ctt-navbar-muted: var(--ifm-color-content-secondary);
+  --ctt-footer-bg: var(--ifm-background-surface-color);
+  --ctt-footer-text: var(--ifm-color-content-secondary);
+  --ctt-control-bg: var(--ctt-surface);
+  --ctt-control-border: var(--ctt-border);
+  --ctt-control-text: var(--ifm-color-content);
+  --ctt-code-bg: var(--ctt-surface-secondary);
+  --ctt-code-text: var(--ifm-color-primary);
+  --ctt-hero-bg: var(--ifm-background-surface-color);
+  --ctt-hero-text: var(--ifm-color-content);
+  --ctt-hero-muted: var(--ifm-color-content-secondary);
+  --ctt-focus: var(--ifm-color-primary);
+}
+
+/* ============================================================
+   DEFAULT — LIGHT
+   ============================================================ */
+html[data-tech-theme='default'][data-theme='light'] {
+  color-scheme: light;
+
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: #f8f9fb;
+
+  --ifm-color-content: #1f2937;
+  --ifm-color-content-secondary: #68707d;
+
+  --ifm-color-primary: #1261a0;
+  --ifm-color-primary-dark: #10578f;
+  --ifm-color-primary-darker: #0f5287;
+  --ifm-color-primary-darkest: #0c446f;
+  --ifm-color-primary-light: #146bb1;
+  --ifm-color-primary-lighter: #1670b9;
+  --ifm-color-primary-lightest: #2a7fbd;
+
+  --ctt-border: #d9dce1;
+  --ctt-surface: #ffffff;
+  --ctt-surface-secondary: #f5f6f8;
+  --ctt-muted: #68707d;
+
+  --ctt-page-bg: #ffffff;
+  --ctt-surface-1: #ffffff;
+  --ctt-surface-2: #f5f6f8;
+  --ctt-navbar-bg: #ffffff;
+  --ctt-navbar-text: #1f2937;
+  --ctt-navbar-muted: #68707d;
+  --ctt-footer-bg: #f5f6f8;
+  --ctt-footer-text: #68707d;
+  --ctt-control-bg: #ffffff;
+  --ctt-control-border: #d9dce1;
+  --ctt-control-text: #1f2937;
+  --ctt-code-bg: #f5f6f8;
+  --ctt-code-text: #1261a0;
+  --ctt-hero-bg: #f5f7fa;
+  --ctt-hero-text: #1f2937;
+  --ctt-hero-muted: #68707d;
+}
+
+/* ============================================================
+   DEFAULT — DARK
+   ============================================================ */
+html[data-tech-theme='default'][data-theme='dark'] {
+  color-scheme: dark;
+
+  --ifm-background-color: #151a22;
+  --ifm-background-surface-color: #1b2029;
+
+  --ifm-color-content: #e5e7eb;
+  --ifm-color-content-secondary: #a7adb7;
+
+  --ifm-color-primary: #5daee9;
+  --ifm-color-primary-dark: #45a2e5;
+  --ifm-color-primary-darker: #379ce1;
+  --ifm-color-primary-darkest: #1d83cb;
+  --ifm-color-primary-light: #75baed;
+  --ifm-color-primary-lighter: #84c0ef;
+  --ifm-color-primary-lightest: #add5f5;
+
+  --ctt-border: #303744;
+  --ctt-surface: #1b2029;
+  --ctt-surface-secondary: #232a34;
+  --ctt-muted: #a7adb7;
+
+  --ctt-page-bg: #151a22;
+  --ctt-surface-1: #1b2029;
+  --ctt-surface-2: #232a34;
+  --ctt-navbar-bg: #10141b;
+  --ctt-navbar-text: #e5e7eb;
+  --ctt-navbar-muted: #a7adb7;
+  --ctt-footer-bg: #10141b;
+  --ctt-footer-text: #a7adb7;
+  --ctt-control-bg: #232a34;
+  --ctt-control-border: #3a4350;
+  --ctt-control-text: #e5e7eb;
+  --ctt-code-bg: #232a34;
+  --ctt-code-text: #75baed;
+  --ctt-hero-bg: #151a22;
+  --ctt-hero-text: #e5e7eb;
+  --ctt-hero-muted: #a7adb7;
+}
+
+/* ============================================================
+   THEME COMPONENT CONTRACT
+   ============================================================ */
+html[data-tech-theme] body {
+  background: var(--ctt-page-bg) !important;
+  color: var(--ctt-text) !important;
+}
+
+html[data-tech-theme] #__docusaurus,
+html[data-tech-theme] .main-wrapper,
+html[data-tech-theme] main {
+  background: var(--ctt-page-bg) !important;
+  color: var(--ctt-text) !important;
+}
+
+html[data-tech-theme] .container,
+html[data-tech-theme] .row {
+  color: inherit;
+}
+
+html[data-tech-theme] h1,
+html[data-tech-theme] h2,
+html[data-tech-theme] h3,
+html[data-tech-theme] h4,
+html[data-tech-theme] h5,
+html[data-tech-theme] h6 {
+  color: var(--ctt-text) !important;
+}
+
+html[data-tech-theme] p,
+html[data-tech-theme] li,
+html[data-tech-theme] dt,
+html[data-tech-theme] dd {
+  color: var(--ctt-text);
+}
+
+html[data-tech-theme] small,
+html[data-tech-theme] .text--truncate {
+  color: var(--ctt-text-muted);
+}
+
+html[data-tech-theme] a {
+  color: var(--ctt-accent);
+}
+
+html[data-tech-theme] a:hover {
+  color: var(--ctt-accent-hover);
+}
+
+html[data-tech-theme] ::selection {
+  background: color-mix(in srgb, var(--ctt-accent) 25%, transparent);
+  color: var(--ctt-text);
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+html[data-tech-theme] .navbar {
+  background: var(--ctt-navbar-bg) !important;
+  color: var(--ctt-navbar-text) !important;
+  border-bottom: 1px solid var(--ctt-border) !important;
+}
+
+html[data-tech-theme] .navbar__title,
+html[data-tech-theme] .navbar__link,
+html[data-tech-theme] .navbar__item,
+html[data-tech-theme] .navbar__brand,
+html[data-tech-theme] .navbar__toggle {
+  color: var(--ctt-navbar-text) !important;
+  padding: 10px;
+}
+
+html[data-tech-theme] .navbar__link:hover,
+html[data-tech-theme] .navbar__item:hover {
+  color: var(--ctt-accent) !important;
+}
+
+html[data-tech-theme] .navbar__toggle:hover {
+  background: var(--ctt-surface-2) !important;
+}
+
+html[data-tech-theme] .navbar__toggle svg,
+html[data-tech-theme] .navbar__close svg {
+  color: currentColor;
+  fill: currentColor;
+}
+
+/* ============================================================
+   MOBILE NAVIGATION
+   ============================================================ */
+html[data-tech-theme] .navbar-sidebar {
+  background: var(--ctt-page-bg) !important;
+  color: var(--ctt-text) !important;
+}
+
+html[data-tech-theme] .navbar-sidebar__brand,
+html[data-tech-theme] .navbar-sidebar__items {
+  background: var(--ctt-page-bg) !important;
+}
+
+html[data-tech-theme] .navbar-sidebar .menu__link {
+  color: var(--ctt-text-muted) !important;
+}
+
+html[data-tech-theme] .navbar-sidebar .menu__link:hover,
+html[data-tech-theme] .navbar-sidebar .menu__link--active {
+  color: var(--ctt-accent) !important;
+  background: var(--ctt-surface-2) !important;
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+html[data-tech-theme] .theme-doc-sidebar-container,
+html[data-tech-theme] .theme-doc-sidebar-menu,
+html[data-tech-theme] .menu {
+  background: var(--ctt-surface-2) !important;
+  color: var(--ctt-text) !important;
+  border-color: var(--ctt-border) !important;
+}
+
+html[data-tech-theme] .menu__link {
+  color: var(--ctt-text-muted) !important;
+  border-radius: 6px;
+}
+
+html[data-tech-theme] .menu__link:hover {
+  color: var(--ctt-text) !important;
+  background: color-mix(
+    in srgb,
+    var(--ctt-accent) 7%,
+    var(--ctt-surface-2)
+  ) !important;
+}
+
+html[data-tech-theme] .menu__link--active {
+  color: var(--ctt-accent) !important;
+  background: color-mix(
+    in srgb,
+    var(--ctt-accent) 12%,
+    var(--ctt-surface-2)
+  ) !important;
+}
+
+html[data-tech-theme] .menu__caret,
+html[data-tech-theme] .menu__link--sublist-caret::after {
+  color: currentColor;
+}
+
+/* ============================================================
+   BREADCRUMBS / TOC
+   ============================================================ */
+html[data-tech-theme] .breadcrumbs__link,
+html[data-tech-theme] .breadcrumbs__item,
+html[data-tech-theme] .table-of-contents__link {
+  color: var(--ctt-text-muted) !important;
+}
+
+html[data-tech-theme] .breadcrumbs__link:hover,
+html[data-tech-theme] .table-of-contents__link:hover,
+html[data-tech-theme] .table-of-contents__link--active {
+  color: var(--ctt-accent) !important;
+}
+
+html[data-tech-theme] .breadcrumbs__item--active .breadcrumbs__link {
+  color: var(--ctt-text) !important;
+}
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+html[data-tech-theme] table {
+  
+  color: var(--ctt-text) !important;
+  border-color: var(--ctt-border) !important;
+}
+
+html[data-tech-theme] table thead,
+html[data-tech-theme] table th {
+  background: var(--ctt-surface-2) !important;
+  color: var(--ctt-text) !important;
+  border-color: var(--ctt-border) !important;
+}
+
+html[data-tech-theme] table td {
+  color: var(--ctt-text) !important;
+  border-color: var(--ctt-border) !important;
+}
+
+html[data-tech-theme] table tbody tr {
+  background: var(--ctt-surface-1);
+}
+
+html[data-tech-theme] table tbody tr:nth-child(even) {
+  background: color-mix(
+    in srgb,
+    var(--ctt-surface-2) 55%,
+    var(--ctt-surface-1)
+  );
+}
+
+html[data-tech-theme] table tbody tr:hover {
+  background: color-mix(
+    in srgb,
+    var(--ctt-accent) 6%,
+    var(--ctt-surface-1)
+  );
+}
+
+/* ============================================================
+   INLINE CODE
+   ============================================================ */
+html[data-tech-theme] :not(pre) > code {
+  background: var(--ctt-code-bg) !important;
+  color: var(--ctt-code-text) !important;
+  border: 1px solid var(--ctt-border) !important;
+  border-radius: 5px;
+}
+
+html[data-tech-theme] pre,
+html[data-tech-theme] .theme-code-block {
+  border: 1px solid var(--ctt-border);
+}
+
+html[data-tech-theme] pre code,
+html[data-tech-theme] .theme-code-block pre code {
+  background: transparent !important;
+  border: 0 !important;
+  color: inherit !important;
+}
+
+/* ============================================================
+   BLOCKQUOTES / HR
+   ============================================================ */
+html[data-tech-theme] blockquote {
+  color: var(--ctt-text-muted) !important;
+  background: color-mix(
+    in srgb,
+    var(--ctt-accent) 6%,
+    var(--ctt-page-bg)
+  ) !important;
+  border-left: 4px solid var(--ctt-accent) !important;
+}
+
+html[data-tech-theme] hr {
+  border-color: var(--ctt-border) !important;
+}
+
+/* ============================================================
+   CARDS / PAGINATION
+   ============================================================ */
+html[data-tech-theme] .card,
+html[data-tech-theme] .pagination-nav__link {
+  
+  color: var(--ctt-text) !important;
+  border: 1px solid var(--ctt-border) !important;
+}
+
+html[data-tech-theme] .card:hover,
+html[data-tech-theme] .pagination-nav__link:hover {
+  border-color: var(--ctt-accent) !important;
+}
+
+html[data-tech-theme] .card__header,
+html[data-tech-theme] .card__body,
+html[data-tech-theme] .card__footer {
+  color: var(--ctt-text);
+}
+
+html[data-tech-theme] .pagination-nav__sublabel {
+  color: var(--ctt-text-muted) !important;
+}
+
+html[data-tech-theme] .pagination-nav__label {
+  color: var(--ctt-accent) !important;
+}
+
+/* ============================================================
+   ADMONITIONS
+   ============================================================ */
+html[data-tech-theme] .alert {
+  color: var(--ctt-text) !important;
+  background: var(--ctt-surface-2) !important;
+  border-color: var(--ctt-border) !important;
+}
+
+html[data-tech-theme] .alert__title,
+html[data-tech-theme] .alert p,
+html[data-tech-theme] .alert li,
+html[data-tech-theme] .alert strong,
+html[data-tech-theme] .alert em {
+  color: inherit !important;
+}
+
+html[data-tech-theme] .alert a {
+  color: var(--ctt-accent-hover) !important;
+}
+
+/* ============================================================
+   FORMS / CONTROLS
+   ============================================================ */
+html[data-tech-theme] input,
+html[data-tech-theme] textarea,
+html[data-tech-theme] select {
+  background: var(--ctt-control-bg) !important;
+  color: var(--ctt-control-text) !important;
+  border-color: var(--ctt-control-border) !important;
+}
+
+html[data-tech-theme] input::placeholder,
+html[data-tech-theme] textarea::placeholder {
+  color: var(--ctt-text-muted) !important;
+}
+
+html[data-tech-theme] input:focus,
+html[data-tech-theme] textarea:focus,
+html[data-tech-theme] select:focus,
+html[data-tech-theme] button:focus-visible,
+html[data-tech-theme] a:focus-visible {
+  outline: 2px solid var(--ctt-focus) !important;
+  outline-offset: 2px;
+}
+
+html[data-tech-theme] button {
+  color: var(--ctt-control-text);
+}
+
+/* ============================================================
+   SEARCH — NAVBAR TRIGGER
+   ============================================================ */
+html[data-tech-theme] .navbar__search-input {
+  width: 12rem;
+  height: 2.3rem !important;
+  padding: 0 0.8rem 0 2.2rem !important;
+
+  background: var(--ctt-control-bg) !important;
+  color: var(--ctt-control-text) !important;
+  border: 1px solid var(--ctt-control-border) !important;
+  border-radius: 30px !important;
+
+  box-shadow: none !important;
+}
+
+html[data-tech-theme] .navbar__search-input:hover {
+  border-color: color-mix(
+    in srgb,
+    var(--ctt-accent) 40%,
+    var(--ctt-control-border)
+  ) !important;
+}
+
+html[data-tech-theme] .navbar__search-input:focus {
+  background: var(--ctt-control-bg) !important;
+  border-color: var(--ctt-accent) !important;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--ctt-accent) 18%, transparent) !important;
+}
+
+html[data-tech-theme] .navbar__search-input::placeholder {
+  color: var(--ctt-text-muted) !important;
+}
+
+/* ============================================================
+   SEARCH — RESULT PANEL
+   ============================================================ */
+html[data-tech-theme] .searchBar .dropdownMenu {
+  
+  color: var(--ctt-text) !important;
+  border: 1px solid var(--ctt-border) !important;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.30),
+    0 4px 18px rgba(0, 0, 0, 0.16) !important;
+}
+
+html[data-tech-theme] .searchBar .dropdownMenu input {
+  color: var(--ctt-text) !important;
+  border-bottom-color: var(--ctt-border) !important;
+}
+
+html[data-tech-theme] .searchBar .dropdownMenu .suggestion {
+  background: var(--ctt-surface-2) !important;
+  color: var(--ctt-text) !important;
+  border-color: transparent !important;
+}
+
+html[data-tech-theme] .searchBar .dropdownMenu .suggestion:hover {
+  background: color-mix(
+    in srgb,
+    var(--ctt-accent) 8%,
+    var(--ctt-surface-2)
+  ) !important;
+  border-color: color-mix(
+    in srgb,
+    var(--ctt-accent) 22%,
+    var(--ctt-border)
+  ) !important;
+}
+
+html[data-tech-theme] .searchBar .dropdownMenu .suggestion.cursor {
+  background: color-mix(
+    in srgb,
+    var(--ctt-accent) 15%,
+    var(--ctt-surface-2)
+  ) !important;
+  color: var(--ctt-text) !important;
+  border-color: color-mix(
+    in srgb,
+    var(--ctt-accent) 30%,
+    var(--ctt-border)
+  ) !important;
+}
+
+html[data-tech-theme] .searchBar .dropdownMenu .suggestion mark {
+  background: transparent !important;
+  color: var(--ctt-accent) !important;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+html[data-tech-theme] .footer {
+  background: var(--ctt-footer-bg) !important;
+  color: var(--ctt-footer-text) !important;
+  border-top: 1px solid var(--ctt-border);
+}
+
+html[data-tech-theme] .footer__title {
+  color: var(--ctt-text) !important;
+}
+
+html[data-tech-theme] .footer__link-item {
+  color: var(--ctt-footer-text) !important;
+}
+
+html[data-tech-theme] .footer__link-item:hover {
+  color: var(--ctt-accent) !important;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+html[data-tech-theme] .hero--primary {
+  position: relative;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--ctt-accent) 10%, transparent),
+      transparent 55%
+    ),
+    var(--ctt-hero-bg) !important;
+
+  color: var(--ctt-hero-text) !important;
+  border-bottom: 1px solid var(--ctt-border) !important;
+}
+
+html[data-tech-theme] .hero--primary .hero__title {
+  color: var(--ctt-hero-text) !important;
+}
+
+html[data-tech-theme] .hero--primary .hero__subtitle {
+  color: var(--ctt-hero-muted) !important;
+}
+
+html[data-tech-theme] .hero--primary .button {
+  color: var(--ctt-accent) !important;
+  
+  border-color: color-mix(
+    in srgb,
+    var(--ctt-accent) 35%,
+    var(--ctt-border)
+  ) !important;
+}
+
+html[data-tech-theme] .hero--primary .button:hover {
+  color: var(--ctt-accent-hover) !important;
+  background: color-mix(
+    in srgb,
+    var(--ctt-accent) 9%,
+    var(--ctt-surface-1)
+  ) !important;
+  border-color: var(--ctt-accent) !important;
+}
+
+html[data-tech-theme] .hero--primary .button.button--primary {
+  color: #ffffff !important;
+  background: var(--ctt-accent) !important;
+  border-color: var(--ctt-accent) !important;
+}
+
+html[data-tech-theme] .hero--primary .button.button--primary:hover {
+  color: #ffffff !important;
+  background: var(--ctt-accent-hover) !important;
+  border-color: var(--ctt-accent-hover) !important;
+}
+
+/* ============================================================
+   DEFAULT HERO
+   ============================================================ */
+html[data-tech-theme='default'][data-theme='light'] .hero--primary {
+  --ctt-hero-bg: #f5f7fa;
+}
+
+html[data-tech-theme='default'][data-theme='dark'] .hero--primary {
+  --ctt-hero-bg: #151a22;
+}
+
+/* ============================================================
+   CATPPUCCIN HERO
+   ============================================================ */
+html[data-tech-theme='catppuccin'] .hero--primary {
+  --ctt-hero-bg: #e6e9ef;
+}
+
+html[data-tech-theme='catppuccin'][data-theme='dark'] .hero--primary {
+  --ctt-hero-bg: #181825;
+}
+
+/* ============================================================
+   NORD HERO
+   ============================================================ */
+html[data-tech-theme='nord'] .hero--primary {
+  --ctt-hero-bg: #e5e9f0;
+}
+
+html[data-tech-theme='nord'][data-theme='dark'] .hero--primary {
+  --ctt-hero-bg: #252c38;
+}
+
+/* ============================================================
+   DRACULA HERO
+   ============================================================ */
+html[data-tech-theme='dracula'] .hero--primary {
+  --ctt-hero-bg: #efeddf;
+}
+
+html[data-tech-theme='dracula'][data-theme='dark'] .hero--primary {
+  --ctt-hero-bg: #21222c;
+}
+
+/* ============================================================
+   TKOD
+   ============================================================ */
+html[data-tech-theme='TKOD'] {
+  color-scheme: dark;
+  --ctt-navbar-bg: #17002e;
+  --ctt-navbar-text: #f5eaff;
+  --ctt-navbar-muted: #cbb0df;
+  --ctt-footer-bg: #0a0018;
+  --ctt-footer-text: #cbb0df;
+  --ctt-control-bg: #23003f;
+  --ctt-control-border: #54206f;
+  --ctt-control-text: #f5eaff;
+  --ctt-hero-bg: #19002f;
+}
+
+html[data-tech-theme='TKOD'][data-theme='light'],
+html[data-tech-theme='TKOD'][data-theme='dark'] {
+  color-scheme: dark;
+}
+
+/* ============================================================
+   SUPRISE
+   ============================================================ */
+html[data-tech-theme='Suprise'] {
+  color-scheme: dark;
+  --ctt-navbar-bg: #170b0e;
+  --ctt-navbar-text: #f7e9eb;
+  --ctt-navbar-muted: #d1afb5;
+  --ctt-footer-bg: #0b0708;
+  --ctt-footer-text: #d1afb5;
+  --ctt-control-bg: #1c0d10;
+  --ctt-control-border: #4b252b;
+  --ctt-control-text: #f7e9eb;
+  --ctt-hero-bg: #1c0d10;
+}
+
+html[data-tech-theme='Suprise'][data-theme='light'],
+html[data-tech-theme='Suprise'][data-theme='dark'] {
+  color-scheme: dark;
+}
+
+/* ============================================================
+   AMOLED
+   ============================================================ */
+html[data-tech-theme='amoled'] {
+  color-scheme: dark;
+  --ctt-navbar-bg: #000000;
+  --ctt-navbar-text: #f5f5f5;
+  --ctt-navbar-muted: #bdbdbd;
+  --ctt-footer-bg: #000000;
+  --ctt-footer-text: #a5a5a5;
+  --ctt-control-bg: #050505;
+  --ctt-control-border: #202020;
+  --ctt-control-text: #f5f5f5;
+  --ctt-hero-bg: #000000;
+}
+
+html[data-tech-theme='amoled'][data-theme='light'],
+html[data-tech-theme='amoled'][data-theme='dark'] {
+  color-scheme: dark;
+}
+
+/* ============================================================
+   HALLOWEEN
+   ============================================================ */
+html[data-tech-theme='halloween'] {
+  color-scheme: dark;
+  --ctt-navbar-bg: #130c16;
+  --ctt-navbar-text: #fff4df;
+  --ctt-navbar-muted: #cbb9c9;
+  --ctt-footer-bg: #0c0810;
+  --ctt-footer-text: #cbb9c9;
+  --ctt-control-bg: #19101d;
+  --ctt-control-border: #4a273d;
+  --ctt-control-text: #fff4df;
+  --ctt-hero-bg: #19101d;
+}
+
+html[data-tech-theme='halloween'][data-theme='light'],
+html[data-tech-theme='halloween'][data-theme='dark'] {
+  color-scheme: dark;
+}
+
+/* ============================================================
+   CHRISTMAS
+   ============================================================ */
+html[data-tech-theme='christmas'] {
+  --ctt-navbar-bg: #ffffff;
+  --ctt-navbar-text: #17351f;
+  --ctt-navbar-muted: #55705d;
+  --ctt-footer-bg: #edf4ef;
+  --ctt-footer-text: #496052;
+  --ctt-control-bg: #ffffff;
+  --ctt-control-border: #d5dfd7;
+  --ctt-control-text: #17351f;
+  --ctt-hero-bg: #edf4ef;
+}
+
+html[data-tech-theme='christmas'][data-theme='dark'] {
+  color-scheme: dark;
+  --ctt-navbar-bg: #0d1d12;
+  --ctt-navbar-text: #f2fff5;
+  --ctt-navbar-muted: #abc4b1;
+  --ctt-footer-bg: #07120b;
+  --ctt-footer-text: #abc4b1;
+  --ctt-control-bg: #0d1d12;
+  --ctt-control-border: #21442c;
+  --ctt-control-text: #f2fff5;
+  --ctt-hero-bg: #0d1d12;
+}
+
+/* ============================================================
+   GALAXY
+   ============================================================ */
+html[data-tech-theme='galaxy'] {
+  color-scheme: dark;
+  --ctt-navbar-bg: rgba(7, 8, 17, 0.92);
+  --ctt-navbar-text: #eef1ff;
+  --ctt-navbar-muted: #969fbd;
+  --ctt-footer-bg: #05060d;
+  --ctt-footer-text: #969fbd;
+  --ctt-control-bg: #0a0c18;
+  --ctt-control-border: #202641;
+  --ctt-control-text: #eef1ff;
+  --ctt-hero-bg: #293752;
+}
+
+html[data-tech-theme='galaxy'][data-theme='light'],
+html[data-tech-theme='galaxy'][data-theme='dark'] {
+  color-scheme: dark;
+}
+
+/* ============================================================
+   CUSTOM
+   ============================================================ */
+html[data-tech-theme='custom'] {
+  color-scheme: dark;
+  --ctt-navbar-bg: #170b0e;
+  --ctt-navbar-text: #f7e9eb;
+  --ctt-navbar-muted: #d1afb5;
+  --ctt-footer-bg: #0b0708;
+  --ctt-footer-text: #d1afb5;
+  --ctt-control-bg: #1c0d10;
+  --ctt-control-border: #4b252b;
+  --ctt-control-text: #f7e9eb;
+  --ctt-hero-bg: #1c0d10;
+}
+
+html[data-tech-theme='custom'][data-theme='light'],
+html[data-tech-theme='custom'][data-theme='dark'] {
+  color-scheme: dark;
+}
+
+/* ============================================================
+   HERO SPACING
+   ============================================================ */
+html[data-tech-theme] .hero--primary .container {
+  position: relative;
+  z-index: 2;
+  padding-top: 4rem !important;
+  padding-bottom: 11rem !important;
+}
+
+/* ============================================================
+   THEME PICKER
+   ============================================================ */
+html[data-tech-theme] .ctt-theme-picker,
+html[data-tech-theme] .theme-picker {
+  color: var(--ctt-control-text);
+  background: var(--ctt-control-bg);
+  border-color: var(--ctt-control-border);
+}
+
+html[data-tech-theme] .ctt-theme-picker select,
+html[data-tech-theme] .theme-picker select {
+  color: var(--ctt-control-text) !important;
+  background: var(--ctt-control-bg) !important;
+}
+
+/* ============================================================
+   SCROLLBARS
+   ============================================================ */
+html[data-tech-theme] {
+  scrollbar-color: var(--ctt-accent) var(--ctt-page-bg);
+}
+
+html[data-tech-theme] ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+html[data-tech-theme] ::-webkit-scrollbar-track {
+  background: var(--ctt-page-bg);
+}
+
+html[data-tech-theme] ::-webkit-scrollbar-thumb {
+  background: color-mix(
+    in srgb,
+    var(--ctt-accent) 55%,
+    var(--ctt-border)
+  );
+  border-radius: 10px;
+}
+
+html[data-tech-theme] ::-webkit-scrollbar-thumb:hover {
+  background: var(--ctt-accent);
+}
+
+/* ========================================================================
+   CTT FINAL THEME REPAIR PACK
+   ========================================================================
+   This block is intentionally LAST.
+   It fixes the two problems found in testing:
+     1. Default Light was still inheriting a dark navbar/search/footer.
+     2. Galaxy's star field was removed/hidden by the normalization layer.
+
+   It also restores the Halloween storm presentation with:
+     - animated lightning flashes
+     - visible lightning bolts
+     - atmospheric purple/orange storm glow
+     - readable dark UI surfaces
+
+   All theme tokens are kept isolated from Docusaurus' data-theme switch.
+   ======================================================================== */
+/* ========================================================================
+   DEFAULT THEME — LIGHT
+   ======================================================================== */
+html[data-tech-theme="default"][data-theme="light"] {
+  color-scheme: light !important;
+
+  --ctt-page-bg: #ffffff;
+  --ctt-surface-1: #ffffff;
+  --ctt-surface-2: #f5f7fa;
+
+  --ctt-text: #1f2937;
+  --ctt-text-muted: #68707d;
+
+  --ctt-accent: #1261a0;
+  --ctt-accent-hover: #146bb1;
+
+  --ctt-navbar-bg: #ffffff;
+  --ctt-navbar-text: #1f2937;
+  --ctt-navbar-muted: #68707d;
+
+  --ctt-footer-bg: #f5f7fa;
+  --ctt-footer-text: #68707d;
+
+  --ctt-control-bg: #ffffff;
+  --ctt-control-border: #d9dce1;
+  --ctt-control-text: #1f2937;
+
+  --ctt-code-bg: #f5f6f8;
+  --ctt-code-text: #1261a0;
+
+  --ctt-hero-bg: #f5f7fa;
+  --ctt-hero-text: #1f2937;
+  --ctt-hero-muted: #68707d;
+
+  --ctt-focus: #1261a0;
+  --ctt-border: #d9dce1;
+}
+
+/* Actual page surfaces */
+html[data-tech-theme="default"][data-theme="light"] body,
+html[data-tech-theme="default"][data-theme="light"] #__docusaurus,
+html[data-tech-theme="default"][data-theme="light"] .main-wrapper,
+html[data-tech-theme="default"][data-theme="light"] main {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+/* Navbar — LIGHT */
+html[data-tech-theme="default"][data-theme="light"] .navbar {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+  border-bottom: 1px solid #d9dce1 !important;
+  box-shadow: 0 1px 0 rgba(31, 41, 55, 0.04) !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .navbar__brand,
+html[data-tech-theme="default"][data-theme="light"] .navbar__title,
+html[data-tech-theme="default"][data-theme="light"] .navbar__link,
+html[data-tech-theme="default"][data-theme="light"] .navbar__item,
+html[data-tech-theme="default"][data-theme="light"] .navbar__toggle {
+  color: #1f2937 !important;
+}
+
+html[data-tech-theme="default"][data-theme="light"] .navbar__link:hover,
+html[data-tech-theme="default"][data-theme="light"] .navbar__item:hover {
+  color: #1261a0 !important;
+}

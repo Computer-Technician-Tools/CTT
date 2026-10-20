@@ -230,7 +230,10 @@ function getIcon(
 }
 
 type Badge = {
-  icon: SvgIcon;
+  // Either an inline SVG icon from an Iconify set, or a raster image (used for
+  // platforms whose official artwork is a bitmap, such as the macOS Finder icon).
+  icon?: SvgIcon;
+  image?: {src: string; alt?: string; wordmark?: boolean};
   label: string;
 };
 
@@ -252,10 +255,13 @@ const badges: Partial<Record<BadgeType, Badge>> = {
   },
 
   macos: {
-    icon: getIcon([
-      {set: simpleIcons, names: ['apple']},
-      {set: logos, names: ['apple']},
-    ]),
+    // Official macOS wordmark from Wikimedia Commons:
+    // File:MacOS wordmark (2017).svg (320px PNG thumbnail).
+    image: {
+      src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/MacOS_wordmark_(2017).svg/320px-MacOS_wordmark_(2017).svg.png',
+      alt: 'macOS',
+      wordmark: true,
+    },
     label: 'macOS',
   },
 
@@ -275,6 +281,7 @@ const badges: Partial<Record<BadgeType, Badge>> = {
     label: 'Android',
   },
 
+  // Apple logo for iOS (macOS uses the Finder icon above).
   ios: {
     icon: getIcon([
       {set: simpleIcons, names: ['apple']},
@@ -891,6 +898,7 @@ export default function PlatformBadges({
   return (
     <span
       className={styles.badges}
+      data-ctt-icons=""
       aria-label={`Supported platforms: ${validItems
         .map((item) => badges[item]!.label)
         .join(', ')}`}
@@ -902,8 +910,6 @@ export default function PlatformBadges({
           return null;
         }
 
-        const icon = badge.icon;
-
         return (
           <span
             className={styles.badge}
@@ -912,15 +918,25 @@ export default function PlatformBadges({
             aria-label={badge.label}
             data-platform={item}
           >
-            <svg
-              aria-hidden="true"
-              className={styles.icon}
-              focusable="false"
-              viewBox={`${icon.left} ${icon.top} ${icon.width} ${icon.height}`}
-              dangerouslySetInnerHTML={{
-                __html: icon.body,
-              }}
-            />
+            {badge.image ? (
+              <img
+                className={badge.image.wordmark ? styles.wordmark : styles.icon}
+                src={badge.image.src}
+                alt={badge.image.alt ?? ''}
+                loading="lazy"
+                decoding="async"
+              />
+            ) : badge.icon ? (
+              <svg
+                aria-hidden="true"
+                className={styles.icon}
+                focusable="false"
+                viewBox={`${badge.icon.left} ${badge.icon.top} ${badge.icon.width} ${badge.icon.height}`}
+                dangerouslySetInnerHTML={{
+                  __html: badge.icon.body,
+                }}
+              />
+            ) : null}
           </span>
         );
       })}
