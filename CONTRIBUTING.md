@@ -15,7 +15,7 @@ Before you begin, make sure you have:
 Fork the [CTT repository](https://github.com/Computer-Technician-Tools/CTT/fork) on GitHub, then clone **your fork**:
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/CTT.git
+git clone https://github.com/USERNAME/CTT.git
 cd CTT
 ```
 
