@@ -207,3 +207,31 @@ If all of the Windows Time, NTP server, DNS, network, and synchronization method
 :::warning
 If the time is only wrong while Windows is running but the BIOS/UEFI clock remains correct after a full power-off, the CMOS battery is not necessarily the problem. Check the Windows Time service, NTP configuration, DNS, firewall, and network first.
 :::
+
+## Godmode Windows Folder
+
+:::info
+Right click on a blank space at the **Desktop** and then make a **NEW** > **Folder** > **New Folder**, and then **Rename** it to this code below
+:::
+
+```cli
+GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}
+```
+
+### Terminal Method
+
+- Maybe a simpler way is to do these commands below, you can open the cmd/terminal and do it even easier.         
+
+- Usualy you are in the path ``C:\Users\Username>``, so to change the directory to the path ``C:\Users\Username\Desktop>``, you have to use the command **cd** (Which means **Change Directory**)
+
+1. Change the directory to Desktop.
+
+```
+cd Desktop
+```
+
+2. Make the folder and rename it instantly.
+
+```
+mkdir GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}
+```

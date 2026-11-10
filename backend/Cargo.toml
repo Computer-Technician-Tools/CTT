@@ -1,0 +1,9 @@
+[package]
+name = "ctt-static-server"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "ctt-static-server"
+path = "src/main.rs"

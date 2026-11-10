@@ -116,6 +116,21 @@
 .sourceBadge svg {
   display: block !important;
   overflow: visible !important;
+  color: currentColor !important;
+  fill: currentColor !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.sourceBadge .brandIcon {
+  color: var(--ifm-font-color-base) !important;
+  fill: currentColor !important;
+}
+
+/* Keep source marks legible on both themes and table row backgrounds. */
+.sourceBadge[aria-label='View on GitHub'],
+.sourceBadge[aria-label='View on GitLab'] {
+  color: var(--ifm-font-color-base) !important;
 }
 
 .favicon {

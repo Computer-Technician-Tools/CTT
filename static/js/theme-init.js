@@ -17,7 +17,8 @@
   };
 
   try {
-    var saved = window.localStorage.getItem(storageKey);
+    var saved = null;
+    try { saved = window.localStorage.getItem(storageKey); } catch (_) { /* Storage can be disabled. */ }
     var theme = themes[saved] ? saved : 'default';
     document.documentElement.setAttribute('data-tech-theme', theme);
   } catch (_) {

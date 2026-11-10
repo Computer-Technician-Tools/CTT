@@ -1,0 +1,48 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgb(10 10 18 / 72%);
+  backdrop-filter: blur(5px);
+}
+
+.dialog {
+  width: min(100%, 27rem);
+  padding: 1.5rem;
+  color: var(--ifm-font-color-base, #f4f4f5);
+  background: var(--ifm-background-surface-color, #1d1c29);
+  border: 1px solid var(--ifm-color-emphasis-300, #555064);
+  border-radius: 1rem;
+  box-shadow: 0 1.25rem 4rem rgb(0 0 0 / 45%);
+}
+
+.mark {
+  display: inline-grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  color: #171722;
+  background: #f04b44;
+  border-radius: .7rem;
+  font-size: .8rem;
+  font-weight: 850;
+}
+
+.dialog h2 { margin: 1rem 0 .4rem; }
+.dialog p { color: var(--ifm-color-emphasis-700, #b9b7c4); line-height: 1.55; }
+.dialog .error { color: var(--ifm-color-danger, #e66); }
+
+.actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1.2rem; }
+.actions button { min-height: 2.75rem; padding: .6rem .9rem; border: 1px solid transparent; border-radius: .55rem; font: inherit; font-weight: 650; cursor: pointer; }
+.actions button:focus-visible { outline: 2px solid var(--ifm-color-primary, #b899ff); outline-offset: 2px; }
+.actions button:disabled { opacity: .65; cursor: wait; }
+.primary { color: #fff; background: var(--ifm-color-primary, #7c3aed); }
+.secondary { color: inherit; background: transparent; border-color: var(--ifm-color-emphasis-400, #625d70) !important; }
+
+@media (max-width: 480px) {
+  .actions { flex-direction: column; }
+  .actions button { width: 100%; }
+}

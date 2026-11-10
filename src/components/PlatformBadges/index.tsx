@@ -1,8 +1,6 @@
 import type {ReactNode} from 'react';
 
-import simpleIconsJson from '@iconify-json/simple-icons/icons.json';
-import logosJson from '@iconify-json/logos/icons.json';
-import materialSymbolsJson from '@iconify-json/material-symbols/icons.json';
+import {simpleIcons, logos, materialSymbols} from '@site/src/generated/platform-icons';
 
 import styles from './styles.module.css';
 
@@ -164,21 +162,16 @@ type BadgeType =
   | 'warning'
   | 'experimental';
 
-const simpleIcons = simpleIconsJson as unknown as IconSet;
-const logos = logosJson as unknown as IconSet;
-const materialSymbols = materialSymbolsJson as unknown as IconSet;
+const simpleIconSet = simpleIcons as unknown as IconSet;
+const logoSet = logos as unknown as IconSet;
+const materialSymbolSet = materialSymbols as unknown as IconSet;
 
 // ============================================================
 // FALLBACK
 // ============================================================
 
 const fallbackIcon: SvgIcon = {
-  body: `
-    <path
-      d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 15h-2v-2h2v2Zm0-4h-2V7h2v6Z"
-      fill="currentColor"
-    />
-  `,
+  body: '<path d="M5 5h14v14H5z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 12h8" fill="none" stroke="currentColor" stroke-width="1.5"/>',
   width: 24,
   height: 24,
   left: 0,
@@ -230,8 +223,8 @@ function getIcon(
 }
 
 type Badge = {
-  // Either an inline SVG icon from an Iconify set, or a raster image (used for
-  // platforms whose official artwork is a bitmap, such as the macOS Finder icon).
+  // Either an inline SVG icon from the legacy icon sets or an SVG Repo asset.
+  // SVG Repo assets are kept as SVG files/URLs to preserve their original artwork.
   icon?: SvgIcon;
   image?: {src: string; alt?: string; wordmark?: boolean};
   label: string;
@@ -248,172 +241,168 @@ const badges: Partial<Record<BadgeType, Badge>> = {
 
   windows: {
     icon: getIcon([
-      {set: simpleIcons, names: ['windows']},
-      {set: logos, names: ['windows']},
+      {set: simpleIconSet, names: ['windows']},
+      {set: logoSet, names: ['windows']},
     ]),
     label: 'Windows',
   },
 
   macos: {
-    // Official macOS wordmark from Wikimedia Commons:
-    // File:MacOS wordmark (2017).svg (320px PNG thumbnail).
-    image: {
-      src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/MacOS_wordmark_(2017).svg/320px-MacOS_wordmark_(2017).svg.png',
-      alt: 'macOS',
-      wordmark: true,
-    },
+    icon: getIcon([
+      {set: materialSymbolSet, names: ['laptop-mac']},
+    ]),
     label: 'macOS',
   },
 
   linux: {
     icon: getIcon([
-      {set: simpleIcons, names: ['linux']},
-      {set: logos, names: ['linux']},
+      {set: simpleIconSet, names: ['linux']},
+      {set: logoSet, names: ['linux']},
     ]),
     label: 'Linux',
   },
 
   android: {
     icon: getIcon([
-      {set: simpleIcons, names: ['android']},
-      {set: logos, names: ['android']},
+      {set: simpleIconSet, names: ['android']},
+      {set: logoSet, names: ['android']},
     ]),
     label: 'Android',
   },
 
-  // Apple logo for iOS (macOS uses the Finder icon above).
   ios: {
     icon: getIcon([
-      {set: simpleIcons, names: ['apple']},
-      {set: logos, names: ['apple']},
+      {set: simpleIconSet, names: ['apple']},
+      {set: logoSet, names: ['apple']},
     ]),
     label: 'iOS',
   },
 
   chromeos: {
     icon: getIcon([
-      {set: simpleIcons, names: ['chromeos']},
-      {set: logos, names: ['chrome']},
+      {set: simpleIconSet, names: ['chromeos']},
+      {set: logoSet, names: ['chrome']},
+      {set: materialSymbolSet, names: ['laptop-chromebook']},
     ]),
     label: 'ChromeOS',
   },
 
   ubuntu: {
     icon: getIcon([
-      {set: simpleIcons, names: ['ubuntu']},
-      {set: logos, names: ['ubuntu']},
+      {set: simpleIconSet, names: ['ubuntu']},
+      {set: logoSet, names: ['ubuntu']},
     ]),
     label: 'Ubuntu',
   },
 
   debian: {
     icon: getIcon([
-      {set: simpleIcons, names: ['debian']},
-      {set: logos, names: ['debian']},
+      {set: simpleIconSet, names: ['debian']},
+      {set: logoSet, names: ['debian']},
     ]),
     label: 'Debian',
   },
 
   fedora: {
     icon: getIcon([
-      {set: simpleIcons, names: ['fedora']},
-      {set: logos, names: ['fedora']},
+      {set: simpleIconSet, names: ['fedora']},
+      {set: logoSet, names: ['fedora']},
     ]),
     label: 'Fedora',
   },
 
   arch: {
     icon: getIcon([
-      {set: simpleIcons, names: ['archlinux']},
-      {set: logos, names: ['archlinux']},
+      {set: simpleIconSet, names: ['archlinux']},
+      {set: logoSet, names: ['archlinux']},
     ]),
     label: 'Arch Linux',
   },
 
   freebsd: {
     icon: getIcon([
-      {set: simpleIcons, names: ['freebsd']},
-      {set: logos, names: ['freebsd']},
+      {set: simpleIconSet, names: ['freebsd']},
+      {set: logoSet, names: ['freebsd']},
     ]),
     label: 'FreeBSD',
   },
 
   openbsd: {
     icon: getIcon([
-      {set: simpleIcons, names: ['openbsd']},
-      {set: logos, names: ['openbsd']},
+      {set: simpleIconSet, names: ['openbsd']},
+      {set: logoSet, names: ['openbsd']},
     ]),
     label: 'OpenBSD',
   },
 
   netbsd: {
     icon: getIcon([
-      {set: simpleIcons, names: ['netbsd']},
-      {set: logos, names: ['netbsd']},
+      {set: simpleIconSet, names: ['netbsd']},
+      {set: logoSet, names: ['netbsd']},
     ]),
     label: 'NetBSD',
   },
 
   'raspberry-pi': {
     icon: getIcon([
-      {set: simpleIcons, names: ['raspberrypi']},
-      {set: logos, names: ['raspberry-pi', 'raspberrypi']},
+      {set: simpleIconSet, names: ['raspberrypi']},
+      {set: logoSet, names: ['raspberry-pi', 'raspberrypi']},
     ]),
     label: 'Raspberry Pi',
   },
 
   steamos: {
     icon: getIcon([
-      {set: simpleIcons, names: ['steam']},
-      {set: logos, names: ['steam']},
+      {set: simpleIconSet, names: ['steam']},
+      {set: logoSet, names: ['steam']},
     ]),
     label: 'SteamOS',
   },
 
   haiku: {
     icon: getIcon([
-      {set: simpleIcons, names: ['haiku']},
-      {set: logos, names: ['haiku']},
+      {set: simpleIconSet, names: ['haiku']},
+      {set: logoSet, names: ['haiku']},
     ]),
     label: 'Haiku',
   },
 
   solaris: {
     icon: getIcon([
-      {set: simpleIcons, names: ['oracle']},
-      {set: logos, names: ['oracle']},
+      {set: simpleIconSet, names: ['oracle']},
+      {set: logoSet, names: ['oracle']},
     ]),
     label: 'Solaris',
   },
 
   illumos: {
     icon: getIcon([
-      {set: simpleIcons, names: ['illumos']},
-      {set: logos, names: ['illumos']},
+      {set: simpleIconSet, names: ['illumos']},
+      {set: logoSet, names: ['illumos']},
     ]),
     label: 'illumos',
   },
 
   openwrt: {
     icon: getIcon([
-      {set: simpleIcons, names: ['openwrt']},
-      {set: logos, names: ['openwrt']},
+      {set: simpleIconSet, names: ['openwrt']},
+      {set: logoSet, names: ['openwrt']},
     ]),
     label: 'OpenWrt',
   },
 
   opnsense: {
     icon: getIcon([
-      {set: simpleIcons, names: ['opnsense']},
-      {set: logos, names: ['opnsense']},
+      {set: simpleIconSet, names: ['opnsense']},
+      {set: logoSet, names: ['opnsense']},
     ]),
     label: 'OPNsense',
   },
 
   pfsense: {
     icon: getIcon([
-      {set: simpleIcons, names: ['pfsense']},
-      {set: logos, names: ['pfsense']},
+      {set: simpleIconSet, names: ['pfsense']},
+      {set: logoSet, names: ['pfsense']},
     ]),
     label: 'pfSense',
   },
@@ -424,84 +413,84 @@ const badges: Partial<Record<BadgeType, Badge>> = {
 
   bootable: {
     icon: getIcon([
-      {set: materialSymbols, names: ['usb-rounded']},
+      {set: materialSymbolSet, names: ['usb-rounded']},
     ]),
     label: 'Bootable USB',
   },
 
   cross: {
     icon: getIcon([
-      {set: materialSymbols, names: ['devices-rounded']},
+      {set: materialSymbolSet, names: ['devices-rounded']},
     ]),
     label: 'Cross-platform',
   },
 
   mobile: {
     icon: getIcon([
-      {set: materialSymbols, names: ['smartphone']},
+      {set: materialSymbolSet, names: ['phone-android-outline']},
     ]),
     label: 'Mobile',
   },
 
   desktop: {
     icon: getIcon([
-      {set: materialSymbols, names: ['desktop-windows']},
+      {set: materialSymbolSet, names: ['desktop-windows']},
     ]),
     label: 'Desktop',
   },
-
+  
   server: {
     icon: getIcon([
-      {set: materialSymbols, names: ['dns']},
+      {set: materialSymbolSet, names: ['dns']},
     ]),
     label: 'Server',
   },
 
   vm: {
     icon: getIcon([
-      {set: simpleIcons, names: ['virtualbox']},
-      {set: simpleIcons, names: ['vmware']},
-      {set: materialSymbols, names: ['computer']},
+      {set: simpleIconSet, names: ['virtualbox']},
+      {set: simpleIconSet, names: ['vmware']},
+      {set: materialSymbolSet, names: ['computer']},
     ]),
     label: 'Virtual Machine',
   },
 
   docker: {
     icon: getIcon([
-      {set: simpleIcons, names: ['docker']},
-      {set: logos, names: ['docker']},
+      {set: simpleIconSet, names: ['docker']},
+      {set: logoSet, names: ['docker']},
     ]),
     label: 'Docker',
   },
 
   'steam-deck': {
     icon: getIcon([
-      {set: simpleIcons, names: ['steam']},
-      {set: logos, names: ['steam']},
+      {set: simpleIconSet, names: ['steam']},
+      {set: logoSet, names: ['steam']},
     ]),
     label: 'Steam Deck',
   },
 
   synology: {
     icon: getIcon([
-      {set: simpleIcons, names: ['synology']},
-      {set: logos, names: ['synology']},
+      {set: simpleIconSet, names: ['synology']},
+      {set: logoSet, names: ['synology']},
     ]),
     label: 'Synology',
   },
 
   proxmox: {
     icon: getIcon([
-      {set: simpleIcons, names: ['proxmox']},
-      {set: logos, names: ['proxmox']},
+      {set: simpleIconSet, names: ['proxmox']},
+      {set: logoSet, names: ['proxmox']},
     ]),
     label: 'Proxmox',
   },
 
   vmware: {
     icon: getIcon([
-      {set: simpleIcons, names: ['vmware']},
-      {set: logos, names: ['vmware']},
+      {set: simpleIconSet, names: ['vmware']},
+      {set: logoSet, names: ['vmware']},
     ]),
     label: 'VMware',
   },
@@ -512,32 +501,32 @@ const badges: Partial<Record<BadgeType, Badge>> = {
 
   playstation: {
     icon: getIcon([
-      {set: simpleIcons, names: ['playstation']},
-      {set: logos, names: ['playstation']},
+      {set: simpleIconSet, names: ['playstation']},
+      {set: logoSet, names: ['playstation']},
     ]),
     label: 'PlayStation',
   },
 
   xbox: {
     icon: getIcon([
-      {set: simpleIcons, names: ['xbox']},
-      {set: logos, names: ['xbox']},
+      {set: simpleIconSet, names: ['xbox']},
+      {set: logoSet, names: ['xbox']},
     ]),
     label: 'Xbox',
   },
 
   nintendo: {
     icon: getIcon([
-      {set: simpleIcons, names: ['nintendo']},
-      {set: logos, names: ['nintendo']},
+      {set: simpleIconSet, names: ['nintendo']},
+      {set: logoSet, names: ['nintendo']},
     ]),
     label: 'Nintendo',
   },
 
   switch: {
     icon: getIcon([
-      {set: simpleIcons, names: ['nintendoswitch']},
-      {set: logos, names: ['nintendo-switch']},
+      {set: simpleIconSet, names: ['nintendoswitch']},
+      {set: logoSet, names: ['nintendo-switch']},
     ]),
     label: 'Nintendo Switch',
   },
@@ -548,72 +537,72 @@ const badges: Partial<Record<BadgeType, Badge>> = {
 
   chrome: {
     icon: getIcon([
-      {set: simpleIcons, names: ['googlechrome']},
-      {set: logos, names: ['chrome']},
+      {set: simpleIconSet, names: ['googlechrome']},
+      {set: logoSet, names: ['chrome']},
     ]),
     label: 'Google Chrome',
   },
 
   firefox: {
     icon: getIcon([
-      {set: simpleIcons, names: ['firefox']},
-      {set: logos, names: ['firefox']},
+      {set: simpleIconSet, names: ['firefox']},
+      {set: logoSet, names: ['firefox']},
     ]),
     label: 'Firefox',
   },
 
   edge: {
     icon: getIcon([
-      {set: simpleIcons, names: ['microsoftedge']},
-      {set: logos, names: ['microsoft-edge']},
+      {set: simpleIconSet, names: ['microsoftedge']},
+      {set: logoSet, names: ['microsoft-edge']},
     ]),
     label: 'Microsoft Edge',
   },
 
   safari: {
     icon: getIcon([
-      {set: simpleIcons, names: ['safari']},
-      {set: logos, names: ['safari']},
+      {set: simpleIconSet, names: ['safari']},
+      {set: logoSet, names: ['safari']},
     ]),
     label: 'Safari',
   },
 
   opera: {
     icon: getIcon([
-      {set: simpleIcons, names: ['opera']},
-      {set: logos, names: ['opera']},
+      {set: simpleIconSet, names: ['opera']},
+      {set: logoSet, names: ['opera']},
     ]),
     label: 'Opera',
   },
 
   brave: {
     icon: getIcon([
-      {set: simpleIcons, names: ['brave']},
-      {set: logos, names: ['brave']},
+      {set: simpleIconSet, names: ['brave']},
+      {set: logoSet, names: ['brave']},
     ]),
     label: 'Brave',
   },
 
   vivaldi: {
     icon: getIcon([
-      {set: simpleIcons, names: ['vivaldi']},
-      {set: logos, names: ['vivaldi']},
+      {set: simpleIconSet, names: ['vivaldi']},
+      {set: logoSet, names: ['vivaldi']},
     ]),
     label: 'Vivaldi',
   },
 
   tor: {
     icon: getIcon([
-      {set: simpleIcons, names: ['torbrowser']},
-      {set: logos, names: ['tor']},
+      {set: simpleIconSet, names: ['torbrowser']},
+      {set: logoSet, names: ['tor']},
     ]),
     label: 'Tor Browser',
   },
 
   librewolf: {
     icon: getIcon([
-      {set: simpleIcons, names: ['librewolf']},
-      {set: logos, names: ['librewolf']},
+      {set: simpleIconSet, names: ['librewolf']},
+      {set: logoSet, names: ['librewolf']},
     ]),
     label: 'LibreWolf',
   },
@@ -624,71 +613,71 @@ const badges: Partial<Record<BadgeType, Badge>> = {
 
   github: {
     icon: getIcon([
-      {set: simpleIcons, names: ['github']},
-      {set: logos, names: ['github']},
+      {set: simpleIconSet, names: ['github']},
+      {set: logoSet, names: ['github']},
     ]),
     label: 'GitHub',
   },
 
   gitlab: {
     icon: getIcon([
-      {set: simpleIcons, names: ['gitlab']},
-      {set: logos, names: ['gitlab']},
+      {set: simpleIconSet, names: ['gitlab']},
+      {set: logoSet, names: ['gitlab']},
     ]),
     label: 'GitLab',
   },
 
   bitbucket: {
     icon: getIcon([
-      {set: simpleIcons, names: ['bitbucket']},
-      {set: logos, names: ['bitbucket']},
+      {set: simpleIconSet, names: ['bitbucket']},
+      {set: logoSet, names: ['bitbucket']},
     ]),
     label: 'Bitbucket',
   },
 
   codeberg: {
     icon: getIcon([
-      {set: simpleIcons, names: ['codeberg']},
-      {set: logos, names: ['codeberg']},
+      {set: simpleIconSet, names: ['codeberg']},
+      {set: logoSet, names: ['codeberg']},
     ]),
     label: 'Codeberg',
   },
 
   gitea: {
     icon: getIcon([
-      {set: simpleIcons, names: ['gitea']},
-      {set: logos, names: ['gitea']},
+      {set: simpleIconSet, names: ['gitea']},
+      {set: logoSet, names: ['gitea']},
     ]),
     label: 'Gitea',
   },
 
   forgejo: {
     icon: getIcon([
-      {set: simpleIcons, names: ['forgejo']},
-      {set: logos, names: ['forgejo']},
+      {set: simpleIconSet, names: ['forgejo']},
+      {set: logoSet, names: ['forgejo']},
     ]),
     label: 'Forgejo',
   },
 
   sourceforge: {
     icon: getIcon([
-      {set: simpleIcons, names: ['sourceforge']},
-      {set: logos, names: ['sourceforge']},
+      {set: simpleIconSet, names: ['sourceforge']},
+      {set: logoSet, names: ['sourceforge']},
     ]),
     label: 'SourceForge',
   },
 
   git: {
     icon: getIcon([
-      {set: simpleIcons, names: ['git']},
-      {set: logos, names: ['git']},
+      {set: simpleIconSet, names: ['git']},
+      {set: logoSet, names: ['git']},
     ]),
     label: 'Git',
   },
 
   code: {
     icon: getIcon([
-      {set: materialSymbols, names: ['code']},
+      {set: materialSymbolSet, names: ['code']},
     ]),
     label: 'Source code',
   },
@@ -699,36 +688,36 @@ const badges: Partial<Record<BadgeType, Badge>> = {
 
   opensource: {
     icon: getIcon([
-      {set: simpleIcons, names: ['opensourceinitiative']},
-      {set: materialSymbols, names: ['code']},
+      {set: simpleIconSet, names: ['opensourceinitiative']},
+      {set: materialSymbolSet, names: ['code']},
     ]),
     label: 'Open Source',
   },
 
   'closed-source': {
     icon: getIcon([
-      {set: materialSymbols, names: ['lock']},
+      {set: materialSymbolSet, names: ['lock']},
     ]),
     label: 'Closed Source',
   },
 
   free: {
     icon: getIcon([
-      {set: materialSymbols, names: ['money-off']},
+      {set: materialSymbolSet, names: ['money-off']},
     ]),
     label: 'Free',
   },
 
   paid: {
     icon: getIcon([
-      {set: materialSymbols, names: ['payments']},
+      {set: materialSymbolSet, names: ['payments']},
     ]),
     label: 'Paid',
   },
 
   freemium: {
     icon: getIcon([
-      {set: materialSymbols, names: ['sell']},
+      {set: materialSymbolSet, names: ['sell']},
     ]),
     label: 'Freemium',
   },
@@ -739,42 +728,42 @@ const badges: Partial<Record<BadgeType, Badge>> = {
 
   portable: {
     icon: getIcon([
-      {set: materialSymbols, names: ['folder-open']},
+      {set: materialSymbolSet, names: ['folder-open']},
     ]),
     label: 'Portable',
   },
 
   cli: {
     icon: getIcon([
-      {set: materialSymbols, names: ['terminal']},
+      {set: materialSymbolSet, names: ['terminal']},
     ]),
     label: 'CLI',
   },
 
   gui: {
     icon: getIcon([
-      {set: materialSymbols, names: ['desktop-windows']},
+      {set: materialSymbolSet, names: ['desktop-windows']},
     ]),
     label: 'GUI',
   },
 
   web: {
     icon: getIcon([
-      {set: materialSymbols, names: ['language']},
+      {set: materialSymbolSet, names: ['language']},
     ]),
     label: 'Web',
   },
 
   'desktop-app': {
     icon: getIcon([
-      {set: materialSymbols, names: ['desktop-windows']},
+      {set: materialSymbolSet, names: ['desktop-windows']},
     ]),
     label: 'Desktop application',
   },
 
   'mobile-app': {
     icon: getIcon([
-      {set: materialSymbols, names: ['smartphone']},
+      {set: materialSymbolSet, names: ['phone-android-outline']},
     ]),
     label: 'Mobile application',
   },
@@ -785,28 +774,28 @@ const badges: Partial<Record<BadgeType, Badge>> = {
 
   offline: {
     icon: getIcon([
-      {set: materialSymbols, names: ['cloud-off']},
+      {set: materialSymbolSet, names: ['cloud-off']},
     ]),
     label: 'Offline',
   },
 
   online: {
     icon: getIcon([
-      {set: materialSymbols, names: ['cloud']},
+      {set: materialSymbolSet, names: ['cloud']},
     ]),
     label: 'Online',
   },
 
   cloud: {
     icon: getIcon([
-      {set: materialSymbols, names: ['cloud']},
+      {set: materialSymbolSet, names: ['cloud']},
     ]),
     label: 'Cloud',
   },
 
   api: {
     icon: getIcon([
-      {set: materialSymbols, names: ['api']},
+      {set: materialSymbolSet, names: ['api']},
     ]),
     label: 'API',
   },
@@ -817,14 +806,14 @@ const badges: Partial<Record<BadgeType, Badge>> = {
 
   admin: {
     icon: getIcon([
-      {set: materialSymbols, names: ['admin-panel-settings']},
+      {set: materialSymbolSet, names: ['admin-panel-settings']},
     ]),
     label: 'Administrator',
   },
 
   root: {
     icon: getIcon([
-      {set: materialSymbols, names: ['security']},
+      {set: materialSymbolSet, names: ['security']},
     ]),
     label: 'Root',
   },
@@ -835,42 +824,42 @@ const badges: Partial<Record<BadgeType, Badge>> = {
 
   social: {
     icon: getIcon([
-      {set: materialSymbols, names: ['share']},
+      {set: materialSymbolSet, names: ['share']},
     ]),
     label: 'Social Media',
   },
 
   recommended: {
     icon: getIcon([
-      {set: materialSymbols, names: ['star']},
+      {set: materialSymbolSet, names: ['star']},
     ]),
     label: 'Recommended',
   },
 
   official: {
     icon: getIcon([
-      {set: materialSymbols, names: ['verified']},
+      {set: materialSymbolSet, names: ['verified']},
     ]),
     label: 'Official',
   },
 
   'third-party': {
     icon: getIcon([
-      {set: materialSymbols, names: ['extension']},
+      {set: materialSymbolSet, names: ['extension']},
     ]),
     label: 'Third-party',
   },
 
   warning: {
     icon: getIcon([
-      {set: materialSymbols, names: ['warning']},
+      {set: materialSymbolSet, names: ['warning']},
     ]),
     label: 'Warning',
   },
 
   experimental: {
     icon: getIcon([
-      {set: materialSymbols, names: ['science']},
+      {set: materialSymbolSet, names: ['science']},
     ]),
     label: 'Experimental',
   },
@@ -943,3 +932,4 @@ export default function PlatformBadges({
     </span>
   );
 }
+

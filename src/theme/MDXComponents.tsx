@@ -3,6 +3,7 @@ import MDXComponents from '@theme-original/MDXComponents';
 import BrandLogo from '@site/src/components/BrandLogo';
 import PlatformBadges from '@site/src/components/PlatformBadges';
 import MediaPreview from '@site/src/components/MediaPreview';
+import ToolIcon from '@site/src/components/ToolIcon';
 
 /**
  * Do not replace the built-in `img`, `video`, or `a` mappings here. Docusaurus
@@ -14,4 +15,5 @@ export default {
   BrandLogo,
   PlatformBadges,
   MediaPreview,
+  ToolIcon,
 };

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#171722">
+<link rel="icon" href="/img/favicon.ico">
+<link rel="apple-touch-icon" href="/img/pwa-192.png">
+<title>Offline · Computer Technician Tools</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#171722;color:#e8e8f4}
+*{box-sizing:border-box}body{min-height:100vh;margin:0;display:grid;place-items:center;padding:1rem}
+main{width:min(100%,30rem);padding:1.5rem;border:1px solid #464456;border-radius:1rem;background:#211f2d}
+.brand{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;font-weight:700}.brand img{width:2.5rem;height:2.5rem}
+h1{font-size:1.7rem;margin:.4rem 0}.copy{color:#c4c4ce;line-height:1.6}
+.actions{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1.25rem}a,button{min-height:2.8rem;padding:.7rem .95rem;border:1px solid #81709f;border-radius:.55rem;font:inherit;font-weight:650;text-decoration:none;cursor:pointer}
+a{background:#7044c7;color:white}button{background:transparent;color:#e8e8f4}button:disabled{opacity:.6;cursor:wait}
+#status{min-height:1.4em;margin:.9rem 0 0;color:#f4a3a3;font-size:.9rem}
+@media(max-width:480px){.actions{flex-direction:column}a,button{width:100%;text-align:center}}
+</style>
+</head>
+<body><main>
+  <div class="brand"><img src="/img/logo.svg" alt=""><span>Computer Technician Tools</span></div>
+  <h1>You’re offline</h1>
+  <p class="copy">Your saved documentation is still available. Continue with cached pages, or try reconnecting to open the page you requested.</p>
+  <p id="status" role="status" aria-live="polite"></p>
+  <div class="actions">
+    <a href="/docs/getting-started">Continue offline</a>
+    <button id="retry" type="button">Try reconnecting</button>
+  </div>
+</main>
+<script>
+document.getElementById('retry').addEventListener('click',async function(){
+  const button=this;const status=document.getElementById('status');button.disabled=true;button.textContent='Checking connection…';status.textContent='';
+  try{const response=await fetch(location.href,{method:'HEAD',cache:'no-store'});if(!response.ok)throw new Error('offline');location.reload();}
+  catch{button.disabled=false;button.textContent='Try reconnecting';status.textContent='Still offline. Choose “Continue offline” or try again.';}
+});
+</script>
+</body>
+</html>

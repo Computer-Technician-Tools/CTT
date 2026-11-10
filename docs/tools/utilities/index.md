@@ -258,7 +258,9 @@ Also good software include [**`Final Cut Pro`**](https://www.apple.com/final-cut
 
 | Tool | Description | Supported platforms | Source |
 | --- | --- | --- | --- |
-| [Audacity](https://www.audacityteam.org/download/) | Free, open-source audio editor and recorder for recording, editing, mixing, and converting audio. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://www.audacityteam.org/download/" github="https://github.com/audacity/audacity" /> |
+| [Audacity](https://www.audacityteam.org/download/) | Free, open-source, multi-track audio editor and recorder for recording, editing, mixing, noise reduction, audio analysis, and converting audio between formats. Supports plugins including VST3 and Nyquist. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://www.audacityteam.org/download/" github="https://github.com/audacity/audacity" /> |
+| [VB-Audio VoiceMeeter](https://vb-audio.com/Voicemeeter/index.htm) | Virtual audio mixer for routing and mixing microphone, application, game, and system audio. Includes virtual audio devices and hardware outputs. Editions: [Standard](https://vb-audio.com/Voicemeeter/index.htm), [Banana](https://vb-audio.com/Voicemeeter/banana.htm), and [Potato](https://vb-audio.com/Voicemeeter/potato.htm). | <PlatformBadges items={['windows']} /> | <PlatformBadges items={['freeware']} /> <SourceBadge url="https://vb-audio.com/Voicemeeter/index.htm" /> |
+| [Helvum](https://gitlab.freedesktop.org/pipewire/helvum) | Free, open-source graphical patchbay for PipeWire. Connect, disconnect, and reroute audio, video, and MIDI streams between applications and devices using a visual node-based interface. | <PlatformBadges items={['linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://gitlab.freedesktop.org/pipewire/helvum" /> |
 
 ## 3D Softwares
 

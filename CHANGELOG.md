@@ -1,9 +1,23 @@
 # Change Logs
 
+## 23/10/2026
+
+### Added
+
+Added offline mode, also i used ai to maximize the peformacne of the website!.
+
+#### Audio Tools
+
+- [Helvum](/docs/tools/utilities/index.md#audio-tools)
+- [VoiceMeeter](/docs/tools/utilities/index.md#audio-tools)
+
+#### Disc & Media Information
+
+- [FLAC](/docs/optical-media/index.md#disc--media-information)
 
 ## 18/10/2026
 
-## Added
+### Added
 
 Added new apps Section
 - [Apps](/docs/platforms/mobile/android/apps.md)

@@ -43,6 +43,7 @@ Helpful information and tools for CDs, DVDs, Blu-ray, UHD Blu-ray, disc images, 
 | --- | --- | --- | --- |
 | [BDInfo](https://www.videohelp.com/software/BDInfo) | Analyzes Blu-ray discs and reports disc structure, playlists, video and audio codecs, subtitles, graphics streams, and bitrates. | <PlatformBadges items={['windows', 'linux', 'macos']} /> | <SourceBadge url="https://github.com/UniqProject/BDInfo" /> |
 | [MediaInfo](https://mediaarea.net/en/MediaInfo) | Displays detailed technical and tag information for video and audio files. | <PlatformBadges items={['windows', 'linux', 'macos', 'android']} /> | <SourceBadge url="https://mediaarea.net/en/MediaInfo" github="https://github.com/MediaArea/MediaInfo" /> |
+| [FLAC](https://xiph.org/flac/) | Free, open-source lossless audio codec that compresses audio without losing any original audio data. Supports metadata tags, album artwork, cue sheets, error detection, and high-quality audio archiving. Includes command-line tools for encoding, decoding, testing, and editing metadata. | <PlatformBadges items={['windows','macos','linux']} /> | <PlatformBadges items={['opensource']} /> <SourceBadge url="https://xiph.org/flac/" github="https://github.com/xiph/flac" /> |
 
 ### DVD Utilities
 

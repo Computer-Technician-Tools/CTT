@@ -1,17 +1,18 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
-  faGithub,
-  faGitlab,
-  faBitbucket,
   faNpm,
   faDocker,
   faPython,
   faCodepen,
   faGitAlt,
 } from '@fortawesome/free-brands-svg-icons';
+import {externalAssets} from '@site/src/generated/external-assets';
+import {simpleIcons} from '@site/src/generated/platform-icons';
 
 import styles from './styles.module.css';
+
+const bundledBrandIcons = simpleIcons.icons as Record<string, {body: string} | undefined>;
 
 interface SourceBadgeProps {
   url: string;
@@ -96,6 +97,14 @@ function getDomain(url: string): string | null {
   }
 }
 
+function isSafeExternalUrl(value: string): boolean {
+  try {
+    return new URL(value).protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
 function getIconSources(
   url: string,
   icon?: string,
@@ -103,7 +112,7 @@ function getIconSources(
   const domain = getDomain(url);
   const sources: string[] = [];
 
-  if (icon) {
+  if (icon && isSafeImageSource(icon)) {
     sources.push(icon);
   }
 
@@ -121,7 +130,128 @@ function getIconSources(
     );
   }
 
+  if (domain) {
+    sources.push(`https://favicon.allesedv.com/${domain}`);
+    sources.push(`https://icons.duckduckgo.com/ip3/${domain}.ico`);
+    sources.push(`https://favicon.yandex.net/favicon/${domain}`);
+  }
+
   return sources;
+}
+
+function isSafeImageSource(value: string): boolean {
+  if (value.startsWith('/') && !value.startsWith('//')) return true;
+  try {
+    const parsed = new URL(value);
+    return parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Put a build-time copy (static/img/...) ahead of each live URL so the icon
+ * works offline. Live URLs stay as fallbacks, and the service worker caches
+ * them once they load.
+ */
+function withLocalCopies(remoteUrls: string[]): string[] {
+  return remoteUrls.flatMap((remote) => {
+    const local = externalAssets[remote];
+    return local ? [local, remote] : [remote];
+  });
+}
+
+function IconPlaceholder({offline = false}: {offline?: boolean}) {
+  return (
+    <span
+      className={styles.favicon}
+      role="img"
+      aria-label={offline ? 'Website icon not saved offline' : 'Website icon unavailable'}
+      title={offline
+        ? 'Website icon not saved for offline use. Reconnect once to save it on this device.'
+        : 'Website icon unavailable; link remains available.'}
+    >
+      <svg viewBox="0 0 24 24" width={24} height={24} aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" strokeWidth="1.6" />
+        <path
+          d="M2.75 12h18.5M12 2.75c2.6 2.6 3.9 5.6 3.9 9.25s-1.3 6.65-3.9 9.25c-2.6-2.6-3.9-5.6-3.9-9.25s1.3-6.65 3.9-9.25z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+        />
+      </svg>
+    </span>
+  );
+}
+
+/**
+ * Tries each candidate image in order. When every candidate fails while offline,
+ * a placeholder is shown instead, and the icon is retried when the connection
+ * returns. When online, nothing is shown for an icon that is unavailable.
+ */
+function CachedIcon({
+  sources,
+  title,
+}: {
+  sources: string[];
+  title?: string;
+}) {
+  const candidates = withLocalCopies(sources);
+  const [index, setIndex] = useState(0);
+  const [exhausted, setExhausted] = useState(false);
+  const [online, setOnline] = useState(true);
+
+  useEffect(() => {
+    const update = () => setOnline(navigator.onLine);
+    const retry = () => {
+      setOnline(true);
+      setIndex(0);
+      setExhausted(false);
+    };
+    update();
+    window.addEventListener('online', retry);
+    window.addEventListener('offline', update);
+    const onWorkerMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'CTT_OFFLINE') setOnline(false);
+    };
+    navigator.serviceWorker?.addEventListener('message', onWorkerMessage);
+    return () => {
+      window.removeEventListener('online', retry);
+      window.removeEventListener('offline', update);
+      navigator.serviceWorker?.removeEventListener('message', onWorkerMessage);
+    };
+  }, []);
+
+  // Third-party favicons are optional: keep offline pages focused on readable text.
+  if (!online) return null;
+
+  if (candidates.length === 0) {
+    return null;
+  }
+
+  if (exhausted || index >= candidates.length) {
+    return <IconPlaceholder />;
+  }
+
+  return (
+    <img
+      src={candidates[index]}
+      alt=""
+      className={styles.favicon}
+      width={24}
+      height={24}
+      loading="lazy"
+      decoding="async"
+      title={title}
+      onError={() => {
+        if (index + 1 < candidates.length) {
+          setIndex(index + 1);
+        } else {
+          setExhausted(true);
+        }
+      }}
+    />
+  );
 }
 
 function WebsiteIcon({
@@ -131,27 +261,7 @@ function WebsiteIcon({
   url: string;
   icon?: string;
 }) {
-  const sources = getIconSources(url, icon);
-  const [sourceIndex, setSourceIndex] = useState(0);
-
-  if (sourceIndex >= sources.length) {
-    return null;
-  }
-
-  return (
-    <img
-      src={sources[sourceIndex]}
-      alt=""
-      className={styles.favicon}
-      width={24}
-      height={24}
-      loading="lazy"
-      decoding="async"
-      onError={() => {
-        setSourceIndex((index) => index + 1);
-      }}
-    />
-  );
+  return <CachedIcon sources={getIconSources(url, icon)} />;
 }
 
 function SimpleIcon({
@@ -161,24 +271,13 @@ function SimpleIcon({
   name: string;
   alt: string;
 }) {
-  const [failed, setFailed] = useState(false);
-
-  if (failed) {
-    return null;
-  }
-
+  const icon = bundledBrandIcons[name];
+  if (!icon) return <CachedIcon sources={[`https://cdn.simpleicons.org/${name}`]} title={alt} />;
   return (
-    <img
-      src={`https://cdn.simpleicons.org/${name}`}
-      alt=""
-      className={styles.favicon}
-      width={24}
-      height={24}
-      loading="lazy"
-      decoding="async"
-      title={alt}
-      onError={() => setFailed(true)}
-    />
+    <svg className={styles.brandIcon} role="img" aria-label={alt} viewBox="0 0 24 24" focusable="false">
+      <title>{alt}</title>
+      <g dangerouslySetInnerHTML={{__html: icon.body}} />
+    </svg>
   );
 }
 
@@ -219,28 +318,13 @@ function SourcePlatformIcon({
       );
 
     case 'github':
-      return (
-        <FontAwesomeIcon
-          icon={faGithub}
-          title="GitHub"
-        />
-      );
+      return <SimpleIcon name="github" alt="GitHub" />;
 
     case 'gitlab':
-      return (
-        <FontAwesomeIcon
-          icon={faGitlab}
-          title="GitLab"
-        />
-      );
+      return <SimpleIcon name="gitlab" alt="GitLab" />;
 
     case 'bitbucket':
-      return (
-        <FontAwesomeIcon
-          icon={faBitbucket}
-          title="Bitbucket"
-        />
-      );
+      return <SimpleIcon name="bitbucket" alt="Bitbucket" />;
 
     case 'npm':
       return (
@@ -403,6 +487,7 @@ function getSourceLinks(
       ([key, value]) =>
         key !== 'icon' &&
         Boolean(value) &&
+        isSafeExternalUrl(String(value)) &&
         Object.prototype.hasOwnProperty.call(sourceTypes, key),
     )
     .map(([key, value]) => {
@@ -554,12 +639,12 @@ export default function SourceBadge(props: SourceBadgeProps) {
       className={styles.sourceGroup}
       data-ctt-icons=""
     >
-      {sources.map((source) => {
+      {sources.map((source, index) => {
         const label = getSourceTypeLabel(source.type);
 
         return (
           <a
-            key={`${source.type}-${source.url}`}
+            key={`${source.type}-${source.url}-${index}`}
             href={source.url}
             target="_blank"
             rel="noopener noreferrer"

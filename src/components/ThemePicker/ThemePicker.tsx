@@ -32,7 +32,12 @@ function getInitialTheme(): ThemeName {
   }
 
   if (typeof window !== 'undefined') {
-    const storedTheme = window.localStorage.getItem(storageKey);
+    let storedTheme: string | null = null;
+    try {
+      storedTheme = window.localStorage.getItem(storageKey);
+    } catch {
+      // Storage can be disabled by browser settings.
+    }
 
     if (isThemeName(storedTheme)) return storedTheme;
   }
@@ -45,7 +50,11 @@ export default function ThemePicker() {
 
   useEffect(() => {
     document.documentElement.dataset.techTheme = theme;
-    window.localStorage.setItem(storageKey, theme);
+    try {
+      window.localStorage.setItem(storageKey, theme);
+    } catch {
+      // Keep the current session usable when storage is disabled.
+    }
   }, [theme]);
 
   const handleThemeChange = (nextTheme: ThemeName) => {
@@ -56,8 +65,12 @@ export default function ThemePicker() {
       root.dataset.techTheme = 'default';
       root.dataset.theme = 'light';
       root.style.colorScheme = 'light';
-      window.localStorage.setItem(storageKey, 'default');
-      window.localStorage.setItem(colorModeKey, 'light');
+      try {
+        window.localStorage.setItem(storageKey, 'default');
+        window.localStorage.setItem(colorModeKey, 'light');
+      } catch {
+        // Keep the current session usable when storage is disabled.
+      }
 
       requestAnimationFrame(() => {
         root.dataset.techTheme = 'default';

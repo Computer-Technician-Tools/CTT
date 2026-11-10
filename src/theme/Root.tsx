@@ -4,6 +4,7 @@ import mediaStyles from '@site/src/components/MediaPreview/styles.module.css';
 
 import ThemeEffects from '@site/src/components/ThemeEffects';
 import ThemePicker from '@site/src/components/ThemePicker';
+import OfflineStatus from '@site/src/components/OfflineStatus';
 
 const darkOnlyThemes = new Set<string>([
   'custom',
@@ -883,9 +884,41 @@ function ThemeModeEnforcer(): null {
   return null;
 }
 
+
+function PWARegistration(): null {
+  useEffect(() => {
+    if (process.env.NODE_ENV !== 'production' || !('serviceWorker' in navigator)) return;
+    // The static landing page registers its own worker; wait briefly here so
+    // documentation scripts and styles get the initial network priority.
+    if (!window.location.pathname.startsWith('/docs/')) return;
+    let cancelled = false;
+    const register = () => {
+      if (cancelled) return;
+      navigator.serviceWorker.register('/sw.js', { scope: '/' })
+        .then(() => navigator.serviceWorker.ready)
+        .then((registration) => {
+          window.setTimeout(() => registration.active?.postMessage({type: 'CACHE_SITE'}), 30000);
+        })
+        .catch(() => {
+          // The site remains fully usable when service workers are unavailable.
+        });
+    };
+    // Install the small offline shell first, then begin the larger background
+    // text cache after the current page has had time to load.
+    const timeoutId = window.setTimeout(register, 3000);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeoutId);
+    };
+  }, []);
+  return null;
+}
+
 export default function Root({children}: {children: ReactNode}): ReactNode {
   return (
     <>
+      <PWARegistration />
+      <OfflineStatus />
       <ThemeModeEnforcer />
       <ThemeEffects />
       <ThemePicker />

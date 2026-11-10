@@ -22,7 +22,10 @@ const config: Config = {
 
   future: {
     v4: true,
-    faster: true,
+    // Rspack's development module graph currently panics on Windows for this
+    // project. Keep the stable Webpack compiler enabled so `npm run start`
+    // consistently starts and hot-reloads instead of crashing mid-compile.
+    faster: false,
   },
 
   // ============================================================
@@ -57,6 +60,16 @@ const config: Config = {
     {
       src: '/js/theme-init.js',
     },
+    ...(process.env.NODE_ENV !== 'production'
+      ? [{ src: '/js/development-reset.js', defer: true }]
+      : []),
+  ],
+
+  // Installable PWA metadata. The SVG logo is the app icon source.
+  headTags: [
+    { tagName: 'link', attributes: { rel: 'manifest', href: '/manifest.webmanifest' } },
+    { tagName: 'link', attributes: { rel: 'apple-touch-icon', href: '/img/pwa-192.png' } },
+    { tagName: 'meta', attributes: { name: 'theme-color', content: '#7c3aed' } },
   ],
 
   // ============================================================
@@ -67,6 +80,9 @@ const config: Config = {
   // resized variants and a low-quality placeholder.
   // PNG and JPG image imports are supported by the plugin.
   plugins: [
+    // Use full-page refreshes in development. This avoids a Windows Webpack
+    // CSS-HMR runtime crash while keeping automatic refresh on file changes.
+    './plugins/stable-dev-server.cjs',
     [
       '@docusaurus/plugin-ideal-image',
       {
@@ -96,8 +112,10 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
 
-          showLastUpdateTime: true,
-          showLastUpdateAuthor: true,
+          // The source archive may be built outside Git; avoid failing builds
+          // while trying to read per-file history metadata.
+          showLastUpdateTime: false,
+          showLastUpdateAuthor: false,
 
           breadcrumbs: true,
         },
@@ -139,7 +157,9 @@ const config: Config = {
       {
         // Generate a hashed search index so browsers can cache it
         // safely while still receiving a new index after docs change.
-        hashed: true,
+        // Put the content hash in the filename so CDNs can cache the index
+        // immutably and a documentation update naturally gets a new URL.
+        hashed: 'filename',
 
         // Search documentation written in English.
         language: ['en'],
@@ -150,7 +170,10 @@ const config: Config = {
         indexPages: true,
 
         // Highlight matching terms after opening a result.
-        highlightSearchTermsOnTargetPage: true,
+        // Highlighting pulls mark.js into the site-wide main bundle. Search
+        // results already show useful context, so keep this optional code out
+        // of every route's initial JavaScript.
+        highlightSearchTermsOnTargetPage: false,
 
         // Show the heading/path in search suggestions.
         explicitSearchResultPath: true,
@@ -228,6 +251,7 @@ const config: Config = {
           type: 'search',
           position: 'right',
         },
+
       ],
     },
 
@@ -281,6 +305,19 @@ const config: Config = {
             {
               label: 'Operating Systems',
               to: '/docs/platforms/operating-systems/',
+            },
+          ],
+        },
+
+        {
+          title: 'Community',
+
+          items: [
+            {
+              html: '<a href="https://github.com/Computer-Technician-Tools/CTT" aria-label="CTT on GitHub" title="GitHub" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.64-1.25-1.64-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 1.71 2.61 1.22 3.25.93.1-.73.39-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.56 0-1.23.44-2.24 1.16-3.03-.12-.28-.5-1.43.11-2.98 0 0 .95-.3 3.1 1.16a10.8 10.8 0 0 1 5.64 0c2.15-1.46 3.1-1.16 3.1-1.16.61 1.55.23 2.7.11 2.98.72.79 1.16 1.8 1.16 3.03 0 4.32-2.63 5.27-5.14 5.55.4.35.76 1.03.76 2.08v3.1c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z"/></svg><span>GitHub</span></a>',
+            },
+            {
+              html: '<a href="https://discord.gg/GtQRHZeHWK" aria-label="CTT on Discord" title="Discord" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M19.7 5.3a18.2 18.2 0 0 0-4.5-1.4l-.6 1.2a16.8 16.8 0 0 0-5.1 0l-.6-1.2a18.1 18.1 0 0 0-4.5 1.4C1.6 9.5.8 13.6 1.2 17.6a18.2 18.2 0 0 0 5.5 2.8l1.2-2a11.8 11.8 0 0 1-1.9-.9l.5-.4a13 13 0 0 0 11 0l.5.4a12 12 0 0 1-1.9.9l1.2 2a18.1 18.1 0 0 0 5.5-2.8c.5-4.6-.8-8.7-3.1-12.3ZM8.8 14.8c-1.1 0-2-.9-2-2.1s.9-2.1 2-2.1 2 .9 2 2.1-.9 2.1-2 2.1Zm6.4 0c-1.1 0-2-.9-2-2.1s.9-2.1 2-2.1 2 .9 2 2.1-.9 2.1-2 2.1Z"/></svg><span>Discord</span></a>',
             },
           ],
         },
