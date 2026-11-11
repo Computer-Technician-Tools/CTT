@@ -61,7 +61,7 @@ export default function OfflineStatus() {
   return (
     <div className={styles.backdrop}>
       <section className={styles.dialog} role="alertdialog" aria-modal="true" aria-labelledby="ctt-offline-title" aria-describedby="ctt-offline-description">
-        <span className={styles.mark} aria-hidden="true">CTT</span>
+        <img className={styles.mark} src="/img/logo.svg" alt="CTT logo" width="40" height="40" decoding="async" data-ctt-media-viewer="true" />
         <h2 id="ctt-offline-title">You’re offline</h2>
         <p id="ctt-offline-description">You can keep reading pages and resources saved on this device. Website favicons and external links may be unavailable.</p>
         {retryFailed && <p className={styles.error} role="status">Still offline. You can continue with saved pages or try again.</p>}

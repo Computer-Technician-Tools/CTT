@@ -1759,6 +1759,13 @@ html[data-tech-theme]:not([data-ctt-page-scrolled]) .theme-back-to-top-button {
   transform: scale(0.82) !important;
 }
 
+/* Keep the floating scroll control out of modal dialogs such as the offline prompt. */
+html:has([role="alertdialog"]) .theme-back-to-top-button {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 /* ========================================================================
    CTT v21 — CLEAN MOBILE NAVIGATION FIX
    ------------------------------------------------------------------------
@@ -3194,13 +3201,12 @@ html[data-tech-theme] table td {
 /* ============================================================
    PLATFORM AND SOURCE ICON CELLS
    Each cell holds one or more badge groups marked [data-ctt-icons].
-   Desktop tables center the icons in the cell so every row lines up
-   on the same grid. On phones the mobile cards keep their left-aligned
-   labels; the icons still sit on the same fixed pitch.
+   Keep each badge group anchored at the same left edge in every table row
+   and mobile card. Centering variable-width groups made the first icon shift.
    ============================================================ */
 
 html[data-tech-theme] table td:has(> [data-ctt-icons]) {
-  text-align: center;
+  text-align: left;
   vertical-align: middle;
 }
 
@@ -3210,4 +3216,54 @@ html[data-tech-theme] table[data-ctt-mobile-cards-ready="true"] tbody td:has(> [
 
 html[data-tech-theme] table td:has(> [data-ctt-icons])::before {
   text-align: left;
+}
+
+/* Final mobile TOC treatment. Keep this after the historical responsive
+   overrides so later theme rules cannot flatten its inset glass treatment. */
+@media screen and (max-width: 996px) {
+  html[data-tech-theme] .theme-doc-toc-mobile.ctt-mobile-toc-fixed {
+    top: calc(var(--ctt-mobile-toc-top, var(--ifm-navbar-height, 60px)) + 0.35rem) !important;
+    padding: 0.35rem 1rem !important;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--ctt-page-bg, var(--ifm-background-color)) 82%, transparent),
+      color-mix(in srgb, var(--ctt-page-bg, var(--ifm-background-color)) 62%, transparent)
+    ) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(1.12) !important;
+    backdrop-filter: blur(10px) saturate(1.12) !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  html[data-tech-theme] .theme-doc-toc-mobile.ctt-mobile-toc-fixed::after {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 1.5rem;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--ctt-page-bg, var(--ifm-background-color)) 42%, transparent),
+      transparent
+    );
+    content: "";
+    pointer-events: none;
+  }
+
+  html[data-tech-theme] .theme-doc-toc-mobile.ctt-mobile-toc-fixed > div {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0.6rem !important;
+  }
+
+  html[data-tech-theme] .theme-doc-toc-mobile.ctt-mobile-toc-fixed button {
+    width: 100% !important;
+    margin: 0 !important;
+    border: 1px solid color-mix(in srgb, var(--ctt-border, var(--ifm-color-emphasis-300)) 72%, transparent) !important;
+    border-radius: 0.6rem !important;
+    background: color-mix(in srgb, var(--ctt-surface-2, var(--ifm-background-surface-color)) 78%, transparent) !important;
+    box-shadow: 0 0.2rem 0.65rem color-mix(in srgb, var(--ctt-page-bg, #000) 28%, transparent) !important;
+    -webkit-backdrop-filter: blur(9px) !important;
+    backdrop-filter: blur(9px) !important;
+  }
 }

@@ -1,7 +1,9 @@
 .badges {
   display: inline-flex;
   align-items: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
+  gap: 0.3rem;
   max-width: 100%;
   vertical-align: middle;
 }

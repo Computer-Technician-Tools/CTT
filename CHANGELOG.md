@@ -1,5 +1,11 @@
 # Change Logs
 
+## 11/11/2026
+
+## Updated
+
+Faster loadings, and fixed few things. Now the site runs faster.
+
 ## 23/10/2026
 
 ### Added

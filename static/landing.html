@@ -15,7 +15,7 @@
     body { min-height: 100vh; margin: 0; display: flex; flex-direction: column; }
     header { height: 3.75rem; padding: 0 1.25rem; display: flex; align-items: center; border-bottom: 1px solid #373746; }
     .brand { display: inline-flex; align-items: center; gap: .8rem; color: inherit; text-decoration: none; font-weight: 650; }
-    .brand-mark { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: .65rem; background: #f04b44; color: #171722; font-weight: 900; }
+    .brand-mark { display: block; width: 2.5rem; height: 2.5rem; object-fit: contain; }
     main { flex: 1; display: grid; place-items: center; padding: 3rem 1.25rem; text-align: center; }
     .intro { width: min(100%, 48rem); }
     h1 { margin: 0 0 .65rem; font-size: clamp(2.25rem, 7vw, 3.75rem); line-height: 1.08; letter-spacing: -.035em; }
@@ -27,19 +27,23 @@
     .socials a { display: inline-flex; width: 2rem; height: 2rem; align-items: center; justify-content: center; color: #c7c9df; }
     .socials a:hover, .socials a:focus-visible { color: #d9b7ff; }
     .socials svg { width: 1.3rem; height: 1.3rem; fill: currentColor; }
-    dialog { width: min(calc(100vw - 32px), 420px); padding: 1.35rem; color: #e8e8f4; background: #211f2d; border: 1px solid #625d70; border-radius: 1rem; }
+    dialog { width: min(calc(100vw - 32px), 420px); padding: 1.35rem; color: #f4f6fa; background: #191c24; border: 1px solid #687180; border-radius: 1rem; }
     dialog::backdrop { background: rgb(10 10 18 / 72%); backdrop-filter: blur(4px); }
-    dialog p { margin: .6rem 0 1.1rem; text-align: left; font-size: .95rem; }
+    dialog h2 { color: #f5f6fa; }
+    dialog p { margin: .6rem 0 1.1rem; text-align: left; color: #cbd1dc; font-size: .95rem; }
+    .offline-brand { display: block; width: 2.5rem; height: 2.5rem; margin-bottom: .7rem; object-fit: contain; }
     .offline-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
-    .offline-actions button { min-height: 2.7rem; padding: .6rem .85rem; border: 1px solid #8a76b5; border-radius: .5rem; color: inherit; background: #302a40; font: inherit; font-weight: 650; cursor: pointer; }
-    .offline-actions button:first-child { background: #7044c7; color: white; }
+    .offline-actions button { min-height: 2.7rem; padding: .6rem .85rem; border: 1px solid #7c8491; border-radius: .5rem; color: #f1f3f7; background: #242832; font: inherit; font-weight: 650; cursor: pointer; }
+    .offline-actions button:first-child { border-color: #7ba0c2; background: #294a66; color: #fff; }
+    .offline-actions button:hover:not(:disabled) { background: #203d56; }
+    .offline-actions button:focus-visible { outline: 2px solid #9fc7ec; outline-offset: 2px; }
     @media (max-width: 480px) { .offline-actions { flex-direction: column; } .offline-actions button { width: 100%; } }
     @media (max-width: 480px) { footer { align-items: flex-start; flex-direction: column; } }
   </style>
 </head>
 <body>
   <header>
-    <a class="brand" href="/" aria-label="Computer Technician Tools home"><span class="brand-mark" aria-hidden="true">C</span><span>Computer Technician Tools</span></a>
+    <a class="brand" href="/" aria-label="Computer Technician Tools home"><img class="brand-mark" src="/img/logo.svg" alt="" width="40" height="40" decoding="async"><span>Computer Technician Tools</span></a>
   </header>
   <main>
     <section class="intro" aria-labelledby="welcome-title">
@@ -60,6 +64,7 @@
     </nav>
   </footer>
   <dialog id="offline-prompt" aria-labelledby="offline-title" aria-describedby="offline-description">
+    <img class="offline-brand" src="/img/logo.svg" alt="CTT logo" width="40" height="40" decoding="async">
     <h2 id="offline-title">You’re offline</h2>
     <p id="offline-description">Saved documentation can still be read. Third-party website favicons and external links may be unavailable.</p>
     <p id="offline-error" role="status" aria-live="polite"></p>

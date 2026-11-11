@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {Component, useCallback, useEffect, useRef, useState} from 'react';
 import type {CSSProperties, ReactNode} from 'react';
 import mediaStyles from '@site/src/components/MediaPreview/styles.module.css';
 
@@ -453,6 +453,91 @@ function installMobileTableCards(): () => void {
     observer.disconnect();
     window.clearTimeout(timer);
   };
+}
+
+const CHUNK_RELOAD_KEY = 'ctt-chunk-reload-at';
+const CHUNK_RELOAD_COOLDOWN_MS = 15_000;
+
+function isChunkLoadError(error: unknown): boolean {
+  const value = error as {name?: unknown; message?: unknown} | null;
+  const name = typeof value?.name === 'string' ? value.name : '';
+  const message = typeof value?.message === 'string' ? value.message : String(error);
+  return name === 'ChunkLoadError' || /Loading (?:CSS )?chunk .+ failed/i.test(message);
+}
+
+class ChunkLoadRecoveryBoundary extends Component<
+  {children: ReactNode},
+  {error: unknown | null}
+> {
+  state = {error: null as unknown | null};
+
+  static getDerivedStateFromError(error: unknown) {
+    return {error};
+  }
+
+  componentDidCatch(error: unknown): void {
+    if (!isChunkLoadError(error) || !navigator.onLine) return;
+
+    try {
+      const previousAttempt = Number(sessionStorage.getItem(CHUNK_RELOAD_KEY) ?? 0);
+      if (Date.now() - previousAttempt < CHUNK_RELOAD_COOLDOWN_MS) return;
+      sessionStorage.setItem(CHUNK_RELOAD_KEY, String(Date.now()));
+      window.location.reload();
+    } catch {
+      // Storage can be disabled; the manual reload fallback remains available.
+    }
+  }
+
+  render(): ReactNode {
+    const error = this.state.error;
+    if (error === null) return this.props.children;
+    if (!isChunkLoadError(error)) throw error;
+
+    return (
+      <section role="alert" style={{padding: '2rem', color: '#f4f6fa', background: '#191c24', border: '1px solid #687180', borderRadius: '.75rem'}}>
+        <h2>This page did not load</h2>
+        <p style={{color: '#cbd1dc'}}>The page files may have changed. Reload to try loading the current version.</p>
+        <button type="button" onClick={() => window.location.reload()}>Reload page</button>
+      </section>
+    );
+  }
+}
+
+function ChunkPreloadGuard(): null {
+  useEffect(() => {
+    type NavigationApi = {
+      prefetch: (url: string) => false | Promise<void[]>;
+      preload: (url: string) => false | Promise<void[]>;
+    };
+    const browserWindow = window as Window & {docusaurus?: NavigationApi};
+    const api = browserWindow.docusaurus;
+    if (!api) return;
+
+    const originalPreload = api.preload;
+    const guardedApi: NavigationApi = {
+      ...api,
+      preload: (url) => {
+        const result = originalPreload(url);
+        if (!result || typeof result.then !== 'function') return result;
+        return result.catch((error: unknown) => {
+          // Docusaurus preloads a page chunk when a link is hovered. A stale
+          // chunk should not throw from that pointer event and leave the dev
+          // runtime error overlay covering the site. Navigation still retries
+          // the route and the boundary above can refresh once if it fails again.
+          if (isChunkLoadError(error)) return [];
+          throw error;
+        });
+      },
+    };
+    // Docusaurus freezes its navigation API, so install a shallow copy instead
+    // of assigning to the frozen preload property.
+    browserWindow.docusaurus = guardedApi;
+
+    return () => {
+      if (browserWindow.docusaurus === guardedApi) browserWindow.docusaurus = api;
+    };
+  }, []);
+  return null;
 }
 
 
@@ -918,12 +1003,13 @@ export default function Root({children}: {children: ReactNode}): ReactNode {
   return (
     <>
       <PWARegistration />
+      <ChunkPreloadGuard />
       <OfflineStatus />
       <ThemeModeEnforcer />
       <ThemeEffects />
       <ThemePicker />
       <CTTMediaViewer />
-      {children}
+      <ChunkLoadRecoveryBoundary>{children}</ChunkLoadRecoveryBoundary>
     </>
   );
 }

@@ -1,9 +1,7 @@
 /**
- * Build-time cache for every third-party icon CTT uses, so the site works offline.
+ * Build-time cache for the small set of CTT tool icons used by the docs.
  *
  * Sources
- *   Favicons (SourceBadge website icons)
- *     icon.horse, Google, allesedv.com, DuckDuckGo, Yandex
  *   Tool icons (<ToolIcon name="..."/> in docs)
  *     hl-<slug>  Dashboard Icons (homarr-labs/dashboard-icons, via jsDelivr)
  *     sh-<slug>  selfh.st icons (selfhst/icons, via jsDelivr)
@@ -18,50 +16,30 @@
  *   CTT_ICONS=all    every icon in the Dashboard Icons, selfh.st, MDI and
  *                    Simple Icons sets
  *
- * Network failures never fail the build. Anything not saved falls back to the
- * live URL at runtime, and the browser caches it once you reconnect.
+ * Third-party favicons are never downloaded by this script. SourceBadge loads
+ * them directly from the provider while online and omits them offline. Tool
+ * icon network failures never fail the build; missing assets fall back online.
  *
  * Writes src/generated/external-assets.ts, which maps each remote key to its
  * local copy.
  */
-import {createHash} from 'node:crypto';
 import {existsSync} from 'node:fs';
-import {mkdir, readFile, readdir, writeFile} from 'node:fs/promises';
+import {mkdir, readFile, readdir, rm, writeFile} from 'node:fs/promises';
 import path from 'node:path';
 
 const root = process.cwd();
-const docsDir = path.join(root, 'docs');
 const componentsDir = path.join(root, 'src/components');
-const faviconDir = path.join(root, 'static/img/favicons');
-const faviconManifestPath = path.join(faviconDir, 'manifest.json');
-const faviconFailuresPath = path.join(root, '.tmp', 'favicon-download-failures.json');
+const legacyFaviconDir = path.join(root, 'static/img/favicons');
 const target = path.join(root, 'src/generated/external-assets.ts');
 const ALL = process.env.CTT_ICONS === 'all';
 
 const REQUEST_TIMEOUT_MS = 15000;
 const CONCURRENCY = 4;
 const MAX_BYTES = 512 * 1024;
-// Do not make every `npm run start` wait on hosts that were already unavailable.
-// A manual refresh, or a new day, retries them after connectivity is restored.
-const FAILURE_RETRY_MS = 24 * 60 * 60 * 1000;
 const EXTENSIONS = {
   'image/png': 'png',
-  'image/x-icon': 'ico',
-  'image/vnd.microsoft.icon': 'ico',
-  'image/jpeg': 'jpg',
-  'image/webp': 'webp',
-  'image/gif': 'gif',
   'image/svg+xml': 'svg',
 };
-
-// Favicon services. Each builder must match the URL SourceBadge requests at runtime.
-const FAVICON_PROVIDERS = [
-  (host) => `https://icon.horse/icon/${host}`,
-  (host) => `https://www.google.com/s2/favicons?domain=${encodeURIComponent(host)}&sz=128`,
-  (host) => `https://favicon.allesedv.com/${host}`,
-  (host) => `https://icons.duckduckgo.com/ip3/${host}.ico`,
-  (host) => `https://favicon.yandex.net/favicon/${host}`,
-];
 
 // jsDelivr-hosted SVG sets. `repo` is the jsDelivr package used for full listings.
 const SVG_SETS = {
@@ -86,30 +64,10 @@ async function listFiles(dir, pattern) {
   return files;
 }
 
-async function readJsonRecord(file) {
-  try {
-    const value = JSON.parse(await readFile(file, 'utf8'));
-    return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
-  } catch {
-    return {};
-  }
-}
-
-// Scan docs and components for the URLs and icon names the site actually uses.
+// Scan components for tool and brand icon names used by the site.
 async function collectUsage() {
-  const pageUrls = new Set();
-  const iconUrls = new Set();
   const toolNames = new Set();
   const simpleNames = new Set();
-
-  for (const file of await listFiles(docsDir, /\.mdx?$/i)) {
-    const text = await readFile(file, 'utf8');
-    for (const [tag] of text.matchAll(/<SourceBadge\b[^>]*>/g)) {
-      for (const [url] of tag.matchAll(/https?:\/\/[^"'{}\s<>]+/g)) pageUrls.add(url);
-      for (const [, url] of tag.matchAll(/\bicon=["']([^"']+)["']/g)) iconUrls.add(url);
-    }
-    for (const [, name] of text.matchAll(/<ToolIcon\b[^>]*\bname=["']([^"']+)["']/g)) toolNames.add(name);
-  }
 
   for (const file of await listFiles(componentsDir, /\.tsx?$/i)) {
     const text = await readFile(file, 'utf8');
@@ -117,17 +75,7 @@ async function collectUsage() {
     for (const [, name] of text.matchAll(/<ToolIcon\b[^>]*\bname=["']([^"']+)["']/g)) toolNames.add(name);
   }
 
-  return {pageUrls, iconUrls, toolNames, simpleNames};
-}
-
-function faviconKeysFor(pageUrl) {
-  let host;
-  try {
-    host = new URL(pageUrl).hostname;
-  } catch {
-    return [];
-  }
-  return FAVICON_PROVIDERS.map((build) => build(host));
+  return {toolNames, simpleNames};
 }
 
 async function fetchImage(url) {
@@ -204,54 +152,11 @@ function referencedSlugs(toolNames) {
 
 async function main() {
   const assets = {};
-  const counts = {};
-  await mkdir(faviconDir, {recursive: true});
-
+  // Remove the old generated third-party favicon bundle from future builds.
+  await rm(legacyFaviconDir, {recursive: true, force: true});
   const usage = await collectUsage();
   const used = referencedSlugs(usage.toolNames);
-
-  // 1. Favicons: reuse earlier downloads from the manifest, fetch the rest.
-  const previous = await readJsonRecord(faviconManifestPath);
-  const failures = await readJsonRecord(faviconFailuresPath);
-  const faviconKeys = [...new Set([
-    ...[...usage.pageUrls].flatMap(faviconKeysFor),
-    ...usage.iconUrls,
-  ])];
-  const faviconFiles = {};
-  for (const key of faviconKeys) {
-    const file = previous[key];
-    if (file && existsSync(path.join(faviconDir, file))) faviconFiles[key] = file;
-  }
-  const retryFailures = process.env.CTT_REFRESH_EXTERNAL_ASSETS === '1';
-  const retryThreshold = Date.now() - FAILURE_RETRY_MS;
-  const pending = faviconKeys.filter((key) =>
-    !faviconFiles[key] &&
-    (retryFailures || !failures[key] || failures[key] < retryThreshold),
-  );
-  const deferred = faviconKeys.length - Object.keys(faviconFiles).length - pending.length;
-  const failed = [];
-  let downloaded = 0;
-  await runPool(pending, CONCURRENCY, async (key) => {
-    const result = await fetchImage(key);
-    if (!result) {
-      failed.push(key);
-      failures[key] = Date.now();
-      return;
-    }
-    const hash = createHash('sha1').update(key).digest('hex').slice(0, 16);
-    const file = `${hash}.${result.extension}`;
-    await writeFile(path.join(faviconDir, file), result.body);
-    faviconFiles[key] = file;
-    delete failures[key];
-    downloaded += 1;
-  });
-  await writeFile(faviconManifestPath, JSON.stringify(faviconFiles, null, 2) + '\n');
-  await mkdir(path.dirname(faviconFailuresPath), {recursive: true});
-  await writeFile(faviconFailuresPath, JSON.stringify(failures, null, 2) + '\n');
-  for (const [key, file] of Object.entries(faviconFiles)) assets[key] = `/img/favicons/${file}`;
-  counts.favicons = Object.keys(faviconFiles).length;
-
-  // 2. jsDelivr SVG sets (Dashboard Icons and selfh.st).
+  // 1. jsDelivr SVG sets (Dashboard Icons and selfh.st).
   for (const [prefix, set] of Object.entries(SVG_SETS)) {
     const dir = path.join(root, 'static/img/icons', set.dir);
     await mkdir(dir, {recursive: true});
@@ -276,11 +181,11 @@ async function main() {
       assets[`${set.base}${slug}.svg`] = `/img/icons/${set.dir}/${slug}.svg`;
       saved.push(slug);
     });
-    counts[prefix] = saved.length;
+    console.log(`${prefix}: ${saved.length} icons retained`);
     if (missing.length) console.warn(`[external-assets] ${prefix}: ${missing.length} icon(s) not downloaded (check the name or reconnect): ${missing.slice(0, 8).join(', ')}`);
   }
 
-  // 3. Iconify packages (installed locally, no network needed).
+  // 2. Iconify packages (installed locally, no network needed).
   for (const [prefix, set] of Object.entries(ICONIFY_SETS)) {
     const dir = path.join(root, 'static/img/icons', set.dir);
     await mkdir(dir, {recursive: true});
@@ -307,20 +212,11 @@ async function main() {
       if (prefix === 'si') assets[`https://cdn.simpleicons.org/${name}`] = `/img/icons/${set.dir}/${name}.svg`;
       saved += 1;
     }
-    counts[prefix] = saved;
+    console.log(`${prefix}: ${saved} icons retained`);
   }
 
   await writeTarget(assets);
-  console.log(`[external-assets] mode=${ALL ? 'all' : 'referenced'} favicons=${counts.favicons} (${downloaded} new) ` +
-    `hl=${counts.hl ?? 0} sh=${counts.sh ?? 0} mdi=${counts.mdi ?? 0} si=${counts.si ?? 0}`);
-  if (failed.length) {
-    console.warn(`[external-assets] ${failed.length} favicon URL(s) could not be downloaded. Connect to the internet and rebuild to save them:`);
-    for (const key of failed.slice(0, 10)) console.warn(`  - ${key}`);
-    if (failed.length > 10) console.warn(`  ...and ${failed.length - 10} more.`);
-  }
-  if (deferred) {
-    console.log(`[external-assets] deferred ${deferred} recently unavailable favicon URL(s); set CTT_REFRESH_EXTERNAL_ASSETS=1 to retry now.`);
-  }
+  console.log(`[external-assets] mode=${ALL ? 'all' : 'referenced'}; third-party favicons are remote-only`);
 }
 
 try {

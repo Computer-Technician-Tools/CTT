@@ -7,7 +7,6 @@ import {
   faCodepen,
   faGitAlt,
 } from '@fortawesome/free-brands-svg-icons';
-import {externalAssets} from '@site/src/generated/external-assets';
 import {simpleIcons} from '@site/src/generated/platform-icons';
 
 import styles from './styles.module.css';
@@ -118,24 +117,11 @@ function getIconSources(
 
   if (domain) {
     sources.push(
-      `https://icon.horse/icon/${domain}`,
-    );
-  }
-
-  if (domain) {
-    sources.push(
       `https://www.google.com/s2/favicons?domain=${encodeURIComponent(
         domain,
-      )}&sz=128`,
+      )}&sz=64`,
     );
   }
-
-  if (domain) {
-    sources.push(`https://favicon.allesedv.com/${domain}`);
-    sources.push(`https://icons.duckduckgo.com/ip3/${domain}.ico`);
-    sources.push(`https://favicon.yandex.net/favicon/${domain}`);
-  }
-
   return sources;
 }
 
@@ -150,17 +136,9 @@ function isSafeImageSource(value: string): boolean {
 }
 
 /**
- * Put a build-time copy (static/img/...) ahead of each live URL so the icon
- * works offline. Live URLs stay as fallbacks, and the service worker caches
- * them once they load.
+ * Keep third-party icons remote-only. They are fetched on demand while online
+ * and omitted from offline documentation.
  */
-function withLocalCopies(remoteUrls: string[]): string[] {
-  return remoteUrls.flatMap((remote) => {
-    const local = externalAssets[remote];
-    return local ? [local, remote] : [remote];
-  });
-}
-
 function IconPlaceholder({offline = false}: {offline?: boolean}) {
   return (
     <span
@@ -196,7 +174,7 @@ function CachedIcon({
   sources: string[];
   title?: string;
 }) {
-  const candidates = withLocalCopies(sources);
+  const candidates = sources;
   const [index, setIndex] = useState(0);
   const [exhausted, setExhausted] = useState(false);
   const [online, setOnline] = useState(true);
