@@ -26,7 +26,6 @@ async function walk(dir) {
       if (stat.size <= 2 * 1024 * 1024) {
         urls.add(`/${relative}`);
         if (/\/index\.html$/i.test(relative)) urls.add(`/${relative.replace(/index\.html$/i, '')}`);
-        else if (/\.html$/i.test(relative) && relative !== 'index.html') urls.add(`/${relative.replace(/\.html$/i, '')}`);
       }
     }
   }

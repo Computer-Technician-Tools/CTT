@@ -5,12 +5,13 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "node scripts/generate-icon-subset.mjs && node scripts/cache-external-assets.mjs && docusaurus start --port 3001",
-    "build": "node scripts/generate-icon-subset.mjs && node scripts/cache-external-assets.mjs && docusaurus build && node scripts/build-landing.mjs && node scripts/precompress-assets.mjs && node scripts/generate-precache.mjs",
+    "build": "node scripts/generate-icon-subset.mjs && node scripts/cache-external-assets.mjs && docusaurus build && node scripts/generate-precache.mjs && node scripts/precompress-assets.mjs",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "serve:rust": "cargo run --release --manifest-path backend/Cargo.toml",
+    "preview:rust": "npm run build && cargo run --release --manifest-path backend/Cargo.toml",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "node scripts/generate-icon-subset.mjs && node scripts/cache-external-assets.mjs && tsc"

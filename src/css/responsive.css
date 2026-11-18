@@ -3218,6 +3218,138 @@ html[data-tech-theme] table td:has(> [data-ctt-icons])::before {
   text-align: left;
 }
 
+/* CTT footer: a cleaner theme-aware directory with icon-only community links. */
+html[data-tech-theme] .footer {
+  padding: 3rem 1.25rem 1.25rem !important;
+  border-top: 1px solid var(--ctt-border, var(--ifm-color-emphasis-200)) !important;
+}
+
+html[data-tech-theme] .footer > .container {
+  width: 100% !important;
+  max-width: 76rem !important;
+  padding: 0 !important;
+}
+
+html[data-tech-theme] .footer__links {
+  display: grid !important;
+  grid-template-columns: 0.8fr 1.5fr 1fr 0.8fr !important;
+  gap: 2rem !important;
+  margin: 0 auto 2.25rem !important;
+}
+
+html[data-tech-theme] .footer__col {
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+}
+
+html[data-tech-theme] .footer__title {
+  margin-bottom: 0.9rem !important;
+  color: var(--ctt-text, var(--ifm-font-color-base)) !important;
+  font-size: 0.8rem !important;
+  font-weight: 750 !important;
+  letter-spacing: 0.075em !important;
+  text-transform: uppercase !important;
+}
+
+html[data-tech-theme] .footer__items {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html[data-tech-theme] .footer__item {
+  margin: 0 0 0.6rem !important;
+}
+
+html[data-tech-theme] .footer__link-item {
+  color: var(--ctt-footer-text, var(--ctt-text-muted, var(--ifm-color-content-secondary))) !important;
+  text-decoration-color: transparent !important;
+  text-underline-offset: 0.2em;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+html[data-tech-theme] .footer__link-item:hover {
+  color: var(--ctt-accent, var(--ifm-color-primary)) !important;
+  text-decoration-color: currentColor !important;
+}
+
+html[data-tech-theme] .footer__col:last-child .footer__items {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.8rem !important;
+}
+
+html[data-tech-theme] .footer__col:last-child .footer__item {
+  margin: 0 !important;
+}
+
+html[data-tech-theme] .ctt-footer-social {
+  display: inline-flex !important;
+  width: 3rem !important;
+  height: 3rem !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1px solid var(--ctt-border, var(--ifm-color-emphasis-300)) !important;
+  border-radius: 0.9rem !important;
+  background: color-mix(in srgb, var(--ctt-accent, var(--ifm-color-primary)) 8%, var(--ctt-surface-2, var(--ifm-background-surface-color))) !important;
+  color: var(--ctt-footer-text, var(--ctt-text-muted, var(--ifm-color-content-secondary))) !important;
+  transition: transform 160ms ease, color 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+html[data-tech-theme] .ctt-footer-social svg {
+  display: block;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+html[data-tech-theme] .ctt-footer-social:hover {
+  transform: translateY(-2px);
+  border-color: var(--ctt-accent, var(--ifm-color-primary)) !important;
+  background: color-mix(in srgb, var(--ctt-accent, var(--ifm-color-primary)) 18%, var(--ctt-surface-2, var(--ifm-background-surface-color))) !important;
+  color: var(--ctt-accent, var(--ifm-color-primary)) !important;
+  box-shadow: 0 0.4rem 1rem color-mix(in srgb, var(--ctt-accent, var(--ifm-color-primary)) 16%, transparent);
+}
+
+html[data-tech-theme] .ctt-footer-social:focus-visible {
+  outline: 2px solid var(--ctt-accent, var(--ifm-color-primary)) !important;
+  outline-offset: 3px !important;
+}
+
+html[data-tech-theme] .footer__bottom {
+  padding-top: 1rem !important;
+  border-top: 1px solid var(--ctt-border, var(--ifm-color-emphasis-200)) !important;
+}
+
+html[data-tech-theme] .footer__copyright {
+  color: var(--ctt-footer-text, var(--ctt-text-muted, var(--ifm-color-content-secondary))) !important;
+  font-size: 0.85rem !important;
+}
+
+@media screen and (max-width: 800px) {
+  html[data-tech-theme] .footer__links {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1.75rem 1.25rem !important;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  html[data-tech-theme] .footer {
+    padding: 2.25rem 1rem 1rem !important;
+  }
+
+  html[data-tech-theme] .footer__links {
+    gap: 1.5rem 0.9rem !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-tech-theme] .footer__link-item,
+  html[data-tech-theme] .ctt-footer-social {
+    transition: none !important;
+  }
+}
+
 /* Final mobile TOC treatment. Keep this after the historical responsive
    overrides so later theme rules cannot flatten its inset glass treatment. */
 @media screen and (max-width: 996px) {

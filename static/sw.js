@@ -8,7 +8,7 @@ const PRECACHE_URL = '/precache-manifest.json';
 const OFFLINE_URL = '/offline.html';
 const MAX_RUNTIME_ENTRIES = 600;
 const PRECACHE_CONCURRENCY = 4;
-const CRITICAL_URLS = ['/', '/index.html', OFFLINE_URL, '/manifest.webmanifest', '/img/logo.svg', '/img/favicon.ico', '/img/pwa-192.png'];
+const CRITICAL_URLS = ['/', '/index.html', OFFLINE_URL, '/manifest.webmanifest', '/img/logo.svg', '/img/favicon.ico', '/img/pwa-192.png', '/img/pwa-512.png'];
 let backgroundCachePromise;
 
 function isCacheableRequest(request, url) {
@@ -47,7 +47,6 @@ async function cacheRemainingSiteFiles() {
     while (next < urls.length) {
       const url = urls[next++];
       if (typeof url !== 'string' || !url.startsWith('/')) continue;
-      if (await cache.match(url)) continue;
       try {
         const response = await fetch(url, {cache: 'reload'});
         if (!cacheResponseIsSafe(response)) throw new Error(`Could not save ${url}`);
@@ -60,16 +59,34 @@ async function cacheRemainingSiteFiles() {
   }));
 }
 
+async function migratePreviousCaches() {
+  const cacheNames = await caches.keys();
+  const previous = cacheNames.filter((name) =>
+    name.startsWith('ctt-') && !KEEP_CACHES.has(name) &&
+    (name.endsWith('-shell') || name.endsWith('-runtime'))
+  );
+  const shell = await caches.open(SHELL_CACHE);
+  const runtime = await caches.open(RUNTIME_CACHE);
+
+  for (const name of previous) {
+    const source = await caches.open(name);
+    const destination = name.endsWith('-runtime') ? runtime : shell;
+    for (const request of await source.keys()) {
+      if (await destination.match(request)) continue;
+      const response = await source.match(request);
+      if (response) await destination.put(request, response);
+    }
+  }
+  return previous;
+}
+
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
     const cache = await caches.open(SHELL_CACHE);
     await Promise.all(CRITICAL_URLS.map(async (url) => {
-      try {
-        const response = await fetch(url, {cache: 'reload'});
-        if (cacheResponseIsSafe(response)) await cache.put(url, response);
-      } catch {
-        // Keep existing branding and offline-screen entries during an offline update.
-      }
+      const response = await fetch(url, {cache: 'reload'});
+      if (!cacheResponseIsSafe(response)) throw new Error(`Could not cache required PWA file ${url}`);
+      await cache.put(url, response);
     }));
     await self.skipWaiting();
   })());
@@ -77,10 +94,8 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil((async () => {
-    const keys = await caches.keys();
-    await Promise.all(keys.filter((key) =>
-      (key.startsWith('ctt-') && !KEEP_CACHES.has(key)) || key === 'ctt-icons'
-    ).map((key) => caches.delete(key)));
+    const previousCaches = await migratePreviousCaches();
+    await Promise.all([...previousCaches, 'ctt-icons'].map((key) => caches.delete(key)));
     await self.clients.claim();
   })());
 });
