@@ -240,7 +240,11 @@ fn cache_policy(path: &Path) -> &'static str {
         || (name.starts_with("search-index-") && name.ends_with(".json"))
     {
         "public, max-age=31536000, immutable"
-    } else if name.ends_with(".html") || name == "sw.js" || name == "precache-manifest.json" {
+    } else if name.ends_with(".html")
+        || name.ends_with(".webmanifest")
+        || name == "sw.js"
+        || name == "precache-manifest.json"
+    {
         "no-cache, max-age=0, must-revalidate"
     } else {
         "public, max-age=3600"

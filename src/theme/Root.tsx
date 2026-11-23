@@ -5,6 +5,7 @@ import mediaStyles from '@site/src/components/MediaPreview/styles.module.css';
 import ThemeEffects from '@site/src/components/ThemeEffects';
 import ThemePicker from '@site/src/components/ThemePicker';
 import OfflineStatus from '@site/src/components/OfflineStatus';
+import PWAInstallPrompt from '@site/src/components/PWAInstallPrompt';
 
 const darkOnlyThemes = new Set<string>([
   'custom',
@@ -975,6 +976,7 @@ export default function Root({children}: {children: ReactNode}): ReactNode {
     <>
       <ChunkPreloadGuard />
       <OfflineStatus />
+      <PWAInstallPrompt />
       <ThemeModeEnforcer />
       <ThemeEffects />
       <ThemePicker />

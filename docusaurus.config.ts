@@ -62,10 +62,7 @@ const config: Config = {
     },
     ...(process.env.NODE_ENV === 'production'
       ? [{ src: '/js/pwa-register.js', defer: true }]
-      : []),
-    ...(process.env.NODE_ENV !== 'production'
-      ? [{ src: '/js/development-reset.js', defer: true }]
-      : []),
+      : [{ src: '/js/development-reset.js', defer: true }]),
   ],
 
   // Installable PWA metadata. The SVG logo is the app icon source.
@@ -73,6 +70,8 @@ const config: Config = {
     { tagName: 'link', attributes: { rel: 'manifest', href: '/manifest.webmanifest' } },
     { tagName: 'link', attributes: { rel: 'apple-touch-icon', href: '/img/pwa-192.png' } },
     { tagName: 'meta', attributes: { name: 'theme-color', content: '#171722' } },
+    { tagName: 'meta', attributes: { name: 'apple-mobile-web-app-capable', content: 'yes' } },
+    { tagName: 'meta', attributes: { name: 'apple-mobile-web-app-title', content: 'CTT' } },
   ],
 
   // ============================================================
@@ -160,9 +159,7 @@ const config: Config = {
       {
         // Generate a hashed search index so browsers can cache it
         // safely while still receiving a new index after docs change.
-        // Put the content hash in the filename so CDNs can cache the index
-        // immutably and a documentation update naturally gets a new URL.
-        hashed: 'filename',
+        hashed: true,
 
         // Search documentation written in English.
         language: ['en'],
@@ -173,10 +170,7 @@ const config: Config = {
         indexPages: true,
 
         // Highlight matching terms after opening a result.
-        // Highlighting pulls mark.js into the site-wide main bundle. Search
-        // results already show useful context, so keep this optional code out
-        // of every route's initial JavaScript.
-        highlightSearchTermsOnTargetPage: false,
+        highlightSearchTermsOnTargetPage: true,
 
         // Show the heading/path in search suggestions.
         explicitSearchResultPath: true,
@@ -255,7 +249,6 @@ const config: Config = {
           type: 'search',
           position: 'right',
         },
-
       ],
     },
 
@@ -315,7 +308,6 @@ const config: Config = {
 
         {
           title: 'Community',
-
           items: [
             {
               html: '<a class="ctt-footer-social" href="https://github.com/Computer-Technician-Tools/CTT" aria-label="CTT on GitHub" title="GitHub" target="_blank" rel="noopener noreferrer"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.64-1.25-1.64-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 1.71 2.61 1.22 3.25.93.1-.73.39-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.56 0-1.23.44-2.24 1.16-3.03-.12-.28-.5-1.43.11-2.98 0 0 .95-.3 3.1 1.16a10.8 10.8 0 0 1 5.64 0c2.15-1.46 3.1-1.16 3.1-1.16.61 1.55.23 2.7.11 2.98.72.79 1.16 1.8 1.16 3.03 0 4.32-2.63 5.27-5.14 5.55.4.35.76 1.03.76 2.08v3.1c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z"/></svg></a>',

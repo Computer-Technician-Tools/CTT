@@ -161,7 +161,18 @@ self.addEventListener('fetch', (event) => {
       return response;
     } catch {
       notifyOffline();
-      return (await cache.match(request)) || Response.error();
+      // Return a normal HTTP response when no cached copy exists. Response.error()
+      // surfaces as a browser-level ERR_FAILED page and gives the app no chance
+      // to explain that this one resource is unavailable offline.
+      return (await cache.match(request)) || new Response('', {
+        status: 503,
+        statusText: 'Offline',
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'Cache-Control': 'no-store',
+          'X-CTT-Offline': '1',
+        },
+      });
     }
   })());
 });
